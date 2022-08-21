@@ -36,8 +36,8 @@ def liste_file(patern, file_path=''):
     # fait la liste des fichier dans le repertoire ou se trouve script.py
     fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
 
-    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
-    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
+    # pour chaque nom de fichier on separe le nom par '.' pour recuperer et stocker tous les noms de fichier dans une 
+    # liste
     for ligne in fichiers:
         if patern in ligne:
             name = ligne.split('_')
