@@ -317,7 +317,7 @@ if __name__ == '__main__':
     # dock('1T56')
     for e in liste:
         grids(e)
-        #dock(e)
+        dock(e)
     #grid_dock_liste(0, 25)
     check_summary()
     #ttt_resultat_all()
