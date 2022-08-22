@@ -34,7 +34,7 @@ def createBoxTxt(f):
             fichier_box.write('center_x = ' + center.pop(0) + '\n')
             fichier_box.write('center_y = ' + center.pop(0) + '\n')
             fichier_box.write('center_z = ' + center.pop(0) + '\n')
-        elif 'size' in lines[i]:
+        elif 'length' in lines[i]:
             size = lines[i].split()[-3:]
             fichier_box.write('size_x = ' + size.pop(0) + '\n')
             fichier_box.write('size_y = ' + size.pop(0) + '\n')
@@ -92,7 +92,7 @@ def result_vina(file):
     """
     dossier = 'model_' + file
     if terminal:
-        if dossier not in listdir(path + 'VINA/RESULT/'):
+        if dossier not in listdir(path + '/VINA/RESULT/'):
             os.system('mkdir VINA/RESULT/model_' + file)
 
     fichier = open('VINA/RESULT/' + file + '_ligand_vina_out.pdbqt', 'r')
@@ -135,7 +135,7 @@ def ecriturelig1(structure, m, lig):
     :return: 
     """
     # initialisation du document contenant la comparaison
-    resultfile = open('VINA/RESULT/model_' + structure + '/comparaison_' + structure + '.txt', 'w')
+    resultfile = open('VINA/RESULT/comparaison_' + structure + '.txt', 'w')
     resultfile.write('Nombre de models = ' + str(m) + '\n')
     m += 1
     resultfile.write('Model | affinite | Docks RMSD |\n')
@@ -185,10 +185,10 @@ def ecritureligs(structure, m, lig):
     :param lig: 
     :return: 
     """
-    resultfile = open('VINA/RESULT/model_' + structure + '/comparaison_' + structure + '.txt', 'r')
+    resultfile = open('VINA/RESULT/comparaison_' + structure + '.txt', 'r')
     old = resultfile.readlines()
     resultfile.close()
-    resultfile = open('VINA/RESULT/model_' + structure + '/comparaison_' + structure + '.txt', 'w')
+    resultfile = open('VINA/RESULT/comparaison_' + structure + '.txt', 'w')
     print(old)
     n=0
     for l in old:
@@ -196,7 +196,7 @@ def ecritureligs(structure, m, lig):
             resultfile.write(l)
             n = 0
         elif l == old[1]:
-            resultfile.write(l[:-1] + ' Docks RMSD lig2 |\n')
+            resultfile.write(l[:-1] + ' Docks RMSD lig' + str(n+2) + ' |\n')
         elif l == old[2]:
             resultfile.write(l[:-1] + ' Angstrom        |\n')
         else:
