@@ -131,7 +131,7 @@ def grid_for_all():
 
 def dock(file):
     """
-    effectue le docking pour la structure donnée en argument.
+    effectue le docking pour la structure donnee en argument.
     exemple de commande:
     /home/rene/bin/ADFRsuite-1.0/bin/adfr -l LIGAND/PDBQT/1T56_ligand1_smile.pdbqt -t target/1T56.trg -r
     LIGAND/PDBQT/1T56_ligand1.pdbqt -p 150 -e 5000000 -n 100 -c 6 -O -o 1T56_result -J dock
