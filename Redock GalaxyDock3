@@ -171,11 +171,11 @@ def dockG():
     :return: 
     """
     liste_gal = liste_file('.', '/LIGAND/MOL2')
-    liste_gal = ['5NZ1_ligand1', '5NZ1_ligand2', '5NZ1_ligand3', '6HNX_ligand1', '6HNZ_ligand1', '6HO0_ligand1', '6HO1_ligand1', '6HO2_ligand1', '6HO3_ligand1', '6HO4_ligand1', '6HO5_ligand1', '6HO6_ligand1', '6HO7_ligand1', '6HO8_ligand1', '6HO9_ligand1', '6HOA_ligand1', '6HOB_ligand1', '6HOC_ligand1', '6HOD_ligand1', '6HOE_ligand1', '6HOF_ligand1', 'BDM15048_ligand1', 'BDM15048_ligand2', 'Cmpd1_ligand1', 'Cmpd1_ligand2', 'Cmpd2_ligand1', 'Cmpd3_ligand1', 'Cmpd3_ligand2', 'Cmpd4_ligand1', 'Cmpd4_ligand2', 'Cmpd5_ligand1', 'Cmpd5_ligand2', 'Cmpd6_ligand1', 'Cmpd6_ligand2', 'Cmpd7_ligand1', 'Cmpd8_ligand1', 'Cmpd9_ligand1']
-    liste_gal = ['3Q0V', '5NZ1']
+    #liste_gal = ['5NZ1_ligand1', '5NZ1_ligand2', '5NZ1_ligand3', '6HNX_ligand1', '6HNZ_ligand1', '6HO0_ligand1', '6HO1_ligand1', '6HO2_ligand1', '6HO3_ligand1', '6HO4_ligand1', '6HO5_ligand1', '6HO6_ligand1', '6HO7_ligand1', '6HO8_ligand1', '6HO9_ligand1', '6HOA_ligand1', '6HOB_ligand1', '6HOC_ligand1', '6HOD_ligand1', '6HOE_ligand1', '6HOF_ligand1', 'BDM15048_ligand1', 'BDM15048_ligand2', 'Cmpd1_ligand1', 'Cmpd1_ligand2', 'Cmpd2_ligand1', 'Cmpd3_ligand1', 'Cmpd3_ligand2', 'Cmpd4_ligand1', 'Cmpd4_ligand2', 'Cmpd5_ligand1', 'Cmpd5_ligand2', 'Cmpd6_ligand1', 'Cmpd6_ligand2', 'Cmpd7_ligand1', 'Cmpd8_ligand1', 'Cmpd9_ligand1']
+    #liste_gal = ['3Q0V', '5NZ1']
     n=0
     for i in liste_gal:
-        n+=1
+        n += 1
         print('######################## Docking Galaxy ' + str(n) + ' sur ' + str(len(liste_gal)) + ' ----> ' + i)
         dock_galaxy(i)
 
