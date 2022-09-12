@@ -72,14 +72,18 @@ def ecriture_box():
     else:
         print('all good ! ')
     resi_file = open('residus.txt', 'r').readlines()
-    print(resi_file)
     resi_liste = []
     for e in resi_file:
         if '\n' in e:
             e = e[:-1]
-            resi_liste += (e.split('+'))
+            new_line = e.split('+')
+            for e in new_line:
+                if e.isdigit():
+                    resi_liste.append(e)
     print(resi_liste)
-
+    print('La box est composee de ' + str(len(resi_liste)) + ' residus, si ce n\'est pas le cas verifiez que le fichier'
+                                                             ' residu soie ecrit correctement ( chaque residu doit etre'
+                                                             ' separe par un +)')
 
 
 if __name__ == '__main__':
