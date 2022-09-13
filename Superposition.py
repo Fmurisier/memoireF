@@ -55,26 +55,27 @@ def ecriture_pymol_all(liste_pdb, ref):
     """
     # va generer la partie de la commande contenant les residus : '_poche, resi 87+...+22 and model '
     box = ecriture_box()
-    fichier = open('scriptPymol.pml', 'w')
-    fichier.write('output = open("rmsd_result.txt", "w")\n')
-    for e in liste_pdb:
-        name = e.split('.')[0]
-        fichier.write('load ' + ref + '.pdb.gz\n')
-        fichier.write('load ' + e + '\n')
-        # selection des poches a superposer, d'abord celle de reference puis celle a superposer
-        fichier.write('select ' + ref + box + ref + '\n')
-        fichier.write('select ' + name + box + name + '\n')
-        # superposition des deux poches
-        fichier.write('super ' + name + '_poche////CA, ' + ref + '_poche////CA\n')
-        fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
+    if box != 'error':
+        fichier = open('scriptPymol.pml', 'w')
+        fichier.write('output = open("rmsd_result.txt", "w")\n')
+        for e in liste_pdb:
+            name = e.split('.')[0]
+            fichier.write('load ' + ref + '.pdb.gz\n')
+            fichier.write('load ' + e + '\n')
+            # selection des poches a superposer, d'abord celle de reference puis celle a superposer
+            fichier.write('select ' + ref + box + ref + '\n')
+            fichier.write('select ' + name + box + name + '\n')
+            # superposition des deux poches
+            fichier.write('super ' + name + '_poche////CA, ' + ref + '_poche////CA\n')
+            fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
 
-        fichier.write('data = cmd.super("' + ref + '", "' + name + '")\n')
-        fichier.write('output.write("' + name + '=")\n')
-        fichier.write('output.write(" %f\\n" % data[0])\n')
+            fichier.write('data = cmd.super("' + ref + '", "' + name + '")\n')
+            fichier.write('output.write("' + name + '=")\n')
+            fichier.write('output.write(" %f\\n" % data[0])\n')
 
-    fichier.write('output.close()\n')
-    fichier.write('print("END")\n quit')
-    fichier.close()
+        fichier.write('output.close()\n')
+        fichier.write('print("END")\n quit')
+        fichier.close()
 
 
 def ecriture_box():
@@ -100,6 +101,7 @@ def ecriture_box():
         return commande
     else:
         print('error file residus.txt don\'t exist ! ')
+        return 'error'
 
 
 def check_file(lfichier):
@@ -117,7 +119,6 @@ def check_file(lfichier):
     x = x[-1]
     if x in lfichier:
         r = True
-
     return r, x
 
 
@@ -155,10 +156,11 @@ def superpose_all():
         ecriture_pymol_all(liste_file('pdb'), ref_structure)
         if terminal:
             os.system('pymol -cp scriptPymol.pml')
+            check_rmsd()
     else:
         print('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
 
-    check_rmsd()
+
 
 
 def superpose_liste(liste_super):
