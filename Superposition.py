@@ -53,16 +53,23 @@ def ecriture_pymol_all(liste_pdb, ref):
     :param liste_pdb:
     :return:
     """
+    # va generer la partie de la commande contenant les residus : '_poche, resi 87+...+22 and model '
+    box = ecriture_box()
     fichier = open('scriptPymol.pml', 'w')
     fichier.write('output = open("rmsd_result.txt", "w")\n')
     for e in liste_pdb:
+        name = e.split('.')[0]
         fichier.write('load ' + ref + '.pdb.gz\n')
-        fichier.write('load ' + e + '.pdb.gz\n')
-        fichier.write('super ' + e + '//A//CA, ' + ref + '//A//CA\n')
-        fichier.write('save ' + e + '_transformed.pdb, ' + e + '\n')
+        fichier.write('load ' + e + '\n')
+        # selection des poches a superposer, d'abord celle de reference puis celle a superposer
+        fichier.write('select ' + ref + box + ref + '\n')
+        fichier.write('select ' + name + box + name + '\n')
+        # superposition des deux poches
+        fichier.write('super ' + name + '_poche////CA, ' + ref + '_poche////CA\n')
+        fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
 
-        fichier.write('data = cmd.super("' + ref + '", "' + e + '")\n')
-        fichier.write('output.write("' + e + '=")\n')
+        fichier.write('data = cmd.super("' + ref + '", "' + name + '")\n')
+        fichier.write('output.write("' + name + '=")\n')
         fichier.write('output.write(" %f\\n" % data[0])\n')
 
     fichier.write('output.close()\n')
@@ -71,7 +78,6 @@ def ecriture_pymol_all(liste_pdb, ref):
 
 
 def ecriture_box():
-
     dossier = 'residus.txt'
     if dossier in listdir(path):
 
@@ -85,16 +91,15 @@ def ecriture_box():
                     if e.isdigit():
                         resi_liste.append(e)
         print(resi_liste)
-        print('La box est composee de ' + str(len(resi_liste)) + ' residus, si ce n\'est pas le cas verifiez que le fichier'
-                                                                 ' residu soie ecrit correctement ( chaque residu doit etre'
-                                                                 ' separe par un +)')
+        print('La box est composee de ' + str(len(resi_liste)) + \
+              ' residus, si ce n\'est pas le cas verifiez que le fichier residu soie ecrit correctement (' \
+              ' chaque residu doit etre separe par un +)')
 
-        #commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
+        # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
         return commande
     else:
         print('error file residus.txt don\'t exist ! ')
-
 
 
 def check_file(lfichier):
@@ -147,7 +152,7 @@ def superpose_all():
         liste_pdb[i] = liste_pdb[i].split('.')[0]
     present, ref_structure = check_file(liste_pdb)
     if present:
-        ecriture_pymol_all(liste_pdb, ref_structure)
+        ecriture_pymol_all(liste_file('pdb'), ref_structure)
         if terminal:
             os.system('pymol -cp scriptPymol.pml')
     else:
@@ -172,8 +177,5 @@ if __name__ == '__main__':
     if 'transformed' not in listdir(path):
         os.system('mkdir transformed')
 
-
     superpose_all()
-    #os.system('mv *_transformed.pdb transformed/')
-
-
+    # os.system('mv *_transformed.pdb transformed/')
