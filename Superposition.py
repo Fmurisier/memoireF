@@ -112,10 +112,8 @@ def check_file(lfichier):
     :return:
     """
     r = False
-
     x = sys.argv
     x.insert(1, '1T56')
-    print(x)
     x = x[-1]
     if x in lfichier:
         r = True
