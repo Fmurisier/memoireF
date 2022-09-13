@@ -25,6 +25,7 @@ path = os.getcwd()
 terminal = False
 # variable environnement
 PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
+liste_soluté = ['GOL', 'HOH', 'MES', 'TRS', 'MG', 'SO4', 'CL', 'PO4', 'AZI', 'ACT', 'K', 'MN', 'SCN', 'ZN', 'BR']
 
 
 def obtention_liste_pdb_transformed():
@@ -101,7 +102,7 @@ def write_sep_file(e):
             if line[0] == 'ATOM' and line[4 + d] == chain:
                 fichier_recepteur.write(i)
             # prend uniquement les ligands et ne prend pas les solutes
-            elif line[0] == 'HETATM' and line[3 + d] != 'HOH':
+            elif line[0] == 'HETATM' and line[3 + d] not in liste_soluté:
                 if d == -1:
                     ligand = line[2][3:]
                 else:
