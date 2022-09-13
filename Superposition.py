@@ -69,7 +69,7 @@ def ecriture_pymol_all(liste_pdb, ref):
             fichier.write('super ' + name + '_poche////CA, ' + ref + '_poche////CA\n')
             fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
 
-            fichier.write('data = cmd.super("' + ref + '", "' + name + '")\n')
+            fichier.write('data = cmd.super("' + ref + '_poche", "' + name + '_poche")\n')
             fichier.write('output.write("' + name + '=")\n')
             fichier.write('output.write(" %f\\n" % data[0])\n')
 
