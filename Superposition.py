@@ -26,6 +26,7 @@ import pathlib
 path = os.getcwd()
 terminal = False
 
+
 def liste_file(patern, file_path=''):
     list_file = []
 
@@ -41,44 +42,6 @@ def liste_file(patern, file_path=''):
     list_file.sort()
 
     return list_file
-
-
-def obtention_liste_pdb():
-    """
-    va effectuer la liste des fichiers pdb et pdb compresse dans le repertoire dans lequel le script.py se trouve
-    :return : list
-    """
-    list_pdb = []
-    list_ext = ['transformed', 'ligand', 'recepteur']
-    c = 0
-    # fait la liste des fichier dans le repertoire ou se trouve script.py
-    fichiers = [f for f in listdir(path) if isfile(join(path, f))]
-
-    # pour chaque nom de fichier on separe le nom et son/ses extension(s)
-    for ligne in fichiers:
-        name = ligne.split('.')
-
-        # on va selectionner uniquement les fichiers pdb et les fichiers pdb compresse
-        if name[-2] == 'pdb' or name[-1] == 'pdb':
-            # on separe le nom du fichier pour verifier s'il n'y a pas deja des fichiers qui ont ete transforme et
-            # eviter de les resuperposer une deuxieme fois et cree des doublons
-            name0 = name[0].split('_')
-
-            add = True
-            for e in list_ext:
-                for i in name0:
-                    if e in i:
-                        add = False
-
-            # ajoute chaque nom de fichier dans la liste
-            if add:
-                list_pdb.append(name[0])
-
-    # Trie la liste, pas forcement necessaire mais utile pour nous car alphabetiquement notre structure de ref est 1ere
-    list_pdb.sort()
-    # print('Nombre de pdb file non transforme dans le dossier : ', len(list_pdb))
-
-    return list_pdb
 
 
 def ecriture_pymol(name):
@@ -169,7 +132,9 @@ def superpose_all():
     si oui lance le programme pour l'ecriture du script pymol
     :return:
     """
-    liste_pdb = obtention_liste_pdb()
+    liste_pdb = liste_file('pdb')
+    for i in range(len(liste_pdb)):
+        liste_pdb[i] = liste_pdb[i].split('.')[0]
     present, ref_structure = check_file(liste_pdb)
     if present:
         ecriture_pymol_all(liste_pdb, ref_structure)
@@ -197,8 +162,9 @@ if __name__ == '__main__':
     if 'transformed' not in listdir(path):
         os.system('mkdir transformed')
 
-    print(obtention_liste_pdb())
-    liste_file('pdb')
+    liste_pdb = liste_file('pdb')
+    for i in range(len(liste_pdb)):
+        liste_pdb[i] = liste_pdb[i].split('.')[0]
 
     #superpose_all()
     #os.system('mv *_transformed.pdb transformed/')
