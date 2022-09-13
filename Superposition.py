@@ -155,6 +155,7 @@ def superpose_all():
         if terminal:
             os.system('pymol -cp scriptPymol.pml')
             check_rmsd()
+            os.system('mv *_transformed.pdb transformed/')
     else:
         print('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
 
@@ -178,4 +179,4 @@ if __name__ == '__main__':
         os.system('mkdir transformed')
 
     superpose_all()
-    # os.system('mv *_transformed.pdb transformed/')
+
