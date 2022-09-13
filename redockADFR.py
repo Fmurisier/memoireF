@@ -12,8 +12,6 @@ Python version : 3.8
 import os
 from os import listdir
 from os.path import isfile, join
-import numpy as np
-import matplotlib.pyplot as plt
 
 path = os.getcwd()
 terminal = False
