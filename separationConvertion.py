@@ -168,19 +168,25 @@ def conversion_ligand_smile_pdbqt():
 
     fichier_log.close()
     if terminal:
-        os.system('mkdir LIGAND')
-        os.system('mkdir SMILE')
-        os.system('mkdir smi')
-        os.system('mkdir smileLog')
+        if 'LIGAND' not in listdir(path):
+            os.system('mkdir LIGAND')
+        if 'SMILE' not in listdir(path):
+            os.system('mkdir SMILE')
+        if 'smi' not in listdir(path):
+            os.system('mkdir smi')
+        if 'smileLog' not in listdir(path):
+            os.system('mkdir smileLog')
         os.system('mv *_ligand1_smile.pdb SMILE/')
         os.system('mv *.smi smi/')
         os.system('mv *_TMP smileLog/')
         os.system('mv *cif smileLog/')
 
-        os.system('mkdir LIGAND/PDBQT')
+        if 'PDBQT' not in listdir(path + '/LIGAND'):
+            os.system('mkdir LIGAND/PDBQT')
         os.system('mv *.pdbqt LIGAND/PDBQT')
         os.system('mv *_ligand1.pdb LIGAND')
-        os.system('mkdir LIGAND/ligand2_3')
+        if 'ligand2_3' not in listdir(path + '/LIGAND'):
+            os.system('mkdir LIGAND/ligand2_3')
         os.system('mv *_ligand* LIGAND/ligand2_3')
 
 
