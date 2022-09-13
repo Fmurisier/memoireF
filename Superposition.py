@@ -44,24 +44,6 @@ def liste_file(patern, file_path=''):
     return list_file
 
 
-def ecriture_pymol(name):
-    """
-    ecris un fichier contenant le script pour pymol pour superposer la structure fournie en argument avec 1T56
-    :param name:
-    :return:
-    """
-    ref = '1T56'
-    fichier = open('scriptPymol.pml', 'w')
-
-    fichier.write('load ' + ref + '.pdb.gz\n')
-    fichier.write('load ' + name + '.pdb.gz\n')
-    # on ajoute //A pour que la superposition s'effectue sur la chaine A au cas ou le ligand aurais plusieurs chaines
-    fichier.write('super ' + name + '//A//CA, ' + ref + '//A//CA\n')
-    # fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
-    fichier.write('save ../file_prep/' + name + '_transformed.pdb, ' + name + '\n')
-    fichier.close()
-
-
 def ecriture_pymol_all(liste_pdb, ref):
     """
     recoit en argument une liste de fichier et une structure de reference, la fonction va ensuite ecrire le script pymol
@@ -99,6 +81,7 @@ def check_file(lfichier):
 
     x = sys.argv
     x.insert(1, '1T56')
+    print(x)
     x = x[-1]
     if x in lfichier:
         r = True
@@ -162,11 +145,8 @@ if __name__ == '__main__':
     if 'transformed' not in listdir(path):
         os.system('mkdir transformed')
 
-    liste_pdb = liste_file('pdb')
-    for i in range(len(liste_pdb)):
-        liste_pdb[i] = liste_pdb[i].split('.')[0]
 
-    #superpose_all()
+    superpose_all()
     #os.system('mv *_transformed.pdb transformed/')
 
 
