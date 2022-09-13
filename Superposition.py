@@ -93,7 +93,7 @@ def ecriture_box():
                         resi_liste.append(e)
         print(resi_liste)
         print('La box est composee de ' + str(len(resi_liste)) + \
-              ' residus, si ce n\'est pas le cas verifiez que le fichier residu soie ecrit correctement (' \
+              ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
               ' chaque residu doit etre separe par un +)')
 
         # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
