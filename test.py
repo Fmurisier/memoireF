@@ -64,13 +64,11 @@ def write_sep_file(e):
     fichier.close()
 
 
-def ecriture_box():
+def ecriture_box(name):
 
     dossier = 'residus.txt'
     if dossier not in listdir(path):
         print('error file residus.txt don\'t exist ! ')
-    else:
-        print('all good ! ')
     resi_file = open('residus.txt', 'r').readlines()
     resi_liste = []
     for e in resi_file:
@@ -85,9 +83,21 @@ def ecriture_box():
                                                              ' residu soie ecrit correctement ( chaque residu doit etre'
                                                              ' separe par un +)')
 
+    commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
+    print(commande)
+
 
 if __name__ == '__main__':
 
-    ecriture_box()
+    l = '1T56'
+    ecriture_box(l)
+
+    '''
+    select 1T56_poche, resi 87+90+102+103+107+110+114+138+142+145+148+149+152+176+179+180+183+184+207 and model 1T56
+
+    select 1U9N_poche, resi 87+90+102+103+107+110+114+138+142+145+148+149+152+176+179+180+183+184+207 and model 1U9N
+
+    super 1T56_poche////CA,1U9N_poche////CA
+'''
 
 
