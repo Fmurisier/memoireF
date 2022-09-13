@@ -64,7 +64,7 @@ def write_sep_file(e):
     fichier.close()
 
 
-def ecriture_box(name):
+def ecriture_box():
 
     dossier = 'residus.txt'
     if dossier not in listdir(path):
@@ -83,7 +83,8 @@ def ecriture_box(name):
                                                              ' residu soie ecrit correctement ( chaque residu doit etre'
                                                              ' separe par un +)')
 
-    commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
+    #commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
+    commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
     print(commande)
 
 
