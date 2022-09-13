@@ -26,6 +26,22 @@ import pathlib
 path = os.getcwd()
 terminal = False
 
+def liste_file(patern, file_path=''):
+    list_file = []
+
+    # fait la liste des fichier dans le repertoire ou se trouve script.py
+    fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
+
+    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
+    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
+    for ligne in fichiers:
+        if patern in ligne:
+            name = ligne.split('_')
+            list_file.append(name[0])
+    list_file.sort()
+
+    return list_file
+
 
 def obtention_liste_pdb():
     """
@@ -181,7 +197,10 @@ if __name__ == '__main__':
     if 'transformed' not in listdir(path):
         os.system('mkdir transformed')
 
-    superpose_all()
-    os.system('mv *_transformed.pdb transformed/')
+    print(obtention_liste_pdb())
+    liste_file('pdb')
+
+    #superpose_all()
+    #os.system('mv *_transformed.pdb transformed/')
 
 
