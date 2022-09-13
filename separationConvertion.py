@@ -25,7 +25,7 @@ path = os.getcwd()
 terminal = False
 # variable environnement
 PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
-liste_soluté = ['GOL', 'HOH', 'MES', 'TRS', 'MG', 'SO4', 'CL', 'PO4', 'AZI', 'ACT', 'K', 'MN', 'SCN', 'ZN', 'BR']
+liste_solute = ['GOL', 'HOH', 'MES', 'TRS', 'MG', 'SO4', 'CL', 'PO4', 'AZI', 'ACT', 'K', 'MN', 'SCN', 'ZN', 'BR']
 
 
 def obtention_liste_pdb_transformed():
@@ -102,7 +102,7 @@ def write_sep_file(e):
             if line[0] == 'ATOM' and line[4 + d] == chain:
                 fichier_recepteur.write(i)
             # prend uniquement les ligands et ne prend pas les solutes
-            elif line[0] == 'HETATM' and line[3 + d] not in liste_soluté:
+            elif line[0] == 'HETATM' and line[3 + d] not in liste_solute:
                 if d == -1:
                     ligand = line[2][3:]
                 else:
@@ -261,7 +261,7 @@ def conversion_recepteur_pdbqt():
     fichiers = [f for f in listdir(path) if isfile(join(path, f))]
 
     fichiers = liste_file('_recepteur')
-    fichier = ['3Q0V', '5MYM', '5NZ1']
+    # fichier = ['3Q0V', '5MYM', '5NZ1']
     compteur = len(fichiers)
 
     for ligne in fichiers:
@@ -338,8 +338,8 @@ if __name__ == '__main__':
 
     separation()
 
-    conversion_recepteur_pdbqt()
+    #conversion_recepteur_pdbqt()
 
-    conversion_ligand_smile_pdbqt()
+    #conversion_ligand_smile_pdbqt()
 
-    mol2()
+    #mol2()
