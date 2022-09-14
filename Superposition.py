@@ -81,20 +81,22 @@ def ecriture_pymol_all(liste_pdb, ref):
 def ecriture_box():
     dossier = 'residus.txt'
     if dossier in listdir(path):
-
         resi_file = open('residus.txt', 'r').readlines()
         resi_liste = []
         for e in resi_file:
             if '\n' in e:
                 e = e[:-1]
-                new_line = e.split('+')
+                new_line = e.split(',')
                 for e in new_line:
-                    if e.isdigit():
+                    if ':' not in e and e != '':
                         resi_liste.append(e)
+                    elif e != '':
+                        resi_liste.append(e.split(':')[-1])
+
         print(resi_liste)
         print('La box est composee de ' + str(len(resi_liste)) + \
               ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
-              ' chaque residu doit etre separe par un +)')
+              ' chaque residu doit etre separe par une \',\')')
 
         # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '

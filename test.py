@@ -67,20 +67,22 @@ def write_sep_file(e):
 def ecriture_box():
     dossier = 'residus.txt'
     if dossier in listdir(path):
-
         resi_file = open('residus.txt', 'r').readlines()
         resi_liste = []
         for e in resi_file:
             if '\n' in e:
                 e = e[:-1]
-                new_line = e.split('+')
+                new_line = e.split(',')
                 for e in new_line:
-                    if e.isdigit():
+                    if ':' not in e and e != '':
                         resi_liste.append(e)
+                    elif e != '':
+                        resi_liste.append(e.split(':')[-1])
+
         print(resi_liste)
         print('La box est composee de ' + str(len(resi_liste)) + \
               ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
-              ' chaque residu doit etre separe par un +)')
+              ' chaque residu doit etre separe par une \',\')')
 
         # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
@@ -92,10 +94,12 @@ def ecriture_box():
 
 if __name__ == '__main__':
 
-    l = '1T56'
-    ecriture_box(l)
+    print(ecriture_box())
 
     '''
+    'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,TRP145,TYR148,THR149,VAL152,' \
+           'ASN176,ASN179,GLU180,LEU183,PHE184,TRP207'
+    
     select 1T56_poche, resi 87+90+102+103+107+110+114+138+142+145+148+149+152+176+179+180+183+184+207 and model 1T56
 
     select 1U9N_poche, resi 87+90+102+103+107+110+114+138+142+145+148+149+152+176+179+180+183+184+207 and model 1U9N
