@@ -75,14 +75,14 @@ def ecriture_box():
                 new_line = e.split(',')
                 for e in new_line:
                     if ':' not in e and e != '':
-                        resi_liste.append(e)
+                        resi_liste.append(e[3:])
                     elif e != '':
                         resi_liste.append(e.split(':')[-1])
 
         print(resi_liste)
         print('La box est composee de ' + str(len(resi_liste)) + \
               ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
-              ' chaque residu doit etre separe par une \',\')')
+              ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
 
         # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
@@ -92,9 +92,24 @@ def ecriture_box():
         return 'error'
 
 
+def lecture_residu():
+    resi_file = open('residus.txt', 'r').readlines()
+    residus = ''
+    if len(resi_file) > 1:
+        for e in resi_file:
+            residus += e[:-1]
+    else:
+        residus += resi_file[0]
+
+    if 'residues' not in residus:
+        residus = 'residues A:' + residus
+    print(residus)
+
+
 if __name__ == '__main__':
 
     print(ecriture_box())
+    #lecture_residu()
 
     '''
     'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,TRP145,TYR148,THR149,VAL152,' \
