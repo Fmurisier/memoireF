@@ -96,7 +96,7 @@ def ecriture_box():
         print(resi_liste)
         print('La box est composee de ' + str(len(resi_liste)) + \
               ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
-              ' chaque residu doit etre separe par une \',\')')
+              ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
 
         # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
