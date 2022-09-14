@@ -89,7 +89,7 @@ def ecriture_box():
                 new_line = e.split(',')
                 for e in new_line:
                     if ':' not in e and e != '':
-                        resi_liste.append(e)
+                        resi_liste.append(e[3:])
                     elif e != '':
                         resi_liste.append(e.split(':')[-1])
 
