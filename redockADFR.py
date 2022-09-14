@@ -19,7 +19,6 @@ terminal = False
 PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
 
 
-
 def lecture_residu():
     resi_file = open('residus.txt', 'r').readlines()
     residus = ''
