@@ -65,27 +65,29 @@ def write_sep_file(e):
 
 
 def ecriture_box():
-
     dossier = 'residus.txt'
-    if dossier not in listdir(path):
-        print('error file residus.txt don\'t exist ! ')
-    resi_file = open('residus.txt', 'r').readlines()
-    resi_liste = []
-    for e in resi_file:
-        if '\n' in e:
-            e = e[:-1]
-            new_line = e.split('+')
-            for e in new_line:
-                if e.isdigit():
-                    resi_liste.append(e)
-    print(resi_liste)
-    print('La box est composee de ' + str(len(resi_liste)) + ' residus, si ce n\'est pas le cas verifiez que le fichier'
-                                                             ' residu soie ecrit correctement ( chaque residu doit etre'
-                                                             ' separe par un +)')
+    if dossier in listdir(path):
 
-    #commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
-    commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
-    print(commande)
+        resi_file = open('residus.txt', 'r').readlines()
+        resi_liste = []
+        for e in resi_file:
+            if '\n' in e:
+                e = e[:-1]
+                new_line = e.split('+')
+                for e in new_line:
+                    if e.isdigit():
+                        resi_liste.append(e)
+        print(resi_liste)
+        print('La box est composee de ' + str(len(resi_liste)) + \
+              ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
+              ' chaque residu doit etre separe par un +)')
+
+        # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
+        commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
+        return commande
+    else:
+        print('error file residus.txt don\'t exist ! ')
+        return 'error'
 
 
 if __name__ == '__main__':
