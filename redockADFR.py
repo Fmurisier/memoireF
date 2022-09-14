@@ -17,8 +17,7 @@ path = os.getcwd()
 terminal = False
 # variable environnement
 PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
-RESIDUES = 'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,TRP145,TYR148,THR149,VAL152,' \
-           'ASN176,ASN179,GLU180,LEU183,PHE184,TRP207'
+
 
 
 def lecture_residu():
@@ -33,6 +32,7 @@ def lecture_residu():
     if 'residues' not in residus:
         residus = 'residues A:' + residus
     print(residus)
+    return residus
 
 
 def liste_file(patern, file_path=''):
@@ -317,6 +317,7 @@ def check_result():
 
 
 if __name__ == '__main__':
+    RESIDUES = lecture_residu()
     if terminal:
         ldoc = ['target', 'AUTODOCKFR']
         for dossier in ldoc:
