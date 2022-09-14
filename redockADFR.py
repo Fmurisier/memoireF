@@ -21,6 +21,20 @@ RESIDUES = 'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET
            'ASN176,ASN179,GLU180,LEU183,PHE184,TRP207'
 
 
+def lecture_residu():
+    resi_file = open('residus.txt', 'r').readlines()
+    residus = ''
+    if len(resi_file) > 1:
+        for e in resi_file:
+            residus += e[:-1]
+    else:
+        residus += resi_file[0]
+
+    if 'residues' not in residus:
+        residus = 'residues A:' + residus
+    print(residus)
+
+
 def liste_file(patern, file_path=''):
     """
     effectue la liste des fichier comprenant un certain motif donne en argument dans le dossier donne en argument si la
