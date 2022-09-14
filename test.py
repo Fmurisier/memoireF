@@ -104,12 +104,13 @@ def lecture_residu():
     if 'residues' not in residus:
         residus = 'residues A:' + residus
     print(residus)
+    return residus
 
 
 if __name__ == '__main__':
 
-    print(ecriture_box())
-    #lecture_residu()
+    #print(ecriture_box())
+    lecture_residu()
 
     '''
     'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,TRP145,TYR148,THR149,VAL152,' \
