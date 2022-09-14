@@ -162,8 +162,6 @@ def superpose_all():
         print('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
 
 
-
-
 def superpose_liste(liste_super):
     """
     recoit une liste et va effectuer la supperposition de chaque structure de la liste sur la structure de reference
