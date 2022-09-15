@@ -44,7 +44,7 @@ def liste_file(patern, file_path=''):
     return list_file
 
 
-def ecriture_pymol_all(liste_pdb, ref):
+def ecriture_pymol_all(liste_pdb, ref, box):
     """
     recoit en argument une liste de fichier et une structure de reference, la fonction va ensuite ecrire le script pymol
     dans un fichier = les lignes de commande pymol effectuant les superpositions tout en enregistrant les nouveaux
@@ -53,29 +53,26 @@ def ecriture_pymol_all(liste_pdb, ref):
     :param liste_pdb:
     :return:
     """
-    # va generer la partie de la commande contenant les residus : '_poche, resi 87+...+22 and model '
-    box = ecriture_box()
-    if box != 'error':
-        fichier = open('scriptPymol.pml', 'w')
-        fichier.write('output = open("rmsd_result.txt", "w")\n')
-        for e in liste_pdb:
-            name = e.split('.')[0]
-            fichier.write('load ' + ref + '.pdb.gz\n')
-            fichier.write('load ' + e + '\n')
-            # selection des poches a superposer, d'abord celle de reference puis celle a superposer
-            fichier.write('select ' + ref + box + ref + '\n')
-            fichier.write('select ' + name + box + name + '\n')
-            # superposition des deux poches
-            fichier.write('super ' + name + '_poche////CA, ' + ref + '_poche////CA\n')
-            fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
+    fichier = open('scriptPymol.pml', 'w')
+    fichier.write('output = open("rmsd_result.txt", "w")\n')
+    for e in liste_pdb:
+        name = e.split('.')[0]
+        fichier.write('load ' + ref + '.pdb.gz\n')
+        fichier.write('load ' + e + '\n')
+        # selection des poches a superposer, d'abord celle de reference puis celle a superposer
+        fichier.write('select ' + ref + box + ref + '\n')
+        fichier.write('select ' + name + box + name + '\n')
+        # superposition des deux poches
+        fichier.write('super ' + name + '_poche////CA, ' + ref + '_poche////CA\n')
+        fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
 
-            fichier.write('data = cmd.super("' + ref + '_poche", "' + name + '_poche")\n')
-            fichier.write('output.write("' + name + '=")\n')
-            fichier.write('output.write(" %f\\n" % data[0])\n')
+        fichier.write('data = cmd.super("' + ref + '_poche", "' + name + '_poche")\n')
+        fichier.write('output.write("' + name + '=")\n')
+        fichier.write('output.write(" %f\\n" % data[0])\n')
 
-        fichier.write('output.close()\n')
-        fichier.write('print("END")\n quit')
-        fichier.close()
+    fichier.write('output.close()\n')
+    fichier.write('print("END")\n quit')
+    fichier.close()
 
 
 def ecriture_box():
@@ -106,7 +103,7 @@ def ecriture_box():
         return 'error'
 
 
-def check_file(lfichier):
+def check_file():
     """
     regarde ce que l'utilisateur a entre comme structure de reference et verifie si celle ci est presente dans le
     dossier par defaut 1T56 si le fichier est inexistant alors message d erreur
@@ -114,12 +111,20 @@ def check_file(lfichier):
     :return:
     """
     r = False
+    b = 'error'
     x = sys.argv
-    x.insert(1, '1T56')
+    x.insert(1, '1T56.pdb.gz')
     x = x[-1]
-    if x in lfichier:
+    file_path = '/../Donnee_memoire'
+    if x in [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]:
         r = True
-    return r, x
+
+        b = ecriture_box()
+
+        if b == 'error':
+            r = False
+
+    return r, x, b
 
 
 def check_rmsd():
@@ -151,9 +156,9 @@ def superpose_all():
     liste_pdb = liste_file('pdb')
     for i in range(len(liste_pdb)):
         liste_pdb[i] = liste_pdb[i].split('.')[0]
-    present, ref_structure = check_file(liste_pdb)
+    present, ref_structure, b = check_file()
     if present:
-        ecriture_pymol_all(liste_file('pdb'), ref_structure)
+        ecriture_pymol_all(liste_file('pdb'), ref_structure, b)
         if terminal:
             os.system('pymol -cp scriptPymol.pml')
             check_rmsd()
