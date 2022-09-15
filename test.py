@@ -107,10 +107,22 @@ def lecture_residu():
     return residus
 
 
+def lecture_ref_file():
+    ref_file = open('../Donnee_memoire/model_alphaFold.pdb', 'r').readlines()
+    dico_res={}
+    for e in ref_file:
+        if 'ATOM' in e:
+            e = e.split(' ')
+            for i in range(e.count('')):
+                e.remove('')
+            print(e)
+
+
 if __name__ == '__main__':
 
     #print(ecriture_box())
-    lecture_residu()
+    #lecture_residu()
+    lecture_ref_file()
 
     '''
     'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,TRP145,TYR148,THR149,VAL152,' \
