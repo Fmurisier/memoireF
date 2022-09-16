@@ -24,7 +24,7 @@ from os.path import isfile, join
 import pathlib
 
 path = os.getcwd()
-dossier_path = '/../Donnee_memoire'
+dossier_path = '/../Donnee_memoire/'
 terminal = False
 
 
@@ -81,16 +81,19 @@ def ecriture_box():
     if dossier in listdir(path):
         resi_file = open('residus.txt', 'r').readlines()
         resi_liste = []
+        resi_code3 = []
         for e in resi_file:
             if '\n' in e:
                 e = e[:-1]
                 new_line = e.split(',')
                 for e in new_line:
                     if ':' not in e and e != '':
+                        resi_code3.append(e)
                         resi_liste.append(e[3:])
                     elif e != '':
-                        resi_liste.append(e.split(':')[-1])
-
+                        resi_code3.append(e.split(':')[-1])
+                        resi_liste.append(e.split(':')[-1][3:])
+        print(resi_code3)
         print(resi_liste)
         print('La box est composee de ' + str(len(resi_liste)) + \
               ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
@@ -98,10 +101,10 @@ def ecriture_box():
 
         # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
-        return commande
+        return commande, resi_code3
     else:
         print('error file residus.txt don\'t exist ! ')
-        return 'error'
+        return 'error', ''
 
 
 def check_file():
@@ -116,24 +119,25 @@ def check_file():
     x = sys.argv
     x.insert(1, '1T56.pdb.gz')
     x = x[-1]
+    check_box = False
 
     if x in [f for f in listdir(path + dossier_path) if isfile(join(path + dossier_path, f))]:
         r = True
         if x[-4:] != '.pdb':
             decompression_pdb(x)
             x = x[:-3]
-        b = ecriture_box()
-        lecture_ref_file(x)
+        b, resi3 = ecriture_box()
+        check_box = lecture_ref_file(x, resi3)
 
-        if b == 'error':
+        if b == 'error' and check_box:
             r = False
 
     return r, x, b
 
 
-def lecture_ref_file(ref):
+def lecture_ref_file(ref, liste_code3):
     #ref_file = open('../Donnee_memoire/model_alphaFold.pdb', 'r').readlines()
-    ref_file = open(dossier_path + '/' + ref, 'r').readlines()
+    ref_file = open(dossier_path + ref, 'r').readlines()
     dico_res = {}
     for e in ref_file:
         if 'ATOM' in e:
@@ -143,12 +147,25 @@ def lecture_ref_file(ref):
             if e[5] not in dico_res:
                 dico_res[e[5]] = e[3]
 
+    box_ok = True
+    for e in liste_code3:
+        code = e[:3]
+        resnum = e[3:]
+        if dico_res.get(resnum) != code:
+            box_ok = False
+    if not box_ok:
+        print('Error the residus of the box are not present in the structure, please check again the residus')
+    return box_ok
+
+
 def decompression_pdb(file):
+    print('decompression')
     fichier = open('scriptPymol.pml', 'w')
     fichier.write('load ' + file + '\n')
     fichier.write('save ' + file[:-3] + '\n')
     fichier.write('print("END")\n quit')
     fichier.close()
+    os.system('pymol -cp scriptPymol.pml')
 
 
 def check_rmsd():
@@ -189,18 +206,6 @@ def superpose_all():
             os.system('mv *_transformed.pdb transformed/')
     else:
         print('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
-
-
-def superpose_liste(liste_super):
-    """
-    recoit une liste et va effectuer la supperposition de chaque structure de la liste sur la structure de reference
-    entre par l'utilisateur, ici par default 1T56
-    :param liste_super:
-    :return:
-    """
-    ecriture_pymol_all(liste_super, '1T56')
-    if terminal:
-        os.system('pymol -cp scriptPymol.pml')
 
 
 if __name__ == '__main__':

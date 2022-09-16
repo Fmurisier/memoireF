@@ -78,7 +78,7 @@ def ecriture_box():
                     if ':' not in e and e != '':
                         resi_liste.append(e[3:])
                     elif e != '':
-                        resi_liste.append(e.split(':')[-1])
+                        resi_liste.append(e.split(':')[-1][3:])
 
         print(resi_liste)
         print('La box est composee de ' + str(len(resi_liste)) + \
