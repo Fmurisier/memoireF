@@ -58,16 +58,17 @@ def ecriture_pymol_all(liste_pdb, ref, box):
     fichier.write('output = open("rmsd_result.txt", "w")\n')
     for e in liste_pdb:
         name = e.split('.')[0]
+        ref_name = ref.split('.')[0]
         fichier.write('load ' + ref + '\n')
         fichier.write('load ' + e + '\n')
         # selection des poches a superposer, d'abord celle de reference puis celle a superposer
-        fichier.write('select ' + ref + box + ref + '\n')
+        fichier.write('select ' + ref_name + box + ref_name + '\n')
         fichier.write('select ' + name + box + name + '\n')
         # superposition des deux poches
-        fichier.write('super ' + name + '_poche////CA, ' + ref + '_poche////CA\n')
+        fichier.write('super ' + name + '_poche////CA, ' + ref_name + '_poche////CA\n')
         fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
 
-        fichier.write('data = cmd.super("' + name + '_poche", "' + ref + '_poche")\n')
+        fichier.write('data = cmd.super("' + name + '_poche", "' + ref_name + '_poche")\n')
         fichier.write('output.write("' + name + '=")\n')
         fichier.write('output.write(" %f\\n" % data[0])\n')
 
@@ -97,7 +98,6 @@ def ecriture_box():
               ' residus, if it is not the case then please check that the file is filled correctly (' \
               ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
 
-        # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
         return commande, resi_code3
     else:
@@ -123,9 +123,8 @@ def check_file():
         r = True
         if x[-4:] != '.pdb':
             decompression_pdb(x)
-            x = x[:-3]
         b, resi3 = ecriture_box()
-        check_box = lecture_ref_file(x, resi3)
+        check_box = lecture_ref_file(x[:-3], resi3)
 
         if b == 'error' and check_box:
             r = False
