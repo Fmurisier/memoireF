@@ -58,7 +58,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
     fichier.write('output = open("rmsd_result.txt", "w")\n')
     for e in liste_pdb:
         name = e.split('.')[0]
-        fichier.write('load ' + ref + '.pdb.gz\n')
+        fichier.write('load ' + ref + '\n')
         fichier.write('load ' + e + '\n')
         # selection des poches a superposer, d'abord celle de reference puis celle a superposer
         fichier.write('select ' + ref + box + ref + '\n')
@@ -67,7 +67,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
         fichier.write('super ' + name + '_poche////CA, ' + ref + '_poche////CA\n')
         fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
 
-        fichier.write('data = cmd.super("' + ref + '_poche", "' + name + '_poche")\n')
+        fichier.write('data = cmd.super("' + name + '_poche", "' + ref + '_poche")\n')
         fichier.write('output.write("' + name + '=")\n')
         fichier.write('output.write(" %f\\n" % data[0])\n')
 
@@ -93,10 +93,8 @@ def ecriture_box():
                     elif e != '':
                         resi_code3.append(e.split(':')[-1])
                         resi_liste.append(e.split(':')[-1][3:])
-        print(resi_code3)
-        print(resi_liste)
-        print('La box est composee de ' + str(len(resi_liste)) + \
-              ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
+        print('The box is made of ' + str(len(resi_liste)) + \
+              ' residus, if it is not the case then please check that the file is filled correctly (' \
               ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
 
         # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
@@ -154,12 +152,12 @@ def lecture_ref_file(ref, liste_code3):
         if dico_res.get(resnum) != code:
             box_ok = False
     if not box_ok:
-        print('Error the residus of the box are not present in the structure, please check again the residus')
+        print('WARNING !!! Error the residus of the box are not present in the structure,'
+              ' please check again the residus')
     return box_ok
 
 
 def decompression_pdb(file):
-    print('decompression')
     fichier = open('scriptPymol.pml', 'w')
     fichier.write('load ' + file + '\n')
     fichier.write('save ' + file[:-3] + '\n')
