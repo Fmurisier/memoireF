@@ -24,6 +24,7 @@ from os.path import isfile, join
 import pathlib
 
 path = os.getcwd()
+dossier_path = '/../Donnee_memoire'
 terminal = False
 
 
@@ -115,16 +116,39 @@ def check_file():
     x = sys.argv
     x.insert(1, '1T56.pdb.gz')
     x = x[-1]
-    file_path = '/../Donnee_memoire'
-    if x in [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]:
-        r = True
 
+    if x in [f for f in listdir(path + dossier_path) if isfile(join(path + dossier_path, f))]:
+        r = True
+        if x[-4:] != '.pdb':
+            decompression_pdb(x)
+            x = x[:-3]
         b = ecriture_box()
+        lecture_ref_file(x)
 
         if b == 'error':
             r = False
 
     return r, x, b
+
+
+def lecture_ref_file(ref):
+    #ref_file = open('../Donnee_memoire/model_alphaFold.pdb', 'r').readlines()
+    ref_file = open(dossier_path + '/' + ref, 'r').readlines()
+    dico_res = {}
+    for e in ref_file:
+        if 'ATOM' in e:
+            e = e.split(' ')
+            for i in range(e.count('')):
+                e.remove('')
+            if e[5] not in dico_res:
+                dico_res[e[5]] = e[3]
+
+def decompression_pdb(file):
+    fichier = open('scriptPymol.pml', 'w')
+    fichier.write('load ' + file + '\n')
+    fichier.write('save ' + file[:-3] + '\n')
+    fichier.write('print("END")\n quit')
+    fichier.close()
 
 
 def check_rmsd():

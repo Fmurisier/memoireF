@@ -1,6 +1,7 @@
 
 import os
 from os import listdir
+import gzip
 from os.path import isfile, join
 
 path = os.getcwd()
@@ -108,14 +109,22 @@ def lecture_residu():
 
 
 def lecture_ref_file():
-    ref_file = open('../Donnee_memoire/model_alphaFold.pdb', 'r').readlines()
+    #ref_file = open('../Donnee_memoire/model_alphaFold.pdb', 'r').readlines()
+    ref_file = open('../Donnee_memoire/1T56.pdb', 'r').readlines()
     dico_res={}
     for e in ref_file:
         if 'ATOM' in e:
             e = e.split(' ')
             for i in range(e.count('')):
                 e.remove('')
-            print(e)
+            if e[5] not in dico_res:
+                dico_res[e[5]] = e[3]
+    print(dico_res)
+    print(dico_res.get('87'))
+
+def lecture_ref_file2(file):
+    commande = 'pymol load ' + file
+    commande2 = 'pymol save ' + file
 
 
 if __name__ == '__main__':
