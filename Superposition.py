@@ -121,14 +121,11 @@ def check_file():
 
     if x in [f for f in listdir(path + dossier_path) if isfile(join(path + dossier_path, f))]:
         r = True
-        elimination = False
         if x[-4:] != '.pdb':
             decompression_pdb(x)
-            elimination = True
         b, resi3 = ecriture_box()
         check_box = lecture_ref_file(x[:-3], resi3)
-        if elimination:
-            os.system('rm ' + x[-3])
+
 
         if b == 'error' and check_box:
             r = False
