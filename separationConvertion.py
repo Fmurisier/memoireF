@@ -128,6 +128,50 @@ def write_sep_file(e):
     fichier.close()
 
 
+def lecture_residu():
+    resi_file = open('residus.txt', 'r').readlines()
+    residus = ''
+    if len(resi_file) > 1:
+        for e in resi_file:
+            residus += e[:-1]
+    else:
+        residus += resi_file[0]
+
+    if 'residues' not in residus:
+        residus = 'residues A:' + residus
+    print(residus)
+    return residus
+
+
+def grids(fichier):
+    """
+    effectue la creation du fichier target = la grille/ box pour le docking a partir du fichier recepteur
+    un exemple de la commande qui doit etre effectue
+    /home/rene/bin/ADFRsuite-1.0/bin/agfr -b residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,
+    TRP145,TYR148,THR149,VAL152,ASN176,ASN179,GLU180,LEU183,PHE184,TRP207 -r RECEPTEUR/PDBQT/1T56_recepteur_H.pdbqt -o
+    1T56
+    fonction qui contien une boucle pour essayer de minimiser les echecs de creation de grille, en cas d'echec de
+    creation de grille relancement de la ligne de commande pour effectuer de nouveau la creation de la grille
+    :param fichier: nom de la structure recepteur a partir de laquelle il faut cree la grille
+    :return:
+    """
+    boucle = True
+    while boucle:
+        if terminal:
+            os.system(PATH + 'agfr -b ' + RESIDUES + ' -r RECEPTEUR/PDBQT/' + fichier + '_recepteur_H.pdbqt -o target/'
+                      + fichier)
+        else:
+            print(PATH + 'agfr -b ' + RESIDUES + ' -r RECEPTEUR/PDBQT/' + fichier + '_recepteur_H.pdbqt -o target/' +
+                  fichier)
+        boucle = check_error_grid(fichier + '.log')
+
+
+def verification_ligand_box():
+    RESIDUES = lecture_residu()
+
+    pass
+
+
 def conversion_ligand_smile_pdbqt():
     """
     /home/rene/bin/ADFRsuite-1.0/bin/prepare_ligand -l 1T56_ligand1.pdb
@@ -337,6 +381,8 @@ def mol2():
 if __name__ == '__main__':
 
     separation()
+
+    verification_ligand_box()
 
     #conversion_recepteur_pdbqt()
 
