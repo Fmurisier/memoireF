@@ -143,6 +143,29 @@ def lecture_residu():
     return residus
 
 
+def check_error_grid(file):
+    """
+    verifie s'il y a eu des erreurs lors de la creation des gilles, si oui affichage d'un message d'erreur sur le
+    terminal indiquant que agfr a crashe et sur quel structure. enregistrement egalement de ce message d'erreur dans un
+    fichier fileerror.txt pour une consultation rapide des erreurs potentielles
+    :param file: fichier a verifier
+    :return:
+    """
+    restart = False
+    fichier = open('target/' + file, 'r')
+    fichierlog = open('fileERROR.txt', 'a')
+    for l in fichier:
+        if 'ERROR' in l:
+            print('\nWARNING PROBLEM agdr crashes....\n')
+            print(l)
+            fichierlog.write('\nWARNING PROBLEM agdr crashes....\n' + l)
+            restart = True
+    if not restart:
+        print('\nNo problem detected in the grid creation\n')
+    fichierlog.close()
+    return restart
+
+
 def grids(fichier):
     """
     effectue la creation du fichier target = la grille/ box pour le docking a partir du fichier recepteur
@@ -156,6 +179,7 @@ def grids(fichier):
     :return:
     """
     boucle = True
+    RESIDUES = lecture_residu()
     while boucle:
         if terminal:
             os.system(PATH + 'agfr -b ' + RESIDUES + ' -r RECEPTEUR/PDBQT/' + fichier + '_recepteur_H.pdbqt -o target/'
