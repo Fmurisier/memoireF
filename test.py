@@ -127,11 +127,29 @@ def lecture_ref_file2(file):
     commande2 = 'pymol save ' + file
 
 
+def verif():
+    fichier_box = open('../Donnee_memoire/1T56.log', 'r').readlines()
+    center = ''
+    length = ''
+    for l in fichier_box:
+        l=l[:-1]
+        if 'Box ' in l:
+            e = l.split(' ')
+            for i in range(e.count('')):
+                e.remove('')
+            if e[1] == 'center:':
+                center = e
+            elif e[1] == 'length:':
+                length = e
+    print(center)
+    print(length)
+
 if __name__ == '__main__':
 
     #print(ecriture_box())
     #lecture_residu()
-    lecture_ref_file()
+    #lecture_ref_file()
+    verif()
 
     '''
     'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,TRP145,TYR148,THR149,VAL152,' \
