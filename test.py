@@ -137,8 +137,7 @@ def liste_file(patern, file_path=''):
     # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
     for ligne in fichiers:
         if patern in ligne:
-            name = ligne.split('_')
-            list_file.append(name[0])
+            list_file.append(ligne)
     list_file.sort()
 
     return list_file
@@ -158,9 +157,20 @@ def verif():
                 center = e
             elif e[1] == 'length:':
                 length = e
-
+    ligands = liste_file('ligand','/../Donnee_memoire/ligand/')
     print(center)
     print(length)
+    xmin = float(center[2]) - float(length[2])/2
+    xmax = float(center[2]) + float(length[2])/2
+    ymin = float(center[3]) - float(length[3]) / 2
+    ymax = float(center[3]) + float(length[3]) / 2
+    zmin = float(center[4]) - float(length[4]) / 2
+    zmax = float(center[4]) + float(length[4]) / 2
+    print('x ', xmin, xmax)
+    print('y ', ymin, ymax)
+    print('z ', zmin, zmax)
+
+    #print(ligands)
 
 if __name__ == '__main__':
 
