@@ -193,7 +193,51 @@ def grids(fichier):
 
 def verification_ligand_box():
     grids(REF)
-    #fichier_box = open(REF + '.log', 'r')
+    fichier_box = open('1T56.log', 'r').readlines()
+    center = ''
+    length = ''
+    for l in fichier_box:
+        l = l[:-1]
+        if 'Box ' in l:
+            e = l.split(' ')
+            for i in range(e.count('')):
+                e.remove('')
+            if e[1] == 'center:':
+                center = e
+            elif e[1] == 'length:':
+                length = e
+    ligands = liste_file('ligand')
+    print(center)
+    print(length)
+    xmin = float(center[2]) - float(length[2]) / 2
+    xmax = float(center[2]) + float(length[2]) / 2
+    ymin = float(center[3]) - float(length[3]) / 2
+    ymax = float(center[3]) + float(length[3]) / 2
+    zmin = float(center[4]) - float(length[4]) / 2
+    zmax = float(center[4]) + float(length[4]) / 2
+    print('x ', xmin, xmax)
+    print('y ', ymin, ymax)
+    print('z ', zmin, zmax)
+    for i in ligands:
+        # print(ligands[i])
+        lig = open('../Donnee_memoire/ligand/' + i).readlines()
+        e = lig[0].split(' ')
+        for h in range(e.count('')):
+            e.remove('')
+        e = e[:-4]
+        z = float(e.pop())
+        y = float(e.pop())
+        x = float(e.pop())
+        # print(x,y,z)
+        in_box = False
+        if not xmin < x < xmax:
+            in_box = True
+        if not ymin < y < ymax:
+            in_box = True
+        if not zmin < z < zmax:
+            in_box = True
+        if in_box:
+            print('WARNING ! ligand ' + i + ' is not in the box')
 
 
     pass
