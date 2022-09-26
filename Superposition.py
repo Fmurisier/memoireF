@@ -206,9 +206,19 @@ def superpose_all():
         print('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
 
 
+def superpose_liste(file_prob):
+    present, ref_structure, b = check_file()
+    ecriture_pymol_all(file_prob, ref_structure, b)
+    if terminal:
+        os.system('pymol -cp scriptPymol.pml')
+        check_rmsd()
+        os.system('mv *_transformed.pdb transformed/')
+
 if __name__ == '__main__':
     if 'transformed' not in listdir(path):
         os.system('mkdir transformed')
 
     superpose_all()
+    file_prob = []
+    superpose_liste(file_prob)
 
