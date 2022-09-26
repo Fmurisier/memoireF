@@ -157,7 +157,7 @@ def verif():
                 center = e
             elif e[1] == 'length:':
                 length = e
-    ligands = liste_file('ligand','/../Donnee_memoire/ligand/')
+    ligands = liste_file('ligand', '/../Donnee_memoire/ligand/')
     print(center)
     print(length)
     xmin = float(center[2]) - float(length[2])/2
@@ -169,6 +169,18 @@ def verif():
     print('x ', xmin, xmax)
     print('y ', ymin, ymax)
     print('z ', zmin, zmax)
+    for i in range(1):
+        print(ligands[i])
+        lig = open('../Donnee_memoire/ligand/' + ligands[i]).readlines()
+        e = lig[0].split(' ')
+        for h in range(e.count('')):
+            e.remove('')
+        e = e[:-4]
+        z = e.pop()
+        y = e.pop()
+        x = e.pop()
+        print(x,y,z)
+
 
     #print(ligands)
 
