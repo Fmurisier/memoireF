@@ -127,6 +127,23 @@ def lecture_ref_file2(file):
     commande2 = 'pymol save ' + file
 
 
+def liste_file(patern, file_path=''):
+    list_file = []
+
+    # fait la liste des fichier dans le repertoire ou se trouve script.py
+    fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
+
+    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
+    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
+    for ligne in fichiers:
+        if patern in ligne:
+            name = ligne.split('_')
+            list_file.append(name[0])
+    list_file.sort()
+
+    return list_file
+
+
 def verif():
     fichier_box = open('../Donnee_memoire/1T56.log', 'r').readlines()
     center = ''
@@ -141,6 +158,7 @@ def verif():
                 center = e
             elif e[1] == 'length:':
                 length = e
+
     print(center)
     print(length)
 

@@ -25,6 +25,7 @@ path = os.getcwd()
 terminal = False
 # variable environnement
 PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
+REF = '1T56'
 liste_solute = ['GOL', 'HOH', 'MES', 'TRS', 'MG', 'SO4', 'CL', 'PO4', 'AZI', 'ACT', 'K', 'MN', 'SCN', 'ZN', 'BR']
 
 
@@ -180,18 +181,19 @@ def grids(fichier):
     """
     boucle = True
     RESIDUES = lecture_residu()
+    commande = PATH + 'agfr -b ' + RESIDUES + ' -r ' + fichier + '.pdb -o target/' + fichier
     while boucle:
         if terminal:
-            os.system(PATH + 'agfr -b ' + RESIDUES + ' -r RECEPTEUR/PDBQT/' + fichier + '_recepteur_H.pdbqt -o target/'
-                      + fichier)
+            os.system(commande)
         else:
-            print(PATH + 'agfr -b ' + RESIDUES + ' -r RECEPTEUR/PDBQT/' + fichier + '_recepteur_H.pdbqt -o target/' +
-                  fichier)
+            print(commande)
         boucle = check_error_grid(fichier + '.log')
 
 
 def verification_ligand_box():
-    RESIDUES = lecture_residu()
+    grids(REF)
+    #fichier_box = open(REF + '.log', 'r')
+
 
     pass
 
@@ -404,7 +406,7 @@ def mol2():
 
 if __name__ == '__main__':
 
-    separation()
+    #separation()
 
     verification_ligand_box()
 
