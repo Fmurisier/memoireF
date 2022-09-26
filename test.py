@@ -169,17 +169,27 @@ def verif():
     print('x ', xmin, xmax)
     print('y ', ymin, ymax)
     print('z ', zmin, zmax)
-    for i in range(1):
-        print(ligands[i])
-        lig = open('../Donnee_memoire/ligand/' + ligands[i]).readlines()
+    for i in ligands:
+        #print(ligands[i])
+        lig = open('../Donnee_memoire/ligand/' + i).readlines()
         e = lig[0].split(' ')
         for h in range(e.count('')):
             e.remove('')
         e = e[:-4]
-        z = e.pop()
-        y = e.pop()
-        x = e.pop()
-        print(x,y,z)
+        z = float(e.pop())
+        y = float(e.pop())
+        x = float(e.pop())
+        #print(x,y,z)
+        in_box = False
+        if not xmin < x < xmax:
+            in_box = True
+        if not ymin < y < ymax:
+            in_box = True
+        if not zmin < z < zmax:
+            in_box = True
+        if in_box:
+            print('WARNING ! ligand ' + i + ' is not in the box')
+
 
 
     #print(ligands)
