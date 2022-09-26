@@ -140,6 +140,8 @@ def lecture_residu():
 
     if 'residues' not in residus:
         residus = 'residues A:' + residus
+    if residus[-1] == '\n':
+        residus = residus[:-1]
     print(residus)
     return residus
 
@@ -153,7 +155,7 @@ def check_error_grid(file):
     :return:
     """
     restart = False
-    fichier = open('target/' + file, 'r')
+    fichier = open(file, 'r')
     fichierlog = open('fileERROR.txt', 'a')
     for l in fichier:
         if 'ERROR' in l:
@@ -181,13 +183,12 @@ def grids(fichier):
     """
     boucle = True
     RESIDUES = lecture_residu()
-    commande = PATH + 'agfr -b ' + RESIDUES + ' -r ' + fichier + '.pdb -o target/' + fichier
-    while boucle:
-        if terminal:
-            os.system(commande)
-        else:
-            print(commande)
-        boucle = check_error_grid(fichier + '.log')
+    commande = PATH + 'agfr -b ' + RESIDUES + ' -r ' + fichier + '.pdb -o ' + fichier
+
+    if terminal:
+        os.system(commande)
+    else:
+        print(commande)
 
 
 def verification_ligand_box():
