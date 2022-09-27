@@ -26,6 +26,7 @@ terminal = False
 # variable environnement
 PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
 REF = '1T56'
+LIGABS = []
 liste_solute = ['GOL', 'HOH', 'MES', 'TRS', 'MG', 'SO4', 'CL', 'PO4', 'AZI', 'ACT', 'K', 'MN', 'SCN', 'ZN', 'BR']
 
 
@@ -124,6 +125,9 @@ def write_sep_file(e):
                     fichier_ligand = open(e + '_ligand' + str(lc) + '.pdb', 'a')
                     fichier_ligand.write(i)
                     fichier_ligand.close()
+    if first:
+        LIGABS.append(e)
+        print('pas de ligand detectee ! ' + e)
 
     fichier_recepteur.close()
     fichier.close()
@@ -240,6 +244,8 @@ def verification_ligand_box():
         if in_box:
             print('WARNING ! ligand ' + i + ' is not in the box')
     print('Verification done')
+    if LIGABS:
+        print('ligand absent from : ' + '  '.join(LIGABS))
 
 
 
