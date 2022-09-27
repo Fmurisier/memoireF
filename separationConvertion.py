@@ -477,6 +477,37 @@ def mol2():
             print('/usr/bin/obabel -ipdbqt LIGAND/ligand2_3/' + h[:-3] + 'pdbqt' + ' -O LIGAND/MOL2/' + h[:-3] + 'mol2')
 
 
+def ecriture_box(liste=False):
+    dossier = 'residus.txt'
+    if dossier in listdir(path):
+        resi_file = open('residus.txt', 'r').readlines()
+        resi_liste = []
+        resi_code3 = []
+        for e in resi_file:
+            if '\n' in e:
+                e = e[:-1]
+                new_line = e.split(',')
+                for e in new_line:
+                    if ':' not in e and e != '':
+                        resi_code3.append(e)
+                        resi_liste.append(e[3:])
+                    elif e != '':
+                        resi_code3.append(e.split(':')[-1])
+                        resi_liste.append(e.split(':')[-1][3:])
+        if not liste:
+            print('The box is made of ' + str(len(resi_liste)) + \
+                  ' residus, if it is not the case then please check that the file is filled correctly (' \
+                  ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
+
+        commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
+        if liste:
+            commande = resi_liste
+        return commande, resi_code3
+    else:
+        print('error file residus.txt don\'t exist ! ')
+        return 'error', ''
+
+
 if __name__ == '__main__':
 
     #separation()
