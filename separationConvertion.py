@@ -245,7 +245,7 @@ def verification_ligand_box():
             print('WARNING ! ligand ' + i + ' is not in the box')
     print('Verification done')
     if LIGABS:
-        print('ligand absent from : ' + '  '.join(LIGABS))
+        print('ligand absent from Chain A: ' + '  '.join(LIGABS))
 
 
 
