@@ -7,6 +7,7 @@ from os.path import isfile, join
 path = os.getcwd()
 terminal = False
 
+
 def write_sep_file(e):
     """
     recoit le nom d'un fichier qui va etre lu pour ensuite creer de nouveaux fichier : recepteur (contenant uniquement
@@ -65,32 +66,35 @@ def write_sep_file(e):
     fichier.close()
 
 
-def ecriture_box():
+def ecriture_box(liste = False):
     dossier = 'residus.txt'
     if dossier in listdir(path):
         resi_file = open('residus.txt', 'r').readlines()
         resi_liste = []
+        resi_code3 = []
         for e in resi_file:
             if '\n' in e:
                 e = e[:-1]
                 new_line = e.split(',')
                 for e in new_line:
                     if ':' not in e and e != '':
+                        resi_code3.append(e)
                         resi_liste.append(e[3:])
                     elif e != '':
+                        resi_code3.append(e.split(':')[-1])
                         resi_liste.append(e.split(':')[-1][3:])
+        if not liste:
+            print('The box is made of ' + str(len(resi_liste)) + \
+                ' residus, if it is not the case then please check that the file is filled correctly (' \
+                ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
 
-        print(resi_liste)
-        print('La box est composee de ' + str(len(resi_liste)) + \
-              ' residus, si ce n\'est pas le cas verifiez que le fichier residus.txt soie ecrit correctement (' \
-              ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
-
-        # commande = 'select ' + name + '_poche, resi ' + '+'.join(resi_liste) + ' and model ' + name
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
-        return commande
+        if liste:
+            commande = resi_liste
+        return commande, resi_code3
     else:
         print('error file residus.txt don\'t exist ! ')
-        return 'error'
+        return 'error', ''
 
 
 def lecture_residu():
@@ -191,15 +195,33 @@ def verif():
             print('WARNING ! ligand ' + i + ' is not in the box')
 
 
+def conformation_alternative(file):
+    error = False
+    res_alt = []
+    lig = open('../Donnee_memoire/recepteur/' + file).readlines()
+    num_res = ecriture_box(True)[0]
+    for l in lig:
+        if float(l.split()[-3]) < 1:
+            if l.split()[-7] in num_res:
+                res_alt.append(l)
+                error = True
+    if error:
+        print('alternatif conformation for : ' + file)
+        #print('residu from the box having alternative conformation : ')
+        #print(res_alt)
 
-    #print(ligands)
+
 
 if __name__ == '__main__':
 
     #print(ecriture_box())
     #lecture_residu()
     #lecture_ref_file()
-    verif()
+    #verif()
+    l_file = liste_file('recepteur', '/../Donnee_memoire/recepteur/')
+    #l_file = ['5NIM_recepteur.pdb']
+    for f in l_file:
+        conformation_alternative(f)
 
     '''
     'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,TRP145,TYR148,THR149,VAL152,' \
