@@ -103,7 +103,7 @@ def write_sep_file(e):
             if line[0] == 'ATOM' and line[4 + d] == chain:
                 fichier_recepteur.write(i)
             # prend uniquement les ligands et ne prend pas les solutes
-            elif line[0] == 'HETATM' and line[3 + d] not in liste_solute:
+            elif line[0] == 'HETATM' and line[3 + d] not in liste_solute and line[4 + d] == 'A':
                 if d == -1:
                     ligand = line[2][3:]
                 else:
@@ -206,7 +206,7 @@ def verification_ligand_box():
                 center = e
             elif e[1] == 'length:':
                 length = e
-    ligands = liste_file('ligand')
+    ligands = liste_file_complet('ligand')
     print(center)
     print(length)
     xmin = float(center[2]) - float(length[2]) / 2
@@ -220,7 +220,8 @@ def verification_ligand_box():
     print('z ', zmin, zmax)
     for i in ligands:
         # print(ligands[i])
-        lig = open('../Donnee_memoire/ligand/' + i).readlines()
+        #lig = open('../Donnee_memoire/ligand/' + i).readlines()
+        lig = open(i).readlines()
         e = lig[0].split(' ')
         for h in range(e.count('')):
             e.remove('')
@@ -238,9 +239,8 @@ def verification_ligand_box():
             in_box = True
         if in_box:
             print('WARNING ! ligand ' + i + ' is not in the box')
+    print('Verification done')
 
-
-    pass
 
 
 def conversion_ligand_smile_pdbqt():
@@ -413,6 +413,28 @@ def liste_file(patern, file_path=''):
         if patern in ligne:
             name = ligne.split('_')
             list_file.append(name[0])
+    list_file.sort()
+
+    return list_file
+
+
+def liste_file_complet(patern, file_path=''):
+    """
+    MODIFIER POUR QU'IL DONNE DIRECT LE NOM COMPLET
+    :param patern:
+    :param file_path:
+    :return:
+    """
+    list_file = []
+
+    # fait la liste des fichier dans le repertoire ou se trouve script.py
+    fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
+
+    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
+    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
+    for ligne in fichiers:
+        if patern in ligne:
+            list_file.append(ligne)
     list_file.sort()
 
     return list_file
