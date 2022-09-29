@@ -2,7 +2,8 @@
 Superposition pymol
 Editor : Murisier Frederic
 
-superpose toutes les structures par rapport a la structure 1T56
+Superpose every structure to the structure reference given in argument
+
 
 fait la liste de tous les fichiers pdb compresse ou pas dans le repertoire dans lequel le script.py se trouve, cree un
 fichier script.pml contenant les lignes commande necessaire a la superposition de toutes les structures par rapport a la
