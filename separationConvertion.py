@@ -30,39 +30,12 @@ LIGABS = []
 liste_solute = ['GOL', 'HOH', 'MES', 'TRS', 'MG', 'SO4', 'CL', 'PO4', 'AZI', 'ACT', 'K', 'MN', 'SCN', 'ZN', 'BR']
 
 
-def obtention_liste_pdb_transformed():
-    """
-    va effectuer la liste des fichiers pdb transforme dans le repertoire transformed
-    :return: list
-    """
-    list_pdb = []
-    c = 0
-
-    # fait la liste des fichier dans le repertoire ou se trouve script.py
-    fichiers = [f for f in listdir(path + '/transformed') if isfile(join(path + '/transformed', f))]
-
-    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
-    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
-    for ligne in fichiers:
-        name = ligne.split('_')
-
-        if name[-1] == 'transformed.pdb':
-            list_pdb.append(name[0])
-            c += 1
-
-    list_pdb.sort()
-    print('Nombre de pdb file transforme dans le dossier : ', c)
-
-    return list_pdb
-
-
 def separation():
     """
-    va appeler une fonction pour lister les fichiers transforme dans le repertoire et va prendre chaque fichier et
-    appelera une seconde fonction qui separera le fichier d'origine en deux nouveaux fichier recepteur et ligand(s)
+    list the transformed file present in the repertory then for each transformed file split it in receptor and ligand(s)
+    files
     :return:
     """
-    # transf_liste = obtention_liste_pdb_transformed()
     transf_liste = [f for f in listdir(path + '/transformed') if isfile(join(path + '/transformed', f))]
 
     for element in transf_liste:
