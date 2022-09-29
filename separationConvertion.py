@@ -32,7 +32,7 @@ liste_solute = ['GOL', 'HOH', 'MES', 'TRS', 'MG', 'SO4', 'CL', 'PO4', 'AZI', 'AC
 
 def separation():
     """
-    list the transformed file present in the repertory then for each transformed file split it in receptor and ligand(s)
+    List the transformed file present in the repertory then for each transformed file split it in receptor and ligand(s)
     files
     :return:
     """
@@ -41,19 +41,18 @@ def separation():
     for element in transf_liste:
         e = element.split('_')
         if os.path.exists(e[0] + '_ligand1.pdb'):
+            # delete previous lig file
             os.system('rm ' + e[0] + '_lig*')
+        # give only the name of the file in argument, removing the '_transformed.pdb'
         write_sep_file(e[0])
 
 
 def write_sep_file(e):
     """
-    recoit le nom d'un fichier qui va etre lu pour ensuite creer de nouveaux fichier : recepteur (contenant uniquement
-    les informations du recepteur et ligand (contenant uniquement les informations du ligands), creera plusieurs fichier
-    ligand si le fichier d'origine contient plusieurs ligand
+    Take in argument the file transformed aimed to be split in receptor and ligand(s) files.
     :param e:
     :return:
     """
-
     fichier = open('transformed/' + e + '_transformed.pdb', 'r')
     fichier_recepteur = open(e + '_recepteur.pdb', 'w')
     lines = fichier.readlines()
