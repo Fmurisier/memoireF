@@ -223,6 +223,9 @@ if __name__ == '__main__':
     for f in l_file:
         conformation_alternative(f)
 
+    import datetime
+    print(str(datetime.date.today()) + ' -' * 40)
+
     '''
     'residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,TRP145,TYR148,THR149,VAL152,' \
            'ASN176,ASN179,GLU180,LEU183,PHE184,TRP207'

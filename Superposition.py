@@ -21,6 +21,7 @@ import sys
 from os import listdir
 import os
 from os.path import isfile, join
+import datetime
 import pathlib
 
 path = os.getcwd()
@@ -195,11 +196,14 @@ def superpose_all():
     si oui lance le programme pour l'ecriture du script pymol
     :return:
     """
+    fichier_log.write('START CHECK SUPERPOSITION')
     liste_pdb = liste_file('pdb')
     for i in range(len(liste_pdb)):
         liste_pdb[i] = liste_pdb[i].split('.')[0]
     present, ref_structure, b = check_file()
     if present:
+        fichier_log.write('CHECK SUPERPOSITION OK')
+        fichier_log.write('START SUPERPOSITION')
         ecriture_pymol_all(liste_file('pdb'), ref_structure, b)
         if terminal:
             os.system('pymol -cp scriptPymol.pml')
@@ -218,10 +222,16 @@ def superpose_liste(file_prob):
         os.system('mv *_transformed.pdb transformed/')
 
 if __name__ == '__main__':
+
+    fichier_log = open('log_pipeline.txt', 'a')
+    fichier_log.write(str(datetime.date.today()) + ' -' * 40)
+    fichier_log.write('START CHECK SUPERPOSITION')
     if 'transformed' not in listdir(path):
         os.system('mkdir transformed')
 
     superpose_all()
     file_prob = []
     superpose_liste(file_prob)
+
+    fichier_log.close()
 
