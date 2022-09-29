@@ -87,23 +87,23 @@ def write_sep_file(e):
     lineone = lines[0].split()
     num_lig = lineone[5]
     lc = 0
-    chain = lineone[4]
+    chain = 'A'
     first = True
     ligand_ref = ''
 
     for i in lines:
         line = i.split()
-        # empeche de faire une erreur quand la ligne ne contiens qu'une seule colonne
+        # avoid error when the line contain only one column
         if len(line) > 4:
-            # verifie si la 3e colonne n'a pas un nom qui fait que la 3e et 4e colonne sont accolee
+            # check if the third column didn't have a namte tag too long merging with the next column
             if len(line[2]) > 3:
                 d = -1
             else:
                 d = 0
-            # prend uniquement la chaine A du recepteur
+            # taking only the chain A
             if line[0] == 'ATOM' and line[4 + d] == chain:
                 fichier_recepteur.write(i)
-            # prend uniquement les ligands et ne prend pas les solutes
+            # keep only the ligands, which is not in the list of solute and only from the chain A
             elif line[0] == 'HETATM' and line[3 + d] not in liste_solute and line[4 + d] == 'A':
                 if d == -1:
                     ligand = line[2][3:]
@@ -113,7 +113,7 @@ def write_sep_file(e):
                     ligand_ref = ligand
                     first = False
                 if ligand == ligand_ref:
-                    # incremente le nom du fichier pour le cas ou il y a deux ligands
+                    # incremente the name of the file in case of multiple ligands
                     if num_lig != line[5 + d]:
                         chain = line[4 + d]
                         num_lig = line[5 + d]
@@ -125,6 +125,7 @@ def write_sep_file(e):
                     fichier_ligand = open(e + '_ligand' + str(lc) + '.pdb', 'a')
                     fichier_ligand.write(i)
                     fichier_ligand.close()
+    # safety warning if there is no ligand detected for a structure
     if first:
         LIGABS.append(e)
         print('pas de ligand detectee ! ' + e)
