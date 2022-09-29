@@ -58,8 +58,8 @@ def write_sep_file(e):
     lines = fichier.readlines()
     lineone = lines[0].split()
     num_lig = lineone[5]
-    lc = 0
-    chain = 'A'
+    lc = 0  # set the ligand number
+    chain = 'A'  # set the chain
     first = True
     ligand_ref = ''
 
@@ -67,7 +67,7 @@ def write_sep_file(e):
         line = i.split()
         # avoid error when the line contain only one column
         if len(line) > 4:
-            # check if the third column didn't have a namte tag too long merging with the next column
+            # check if the third column didn't have a name tag too long merging with the next column
             if len(line[2]) > 3:
                 d = -1
             else:
@@ -107,6 +107,10 @@ def write_sep_file(e):
 
 
 def lecture_residu():
+    """
+
+    :return:
+    """
     resi_file = open('residus.txt', 'r').readlines()
     residus = ''
     if len(resi_file) > 1:
