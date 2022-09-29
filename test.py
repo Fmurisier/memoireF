@@ -202,13 +202,13 @@ def conformation_alternative(file):
     num_res = ecriture_box(True)[0]
     for l in lig:
         if float(l.split()[-3]) < 1:
-            if l.split()[-7] in num_res:
-                res_alt.append(l)
+            if l.split()[-7] in num_res and l.split()[-7] not in res_alt:
+                res_alt.append(l.split()[-7])
                 error = True
     if error:
         print('alternatif conformation for : ' + file)
         #print('residu from the box having alternative conformation : ')
-        #print(res_alt)
+        print(res_alt)
 
 
 
