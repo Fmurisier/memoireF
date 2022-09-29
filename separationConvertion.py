@@ -95,7 +95,7 @@ def write_sep_file(e):
         line = i.split()
         # empeche de faire une erreur quand la ligne ne contiens qu'une seule colonne
         if len(line) > 4:
-            # verifie si la 3eme colonne n'a pas un nom qui fait que la 3 eme et 4eme colonne sont accolee
+            # verifie si la 3e colonne n'a pas un nom qui fait que la 3e et 4e colonne sont accolee
             if len(line[2]) > 3:
                 d = -1
             else:
@@ -224,7 +224,7 @@ def verification_ligand_box():
     print('z ', zmin, zmax)
     for i in ligands:
         # print(ligands[i])
-        #lig = open('../Donnee_memoire/ligand/' + i).readlines()
+        # lig = open('../Donnee_memoire/ligand/' + i).readlines()
         lig = open(i).readlines()
         e = lig[0].split(' ')
         for h in range(e.count('')):
@@ -246,7 +246,6 @@ def verification_ligand_box():
     print('Verification done')
     if LIGABS:
         print('ligand absent from Chain A: ' + '  '.join(LIGABS))
-
 
 
 def conversion_ligand_smile_pdbqt():
