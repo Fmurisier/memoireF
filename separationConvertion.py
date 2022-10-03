@@ -53,7 +53,8 @@ def write_sep_file(e):
     :param e:
     :return:
     """
-    fichier = open('transformed/' + e + '_transformed.pdb', 'r')
+    #fichier = open('transformed/' + e + '_transformed.pdb', 'r')
+    fichier = open('../Donnee_memoire/transformed_box/' + e + '_transformed.pdb', 'r')
     fichier_recepteur = open(e + '_recepteur.pdb', 'w')
     lines = fichier.readlines()
     lineone = lines[0].split()
@@ -62,6 +63,11 @@ def write_sep_file(e):
     chain = 'A'  # set the chain
     first = True
     ligand_ref = ''
+    error = False
+    errorlig = False
+    res_alt = []
+    lig_alt = []
+    num_res = ecriture_box(True)[0]
 
     for i in lines:
         line = i.split()
@@ -75,6 +81,10 @@ def write_sep_file(e):
             # taking only the chain A
             if line[0] == 'ATOM' and line[4 + d] == chain:
                 fichier_recepteur.write(i)
+                if float(i.split()[-3]) < 1:
+                    if i.split()[-7] in num_res and i.split()[-7] not in res_alt:
+                        res_alt.append(i.split()[-7])
+                        error = True
             # keep only the ligands, which is not in the list of solute and only from the chain A
             elif line[0] == 'HETATM' and line[3 + d] not in liste_solute and line[4 + d] == 'A':
                 if d == -1:
@@ -93,15 +103,26 @@ def write_sep_file(e):
                     elif chain != line[4 + d]:
                         chain = line[4 + d]
                         lc += 1
+                    if float(i.split()[-3]) < 1 and i.split()[-7] not in lig_alt:
+                            lig_alt.append(i.split()[-7])
+                            errorlig = True
 
                     fichier_ligand = open(e + '_ligand' + str(lc) + '.pdb', 'a')
                     fichier_ligand.write(i)
                     fichier_ligand.close()
+
     # safety warning if there is no ligand detected for a structure
     if first:
         LIGABS.append(e)
         print('pas de ligand detectee ! ' + e)
-
+    if errorlig:
+        print('alternatif LIGAND conformation for : ' + e)
+        # print('residu from the box having alternative conformation : ')
+        print(lig_alt)
+    if error:
+        print('alternatif RECEPTOR conformation for : ' + e)
+        #print('residu from the box having alternative conformation : ')
+        print(res_alt)
     fichier_recepteur.close()
     fichier.close()
 
@@ -488,10 +509,14 @@ if __name__ == '__main__':
 
     #separation()
 
-    verification_ligand_box()
+    #verification_ligand_box()
 
     #conversion_recepteur_pdbqt()
 
     #conversion_ligand_smile_pdbqt()
 
     #mol2()
+    listeX = ['1T56', '5NIZ', '5NIM']
+
+    for e in listeX:
+        write_sep_file(e)
