@@ -53,8 +53,8 @@ def write_sep_file(e):
     :param e:
     :return:
     """
-    #fichier = open('transformed/' + e + '_transformed.pdb', 'r')
-    fichier = open('../Donnee_memoire/transformed_box/' + e + '_transformed.pdb', 'r')
+    fichier = open('transformed/' + e + '_transformed.pdb', 'r')
+    #fichier = open('../Donnee_memoire/transformed_box/' + e + '_transformed.pdb', 'r')
     fichier_recepteur = open(e + '_recepteur.pdb', 'w')
     lines = fichier.readlines()
     lineone = lines[0].split()
