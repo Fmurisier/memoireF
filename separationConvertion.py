@@ -507,16 +507,20 @@ def ecriture_box(liste=False):
 
 if __name__ == '__main__':
 
-    #separation()
+    separation()
 
-    #verification_ligand_box()
+    verification_ligand_box()
 
     #conversion_recepteur_pdbqt()
 
     #conversion_ligand_smile_pdbqt()
 
     #mol2()
+
+    '''
     listeX = ['1T56', '5NIZ', '5NIM']
 
     for e in listeX:
         write_sep_file(e)
+    
+    '''
