@@ -118,7 +118,7 @@ def check_file():
     """
     regarde ce que l'utilisateur a entre comme structure de reference et verifie si celle ci est presente dans le
     dossier par defaut 1T56 si le fichier est inexistant alors message d erreur
-    :param lfichier:
+    :param:
     :return:
     """
     r = False
@@ -135,7 +135,6 @@ def check_file():
             decompression_pdb(x)
         b, resi3 = ecriture_box()
         check_box = lecture_ref_file(x[:-3], resi3)
-
 
         if b == 'error' and check_box:
             r = False
@@ -162,8 +161,11 @@ def lecture_ref_file(ref, liste_code3):
         if dico_res.get(resnum) != code:
             box_ok = False
     if not box_ok:
-        print('WARNING !!! Error the residus of the box are not present in the structure,'
-              ' please check again the residus')
+        warning_message = 'WARNING !!! Error the residus of the box are not present in the structure, ' \
+                          'please check again the residus'
+        print(warning_message)
+        fichier_log.write(warning_message)
+
     return box_ok
 
 
