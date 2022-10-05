@@ -127,6 +127,7 @@ def check_file():
     if x in [f for f in listdir(path + dossier_path) if isfile(join(path + dossier_path, f))]:
         r = True
         if x[-4:] != '.pdb':
+            fichier_log.write('Decompression ref file')
             decompression_pdb(x)
         b, resi3 = ecriture_box()
         check_box = lecture_ref_file(x[:-3], resi3)
