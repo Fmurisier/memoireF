@@ -97,16 +97,20 @@ def ecriture_box(liste=False):
                         resi_code3.append(e.split(':')[-1])
                         resi_liste.append(e.split(':')[-1][3:])
         if not liste:
-            print('The box is made of ' + str(len(resi_liste)) + \
+            information = 'The box is made of ' + str(len(resi_liste)) + \
                   ' residus, if it is not the case then please check that the file is filled correctly (' \
-                  ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
+                  ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')'
+            print(information)
+            fichier_log.write(information)
 
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
         if liste:
             commande = resi_liste
         return commande, resi_code3
     else:
-        print('error file residus.txt don\'t exist ! ')
+        error_message = 'error file residus.txt don\'t exist ! '
+        print(error_message)
+        fichier_log.write(error_message)
         return 'error', ''
 
 
