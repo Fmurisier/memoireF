@@ -1,6 +1,7 @@
 """
 Superposition pymol
 Editor : Murisier Frederic
+Date : 2022
 
 Superpose every structure to the structure reference given in argument
 listing every (compressed) pdb file present in the repertory
@@ -9,7 +10,7 @@ fait la liste de tous les fichiers pdb compresse ou pas dans le repertoire dans 
 fichier script.pml contenant les lignes commande necessaire a la superposition de toutes les structures par rapport a la
 structure de reference.
 fait executer via le terminal le scipt pour pymol resultant la creation de fichier des structures superposee
-Date : 2022
+
 cree une liste de tous les fichiers pdb ou pdb.gz contenu dans le dossier et qui n'ont pas deja ete transforme
 cree un script pymol qui sera lance a la fin de l'algorithme pour superposer toutes les structures par rapport a la
 structure de reference (1T56)
