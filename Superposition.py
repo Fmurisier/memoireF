@@ -235,14 +235,14 @@ def superpose_all():
         fichier_log.write('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
 
 
-def superpose_liste(file_prob):
+def superpose_liste(file_p):
     """
-
-    :param file_prob:
+    superpose a list of structure (usualy the ones that failed)
+    :param file_p:
     :return:
     """
     present, ref_structure, b = check_file()
-    ecriture_pymol_all(file_prob, ref_structure, b)
+    ecriture_pymol_all(file_p, ref_structure, b)
     if terminal:
         os.system('pymol -cp scriptPymol.pml')
         check_rmsd()
