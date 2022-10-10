@@ -52,6 +52,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
     """
     fichier = open('scriptPymol.pml', 'w')
     fichier.write('output = open("rmsd_result.txt", "w")\n')
+    fichier_log.write('WRITING PYMOL SCRIPT')
     for e in liste_pdb:
         name = e.split('.')[0]
         ref_name = ref.split('.')[0]
@@ -60,7 +61,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
         # selection of the residue to be superposed
         fichier.write('select ' + ref_name + box + ref_name + '\n')
         fichier.write('select ' + name + box + name + '\n')
-        # superposition des deux poches
+        # superposition
         fichier.write('super ' + name + '_poche////CA, ' + ref_name + '_poche////CA\n')
         fichier.write('save ' + name + '_transformed.pdb, ' + name + '\n')
 
@@ -71,6 +72,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
     fichier.write('output.close()\n')
     fichier.write('print("END")\n quit')
     fichier.close()
+    fichier_log.write('PYMOL SCRIPT DONE')
 
 
 def ecriture_box(liste=False):
