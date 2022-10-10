@@ -236,12 +236,18 @@ def superpose_all():
 
 
 def superpose_liste(file_prob):
+    """
+
+    :param file_prob:
+    :return:
+    """
     present, ref_structure, b = check_file()
     ecriture_pymol_all(file_prob, ref_structure, b)
     if terminal:
         os.system('pymol -cp scriptPymol.pml')
         check_rmsd()
         os.system('mv *_transformed.pdb transformed/')
+
 
 if __name__ == '__main__':
 
