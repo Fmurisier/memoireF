@@ -76,6 +76,12 @@ def ecriture_pymol_all(liste_pdb, ref, box):
 
 
 def ecriture_box(liste=False):
+    """
+    read the residus.txt file, extract the name of each residus. check if the residus are in the structure and then
+    create the box
+    :param liste:
+    :return:
+    """
     dossier = 'residus.txt'
     if dossier in listdir(path):
         resi_file = open('residus.txt', 'r').readlines()
@@ -112,8 +118,8 @@ def ecriture_box(liste=False):
 
 def check_file():
     """
-    regarde ce que l'utilisateur a entre comme structure de reference et verifie si celle ci est presente dans le
-    dossier par defaut 1T56 si le fichier est inexistant alors message d erreur
+    verification of the argument given by the user: if the reference structure exist or not
+    if it exists check if the file is compressed or not. if it is then the function will decompress it automatically
     :param:
     :return:
     """
