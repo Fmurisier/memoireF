@@ -20,6 +20,7 @@ Python version : 3.8
 import os
 from os import listdir
 from os.path import isfile, join
+import datetime
 
 path = os.getcwd()
 terminal = False
@@ -506,6 +507,9 @@ def ecriture_box(liste=False):
 
 
 if __name__ == '__main__':
+    fichier_log = open('log_pipeline.txt', 'a')
+    fichier_log.write(str(datetime.date.today()) + ' -' * 40)
+    fichier_log.write('START CHECK SUPERPOSITION')
 
     separation()
 
@@ -516,6 +520,8 @@ if __name__ == '__main__':
     #conversion_ligand_smile_pdbqt()
 
     #mol2()
+
+    fichier_log.close()
 
     '''
     listeX = ['1T56', '5NIZ', '5NIM']
