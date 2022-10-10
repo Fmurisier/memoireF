@@ -55,7 +55,7 @@ def write_sep_file(e):
     :return:
     """
     fichier = open('transformed/' + e + '_transformed.pdb', 'r')
-    #fichier = open('../Donnee_memoire/transformed_box/' + e + '_transformed.pdb', 'r')
+    # fichier = open('../Donnee_memoire/transformed_box/' + e + '_transformed.pdb', 'r')
     fichier_recepteur = open(e + '_recepteur.pdb', 'w')
     lines = fichier.readlines()
     lineone = lines[0].split()
@@ -105,8 +105,8 @@ def write_sep_file(e):
                         chain = line[4 + d]
                         lc += 1
                     if float(i.split()[-3]) < 1 and i.split()[-7] not in lig_alt:
-                            lig_alt.append(i.split()[-7])
-                            errorlig = True
+                        lig_alt.append(i.split()[-7])
+                        errorlig = True
 
                     fichier_ligand = open(e + '_ligand' + str(lc) + '.pdb', 'a')
                     fichier_ligand.write(i)
@@ -128,7 +128,7 @@ def write_sep_file(e):
         m = 'alternatif RECEPTOR conformation for : ' + e
         print(m)
         fichier_log.write(m)
-        #print('residu from the box having alternative conformation : ')
+        # print('residu from the box having alternative conformation : ')
         print(res_alt)
     fichier_recepteur.close()
     fichier.close()
@@ -154,30 +154,28 @@ def lecture_residu():
     if residus[-1] == '\n':
         residus = residus[:-1]
     print(residus)
-    fichierlog.write('Residus = ' + residus)
+    fichier_log.write('Residus = ' + residus)
     return residus
 
 
 def check_error_grid(file):
     """
-    verifie s'il y a eu des erreurs lors de la creation des gilles, si oui affichage d'un message d'erreur sur le
-    terminal indiquant que agfr a crashe et sur quel structure. enregistrement egalement de ce message d'erreur dans un
-    fichier fileerror.txt pour une consultation rapide des erreurs potentielles
+    Check if there is any error during the creation of the box. If yes, error message with the information in a
+    fileerror.txt file
     :param file: fichier a verifier
     :return:
     """
     restart = False
     fichier = open(file, 'r')
-    fichierlog = open('fileERROR.txt', 'a')
     for l in fichier:
         if 'ERROR' in l:
             print('\nWARNING PROBLEM agdr crashes....\n')
             print(l)
-            fichierlog.write('\nWARNING PROBLEM agdr crashes....\n' + l)
+            fichier_log.write('\nWARNING PROBLEM agdr crashes....\n' + l)
             restart = True
     if not restart:
         print('\nNo problem detected in the grid creation\n')
-    fichierlog.close()
+        fichier_log.write('\nNo problem detected in the grid creation\n')
     return restart
 
 
@@ -524,11 +522,11 @@ if __name__ == '__main__':
 
     verification_ligand_box()
 
-    #conversion_recepteur_pdbqt()
+    # conversion_recepteur_pdbqt()
 
-    #conversion_ligand_smile_pdbqt()
+    # conversion_ligand_smile_pdbqt()
 
-    #mol2()
+    # mol2()
 
     fichier_log.close()
 
