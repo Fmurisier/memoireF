@@ -44,9 +44,8 @@ def liste_file(patern, file_path=''):
 
 def ecriture_pymol_all(liste_pdb, ref, box):
     """
-    recoit en argument une liste de fichier et une structure de reference, la fonction va ensuite ecrire le script pymol
-    dans un fichier = les lignes de commande pymol effectuant les superpositions tout en enregistrant les nouveaux
-    fichiers superpose dans de nouveaux fichier
+    write a pymol script with the command line to superpose each structure from the list given in argument to the
+    reference structure also given in argument. the box argument is the box where the structure are superposed
     :param ref:
     :param liste_pdb:
     :return:
@@ -58,7 +57,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
         ref_name = ref.split('.')[0]
         fichier.write('load ' + ref + '\n')
         fichier.write('load ' + e + '\n')
-        # selection des poches a superposer, d'abord celle de reference puis celle a superposer
+        # selection of the residue to be superposed
         fichier.write('select ' + ref_name + box + ref_name + '\n')
         fichier.write('select ' + name + box + name + '\n')
         # superposition des deux poches
