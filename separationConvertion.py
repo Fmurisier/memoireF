@@ -138,7 +138,7 @@ def write_sep_file(e):
 
 def lecture_residu():
     """
-
+    extraction of the name and number of the different residus of the box
     :return:
     """
     resi_file = open('residus.txt', 'r').readlines()
@@ -154,6 +154,7 @@ def lecture_residu():
     if residus[-1] == '\n':
         residus = residus[:-1]
     print(residus)
+    fichierlog.write('Residus = ' + residus)
     return residus
 
 
