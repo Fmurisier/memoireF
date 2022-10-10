@@ -77,8 +77,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
 
 def ecriture_box(liste=False):
     """
-    read the residus.txt file, extract the name of each residus. check if the residus are in the structure and then
-    create the box
+    read the residus.txt file, extract the name of each residus and create the box
     :param liste:
     :return:
     """
@@ -145,6 +144,12 @@ def check_file():
 
 
 def lecture_ref_file(ref, liste_code3):
+    """
+    Check if the residus are in the reference structure
+    :param ref:
+    :param liste_code3:
+    :return:
+    """
     #ref_file = open('../Donnee_memoire/model_alphaFold.pdb', 'r').readlines()
     ref_file = open(dossier_path + ref, 'r').readlines()
     dico_res = {}
@@ -172,17 +177,23 @@ def lecture_ref_file(ref, liste_code3):
 
 
 def decompression_pdb(file):
+    """
+    decompress the file given in argument
+    :param file:
+    :return:
+    """
     fichier = open('scriptPymol.pml', 'w')
     fichier.write('load ' + file + '\n')
     fichier.write('save ' + file[:-3] + '\n')
     fichier.write('print("END")\n quit')
     fichier.close()
     os.system('pymol -cp scriptPymol.pml')
+    fichier_log.write('Decompression of the reference file')
 
 
 def check_rmsd():
     """
-    verifie si le rmsd est plus haut que 1, si c'est le cas affiche un message d'erreur
+    Check if the rmsd of the superposition is higher than 1. If it is then give a warning
     :return:
     """
     problem = False
@@ -195,15 +206,15 @@ def check_rmsd():
         if float(ligne[1][:-1]) > 1:
             problem = True
             print('\nWARNING ' + str(l))
+            fichier_log.write('\nWARNING ' + str(l))
     if not problem:
         print('\nNo RMSD problem detected\n')
+        fichier_log.write('\nNo RMSD problem detected\n')
 
 
 def superpose_all():
     """
-    prend l'argument donne par l'utilisateur lors de l'entree de la ligne de commande, check si la structure est
-    presente dans le fichier, si non affiche un message d'erreur
-    si oui lance le programme pour l'ecriture du script pymol
+    Check if the reference structure exists in the directory if yes then executes the function writing the pymol file
     :return:
     """
     fichier_log.write('START CHECK SUPERPOSITION')
@@ -221,6 +232,7 @@ def superpose_all():
             os.system('mv *_transformed.pdb transformed/')
     else:
         print('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
+        fichier_log.write('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
 
 
 def superpose_liste(file_prob):
