@@ -24,19 +24,21 @@ terminal = False
 
 
 def liste_file(patern, file_path=''):
+    """
+    search in the directory given in argument the file with the pattern given in argument and create a list of file
+    :param patern:
+    :param file_path:
+    :return:
+    """
     list_file = []
-
-    # fait la liste des fichier dans le repertoire ou se trouve script.py
     fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
 
-    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
-    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
+    # each name is splited by the symbol '_' to find only the file 'transformed
     for ligne in fichiers:
         if patern in ligne:
             name = ligne.split('_')
             list_file.append(name[0])
     list_file.sort()
-
     return list_file
 
 
