@@ -115,17 +115,25 @@ def write_sep_file(e):
     # safety warning if there is no ligand detected for a structure
     if first:
         LIGABS.append(e)
-        print('pas de ligand detectee ! ' + e)
+        m = 'No ligand detected ! ' + e
+        print(m)
+        fichier_log.write(m)
     if errorlig:
-        print('alternatif LIGAND conformation for : ' + e)
+        m = 'alternatif LIGAND conformation for : ' + e
+        print(m)
+        fichier_log.write(m)
         # print('residu from the box having alternative conformation : ')
         print(lig_alt)
     if error:
-        print('alternatif RECEPTOR conformation for : ' + e)
+        m = 'alternatif RECEPTOR conformation for : ' + e
+        print(m)
+        fichier_log.write(m)
         #print('residu from the box having alternative conformation : ')
         print(res_alt)
     fichier_recepteur.close()
     fichier.close()
+    print(m)
+    fichier_log.write('END SEPARATION')
 
 
 def lecture_residu():
@@ -509,7 +517,7 @@ def ecriture_box(liste=False):
 if __name__ == '__main__':
     fichier_log = open('log_pipeline.txt', 'a')
     fichier_log.write(str(datetime.date.today()) + ' -' * 40)
-    fichier_log.write('START CHECK SUPERPOSITION')
+    fichier_log.write('START SEPARATION')
 
     separation()
 
