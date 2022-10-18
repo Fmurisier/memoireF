@@ -181,17 +181,14 @@ def check_error_grid(file):
 
 def grids(fichier):
     """
-    effectue la creation du fichier target = la grille/ box pour le docking a partir du fichier recepteur
-    un exemple de la commande qui doit etre effectue
+    Create the target file (= grid or box) for the docking
+    an exemple of commande line :
     /home/rene/bin/ADFRsuite-1.0/bin/agfr -b residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,
     TRP145,TYR148,THR149,VAL152,ASN176,ASN179,GLU180,LEU183,PHE184,TRP207 -r RECEPTEUR/PDBQT/1T56_recepteur_H.pdbqt -o
     1T56
-    fonction qui contien une boucle pour essayer de minimiser les echecs de creation de grille, en cas d'echec de
-    creation de grille relancement de la ligne de commande pour effectuer de nouveau la creation de la grille
-    :param fichier: nom de la structure recepteur a partir de laquelle il faut cree la grille
+    :param fichier: name of the structure for whitch the grid need to be created
     :return:
     """
-    boucle = True
     RESIDUES = lecture_residu()
     commande = PATH + 'agfr -b ' + RESIDUES + ' -r ' + fichier + '.pdb -o ' + fichier
 
