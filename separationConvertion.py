@@ -200,8 +200,7 @@ def grids(fichier):
 
 def verification_ligand_box():
     """
-    The function verify if the ligand are in the box
-    if not print an error message
+    The function verify if the ligand are in the box, if not print an error message
     :return:
     """
     grids(REF)
