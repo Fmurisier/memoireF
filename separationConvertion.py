@@ -111,7 +111,7 @@ def write_sep_file(e):
                     fichier_ligand = open(e + '_ligand' + str(lc) + '.pdb', 'a')
                     fichier_ligand.write(i)
                     fichier_ligand.close()
-
+    m=''
     # safety warning if there is no ligand detected for a structure
     if first:
         LIGABS.append(e)
@@ -199,6 +199,11 @@ def grids(fichier):
 
 
 def verification_ligand_box():
+    """
+    The function verify if the ligand are in the box
+    if not print an error message
+    :return:
+    """
     grids(REF)
     fichier_box = open('1T56.log', 'r').readlines()
     center = ''
