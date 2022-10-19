@@ -374,26 +374,31 @@ def conversion_ligand_smile_pdbqt_liste(files):
 
 def conversion_pdbqt(nomfichier, lig=True):
     """
-    convertion d'un fichier pdb fournis en argument en pdbqt
-    /home/rene/bin/ADFRsuite-1.0/bin/prepare_ligand -l _ligand1.pdb
+    convert a pdb file in pdbqt
     :param lig: boolean
     :param nomfichier:
     :return:
     """
-    # commande qui transforme un pdb en pdbqt
+    # pdb in pdbqt command line
     # os.system('/home/rene/bin/ADFRsuite-1.0/bin/prepare_ligand -l ' + nomfichier)
     if lig:
+        commande01 = PATH + 'prepare_ligand -l ' + nomfichier
         if terminal:
-            os.system(PATH + 'prepare_ligand -l ' + nomfichier)
-        print(PATH + 'prepare_ligand -l ' + nomfichier)
+            os.system(commande01)
+        print(commande01)
+        fichier_log.write(commande01)
     else:
         commande1 = 'python3 ../../../home/rene/bin/pdb2pqr/pdb2pqr --titration-state-method propka --drop-water ' \
                     '--pdb-output ' + nomfichier + '_H.pdb --with-ph 7.4 ' + nomfichier + '.pdb ' + nomfichier + '.pqr'
+        commande2 = PATH + 'prepare_receptor -r ' + nomfichier + '_H.pdb'
         if terminal:
             os.system(commande1)
-            os.system(PATH + 'prepare_receptor -r ' + nomfichier + '_H.pdb')
+            os.system(commande2)
         print(commande1)
-        print(PATH + 'prepare_receptor -r ' + nomfichier + '_H.pdb')
+        print(commande2)
+        fichier_log.write(commande1)
+        fichier_log.write(commande2)
+
 
 
 def conversion_recepteur_pdbqt():
