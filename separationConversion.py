@@ -274,6 +274,7 @@ def verification_ligand_box():
         print(mess)
         fichier_log.write(mess + '\n')
 
+
 def conversion_ligand_smile_pdbqt():
     """
     Convert the pdb file in smile then back in pdb to change the coordinate
@@ -317,7 +318,6 @@ def conversion_ligand_smile_pdbqt():
         # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1_smile.pdb')
 
-    fichier_log.close()
     # moving the file in new directory
     if terminal:
         if 'LIGAND' not in listdir(path):
@@ -572,11 +572,11 @@ if __name__ == '__main__':
 
     verification_ligand_box()
 
-    # conversion_recepteur_pdbqt()
+    conversion_recepteur_pdbqt()
 
-    # conversion_ligand_smile_pdbqt()
+    conversion_ligand_smile_pdbqt()
 
-    # mol2()
+    mol2()
 
     fichier_log.close()
 
