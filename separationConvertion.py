@@ -278,9 +278,7 @@ def conversion_ligand_smile_pdbqt():
 
     for ligne in fichiers:
         c += 1
-        print('####################################################################################################\n' +
-              str(c) + '------------------>' + str(compteur) + '    ' + ligne +
-              '\n###################################################################################################\n')
+        print('#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n')
 
         # transforme le ligand de ref en pdbqt ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1.pdb')
