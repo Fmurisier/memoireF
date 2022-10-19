@@ -285,22 +285,27 @@ def conversion_ligand_smile_pdbqt():
         conversion_pdbqt(ligne + '_ligand1.pdb')
 
         # ################# pdb to smi ################
+        indication = 'obabel -ipdb ' + ligne + '_ligand1.pdb -osmi -O ' + ligne + '_ligand1.smi'
+        print(indication)
+        fichier_log.write(indication)
         if terminal:
-            os.system('obabel -ipdb ' + ligne + '_ligand1.pdb -osmi -O ' + ligne + '_ligand1.smi')
-        print('obabel -ipdb ' + ligne + '_ligand1.pdb -osmi -O ' + ligne + '_ligand1.smi')
+            os.system(indication)
 
         # ################### smi to pdb ##################
+        indication = 'acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile'
+        print(indication)
+        fichier_log.write(indication)
         if terminal:
-            os.system('acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile')
+            os.system(indication)
             fichiers_smile_pdb = liste_file('_ligand1_smile')
             if ligne not in fichiers_smile_pdb:
-                fichier_log.write('\nerror smile : ' + ligne)
-        print('acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile')
+                fichier_log.write('\nerror smile : ' + ligne + '\n')
 
         # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1_smile.pdb')
 
     fichier_log.close()
+    # moving the file in new directory
     if terminal:
         if 'LIGAND' not in listdir(path):
             os.system('mkdir LIGAND')
