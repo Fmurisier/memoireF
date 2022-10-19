@@ -278,17 +278,18 @@ def conversion_ligand_smile_pdbqt():
 
     for ligne in fichiers:
         c += 1
-        print('#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n')
-
-        # transforme le ligand de ref en pdbqt ################# pdb to pdbqt ################
+        indication = '#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n'
+        print(indication)
+        fichier_log.write(indication)
+        # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1.pdb')
 
-        # commande qui transforme un pdb en smi ################# pdb to smi ################
+        # ################# pdb to smi ################
         if terminal:
             os.system('obabel -ipdb ' + ligne + '_ligand1.pdb -osmi -O ' + ligne + '_ligand1.smi')
         print('obabel -ipdb ' + ligne + '_ligand1.pdb -osmi -O ' + ligne + '_ligand1.smi')
 
-        # commande qui transforme un smi en pdb ################### smi to pdb ##################
+        # ################### smi to pdb ##################
         if terminal:
             os.system('acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile')
             fichiers_smile_pdb = liste_file('_ligand1_smile')
@@ -296,7 +297,7 @@ def conversion_ligand_smile_pdbqt():
                 fichier_log.write('\nerror smile : ' + ligne)
         print('acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile')
 
-        # commande qui transforme un pdb en pdbqt ################# pdb to pdbqt ################
+        # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1_smile.pdb')
 
     fichier_log.close()
