@@ -514,6 +514,11 @@ def mol2():
 
 
 def ecriture_box(liste=False):
+    """
+    write the grid from the residus.txt file, and check if the file existe if not print a warning
+    :param liste:
+    :return:
+    """
     dossier = 'residus.txt'
     if dossier in listdir(path):
         resi_file = open('residus.txt', 'r').readlines()
@@ -531,15 +536,18 @@ def ecriture_box(liste=False):
                         resi_code3.append(e.split(':')[-1])
                         resi_liste.append(e.split(':')[-1][3:])
         if not liste:
-            print('The box is made of ' + str(len(resi_liste)) + \
-                  ' residus, if it is not the case then please check that the file is filled correctly (' \
-                  ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')')
+            info = 'The box is made of ' + str(len(resi_liste)) + ' residus, if it is not the case then please check ' \
+                                                                  'that the file is filled correctly (exemple : ' \
+                                                                '\'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')'
+            fichier_log.write(info)
+            print(info)
 
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
         if liste:
             commande = resi_liste
         return commande, resi_code3
     else:
+        fichier_log.write('error file residus.txt don\'t exist ! \n')
         print('error file residus.txt don\'t exist ! ')
         return 'error', ''
 
