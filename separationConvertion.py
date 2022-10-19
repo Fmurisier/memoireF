@@ -488,23 +488,29 @@ def mol2():
             os.system('mkdir LIGAND/' + dossier)
     l = os.listdir('LIGAND/PDBQT')
     l2 = os.listdir('LIGAND/ligand2_3')
-    l = ['3Q0V_ligand1.pdb', '5MYM_ligand1.pdb', '5NZ1_ligand1.pdb']
-    l2 = ['3Q0V_ligand2.pdb', '5MYM_ligand2.pdb', '5NZ1_ligand2.pdb', '5NZ1_ligand3.pdb']
+    #l = ['3Q0V_ligand1.pdb', '5MYM_ligand1.pdb', '5NZ1_ligand1.pdb']
+    #l2 = ['3Q0V_ligand2.pdb', '5MYM_ligand2.pdb', '5NZ1_ligand2.pdb', '5NZ1_ligand3.pdb']
 
     for h in l:
         if '_smile.pdbqt' not in h:
+            commande = '/usr/bin/obabel -ipdbqt LIGAND/PDBQT/' + h + ' -O LIGAND/MOL2/' + h[:-3] + 'mol2'
+            fichier_log.write(commande)
+            print(commande)
             if terminal:
-                os.system('/usr/bin/obabel -ipdbqt LIGAND/PDBQT/' + h + ' -O LIGAND/MOL2/' + h[:-3] + 'mol2')
-            print('/usr/bin/obabel -ipdbqt LIGAND/PDBQT/' + h + ' -O LIGAND/MOL2/' + h[:-3] + 'mol2')
+                os.system(commande)
 
     for h in l2:
         if '.pdb' in h:
+            commande1 = '/usr/bin/obabel -ipdb LIGAND/ligand2_3/' + h + ' -O LIGAND/ligand2_3/' + h[:-3] + 'pdbqt'
+            commande2 = '/usr/bin/obabel -ipdbqt LIGAND/ligand2_3/' + h[:-3] + 'pdbqt' + ' -O LIGAND/MOL2/' + h[:-3] +\
+                        'mol2'
+            fichier_log.write(commande1)
+            fichier_log.write(commande2)
+            print(commande1)
+            print(commande2)
             if terminal:
-                os.system('/usr/bin/obabel -ipdb LIGAND/ligand2_3/' + h + ' -O LIGAND/ligand2_3/' + h[:-3] + 'pdbqt')
-                os.system('/usr/bin/obabel -ipdbqt LIGAND/ligand2_3/' + h[:-3] + 'pdbqt' + ' -O LIGAND/MOL2/' + h[:-3]
-                          + 'mol2')
-            print('/usr/bin/obabel -ipdb LIGAND/ligand2_3/' + h + ' -O LIGAND/ligand2_3/' + h[:-3] + 'pdbqt')
-            print('/usr/bin/obabel -ipdbqt LIGAND/ligand2_3/' + h[:-3] + 'pdbqt' + ' -O LIGAND/MOL2/' + h[:-3] + 'mol2')
+                os.system(commande1)
+                os.system(commande2)
 
 
 def ecriture_box(liste=False):
