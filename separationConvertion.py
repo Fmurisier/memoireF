@@ -271,7 +271,7 @@ def conversion_ligand_smile_pdbqt():
     :return:
     """
     c = 0
-    fichier_log = open('log_smile', 'w')
+    fichier_log_smile = open('log_smile', 'w')
     fichiers = liste_file('_ligand1')
     fichier = ['3Q0V', '5MYM', '5NZ1']
     compteur = len(fichiers)
@@ -281,6 +281,7 @@ def conversion_ligand_smile_pdbqt():
         indication = '#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n'
         print(indication)
         fichier_log.write(indication)
+        fichier_log_smile.write(indication)
         # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1.pdb')
 
@@ -288,6 +289,7 @@ def conversion_ligand_smile_pdbqt():
         indication = 'obabel -ipdb ' + ligne + '_ligand1.pdb -osmi -O ' + ligne + '_ligand1.smi'
         print(indication)
         fichier_log.write(indication)
+        fichier_log_smile.write(indication)
         if terminal:
             os.system(indication)
 
@@ -295,11 +297,13 @@ def conversion_ligand_smile_pdbqt():
         indication = 'acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile'
         print(indication)
         fichier_log.write(indication)
+        fichier_log_smile.write(indication)
         if terminal:
             os.system(indication)
             fichiers_smile_pdb = liste_file('_ligand1_smile')
             if ligne not in fichiers_smile_pdb:
                 fichier_log.write('\nerror smile : ' + ligne + '\n')
+                fichier_log_smile.write('\nerror smile : ' + ligne + '\n')
 
         # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1_smile.pdb')
@@ -338,15 +342,16 @@ def conversion_ligand_smile_pdbqt_liste(files):
     :return:
     """
     c = 0
-    fichier_log = open('log_smile', 'w')
 
     compteur = len(files)
-
+    fichier_log_smile = open('log_smile', 'a')
+    fichier_log_smile.write(str(datetime.date.today()) + ' -' * 40)
     for ligne in files:
         c += 1
         indication = '#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n'
         print(indication)
         fichier_log.write(indication)
+        fichier_log_smile.write(indication)
 
         # transforme le ligand de ref en pdbqt ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1.pdb')
@@ -355,16 +360,17 @@ def conversion_ligand_smile_pdbqt_liste(files):
         indication = 'acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile'
         print(indication)
         fichier_log.write(indication)
+        fichier_log_smile.write(indication)
         if terminal:
             os.system('acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile')
             fichiers_smile_pdb = liste_file('_ligand1_smile')
             if ligne not in fichiers_smile_pdb:
                 fichier_log.write('\nerror smile : ' + ligne + '\n')
+                fichier_log_smile.write('\nerror smile : ' + ligne + '\n')
 
         # commande qui transforme un pdb en pdbqt ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1_smile.pdb')
 
-    fichier_log.close()
     if terminal:
         os.system('mv *_ligand1_smile.pdb SMILE/')
         os.system('mv *.smi SMILE/smi/')
