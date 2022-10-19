@@ -478,11 +478,10 @@ def liste_file_complet(pattern, file_path=''):
 
 
 def mol2():
-    '''
-
-    '/usr/bin/obabel -ipdbqt fichier_ligand1.pdbqt -O XX.mol2'
+    """
+    convert the pdbqt file in mol2
     :return:
-    '''
+    """
     if terminal:
         dossier = 'MOL2'
         if dossier not in listdir(path + '/LIGAND'):
