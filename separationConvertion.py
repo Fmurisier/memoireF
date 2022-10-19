@@ -400,22 +400,23 @@ def conversion_pdbqt(nomfichier, lig=True):
         fichier_log.write(commande2)
 
 
-
 def conversion_recepteur_pdbqt():
+    """
+    Convert all recepteur fil in pdbqt
+    :return:
+    """
     c = 0
-    fichiers = [f for f in listdir(path) if isfile(join(path, f))]
-
     fichiers = liste_file('_recepteur')
-    # fichier = ['3Q0V', '5MYM', '5NZ1']
     compteur = len(fichiers)
 
     for ligne in fichiers:
         c += 1
-        print('####################################################################################################\n' +
-              str(c) + '------------------>' + str(compteur) + '           ' + ligne +
-              '\n###################################################################################################\n')
+        indication = '#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n'
+        print(indication)
+        fichier_log.write(indication)
         conversion_pdbqt(ligne + '_recepteur', False)
 
+    # move the file in the final directory
     if terminal:
         dossier = 'RECEPTEUR'
         if dossier not in listdir(path):
@@ -432,6 +433,12 @@ def conversion_recepteur_pdbqt():
 
 
 def liste_file(patern, file_path=''):
+    """
+    Return the list of file
+    :param patern:
+    :param file_path:
+    :return:
+    """
     list_file = []
 
     # fait la liste des fichier dans le repertoire ou se trouve script.py
