@@ -236,7 +236,6 @@ def verification_ligand_box():
     fichier_log.write('y ' + str(ymin) + '---' + str(ymax) + '\n')
     fichier_log.write('z ' + str(zmin) + '---' + str(zmax) + '\n')
     for i in ligands:
-        # print(ligands[i])
         # lig = open('../Donnee_memoire/ligand/' + i).readlines()
         lig = open(i).readlines()
         e = lig[0].split(' ')
@@ -246,7 +245,6 @@ def verification_ligand_box():
         z = float(e.pop())
         y = float(e.pop())
         x = float(e.pop())
-        # print(x,y,z)
         in_box = False
         if not xmin < x < xmax:
             in_box = True
@@ -256,7 +254,9 @@ def verification_ligand_box():
             in_box = True
         if in_box:
             print('WARNING ! ligand ' + i + ' is not in the box')
+            fichier_log.write('\n\nWARNING !\n ligand ' + i + ' is not in the box\n\n')
     print('Verification done')
+    fichier_log.write('Verification done\n')
     if LIGABS:
         print('ligand absent from Chain A: ' + '  '.join(LIGABS))
 
