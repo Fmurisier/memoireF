@@ -174,7 +174,7 @@ def check_error_grid(file):
             restart = True
     if not restart:
         print('\nNo problem detected in the grid creation\n')
-        fichier_log.write('\nNo problem detected in the grid creation\n' + '\n')
+        fichier_log.write('\nNo problem detected in the grid creation\n\n')
     return restart
 
 
@@ -278,7 +278,7 @@ def conversion_ligand_smile_pdbqt():
         indication = '#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n'
         print(indication)
         fichier_log.write(indication)
-        fichier_log_smile.write(indication)
+        fichier_log_smile.write(indication + '\n')
         # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1.pdb')
 
@@ -286,7 +286,7 @@ def conversion_ligand_smile_pdbqt():
         indication = 'obabel -ipdb ' + ligne + '_ligand1.pdb -osmi -O ' + ligne + '_ligand1.smi'
         print(indication)
         fichier_log.write(indication)
-        fichier_log_smile.write(indication)
+        fichier_log_smile.write(indication + '\n')
         if terminal:
             os.system(indication)
 
@@ -294,7 +294,7 @@ def conversion_ligand_smile_pdbqt():
         indication = 'acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile'
         print(indication)
         fichier_log.write(indication)
-        fichier_log_smile.write(indication)
+        fichier_log_smile.write(indication + '\n')
         if terminal:
             os.system(indication)
             fichiers_smile_pdb = liste_file('_ligand1_smile')
@@ -344,7 +344,7 @@ def conversion_ligand_smile_pdbqt_liste(files):
         c += 1
         indication = '#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n'
         print(indication)
-        fichier_log.write(indication)
+        fichier_log.write(indication + '\n')
         fichier_log_smile.write(indication)
 
         # ################# pdb to pdbqt ################
@@ -353,8 +353,8 @@ def conversion_ligand_smile_pdbqt_liste(files):
         # ################### smi to pdb ##################
         indication = 'acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile'
         print(indication)
-        fichier_log.write(indication)
-        fichier_log_smile.write(indication)
+        fichier_log.write(indication + '\n')
+        fichier_log_smile.write(indication + '\n')
         if terminal:
             os.system('acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile')
             fichiers_smile_pdb = liste_file('_ligand1_smile')
@@ -386,7 +386,7 @@ def conversion_pdbqt(nomfichier, lig=True):
         if terminal:
             os.system(commande01)
         print(commande01)
-        fichier_log.write(commande01)
+        fichier_log.write(commande01 + '\n')
     else:
         commande1 = 'python3 ../../../home/rene/bin/pdb2pqr/pdb2pqr --titration-state-method propka --drop-water ' \
                     '--pdb-output ' + nomfichier + '_H.pdb --with-ph 7.4 ' + nomfichier + '.pdb ' + nomfichier + '.pqr'
@@ -396,8 +396,8 @@ def conversion_pdbqt(nomfichier, lig=True):
             os.system(commande2)
         print(commande1)
         print(commande2)
-        fichier_log.write(commande1)
-        fichier_log.write(commande2)
+        fichier_log.write(commande1 + '\n')
+        fichier_log.write(commande2 + '\n')
 
 
 def conversion_recepteur_pdbqt():
@@ -413,7 +413,7 @@ def conversion_recepteur_pdbqt():
         c += 1
         indication = '#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n'
         print(indication)
-        fichier_log.write(indication)
+        fichier_log.write(indication + '\n')
         conversion_pdbqt(ligne + '_recepteur', False)
 
     # move the file in the final directory
@@ -494,7 +494,7 @@ def mol2():
     for h in l:
         if '_smile.pdbqt' not in h:
             commande = '/usr/bin/obabel -ipdbqt LIGAND/PDBQT/' + h + ' -O LIGAND/MOL2/' + h[:-3] + 'mol2'
-            fichier_log.write(commande)
+            fichier_log.write(commande + '\n')
             print(commande)
             if terminal:
                 os.system(commande)
@@ -504,8 +504,8 @@ def mol2():
             commande1 = '/usr/bin/obabel -ipdb LIGAND/ligand2_3/' + h + ' -O LIGAND/ligand2_3/' + h[:-3] + 'pdbqt'
             commande2 = '/usr/bin/obabel -ipdbqt LIGAND/ligand2_3/' + h[:-3] + 'pdbqt' + ' -O LIGAND/MOL2/' + h[:-3] +\
                         'mol2'
-            fichier_log.write(commande1)
-            fichier_log.write(commande2)
+            fichier_log.write(commande1 + '\n')
+            fichier_log.write(commande2 + '\n')
             print(commande1)
             print(commande2)
             if terminal:
@@ -539,7 +539,7 @@ def ecriture_box(liste=False):
             info = 'The box is made of ' + str(len(resi_liste)) + ' residus, if it is not the case then please check ' \
                                                                   'that the file is filled correctly (exemple : ' \
                                                                 '\'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')'
-            fichier_log.write(info)
+            fichier_log.write(info + '\n')
             print(info)
 
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
@@ -555,7 +555,7 @@ def ecriture_box(liste=False):
 if __name__ == '__main__':
     fichier_log = open('log_pipeline.txt', 'a')
     fichier_log.write(str(datetime.date.today()) + ' -' * 40)
-    fichier_log.write('START SEPARATION')
+    fichier_log.write('START SEPARATION\n')
 
     separation()
 
