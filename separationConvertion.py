@@ -38,7 +38,7 @@ def separation():
     :return:
     """
     transf_liste = [f for f in listdir(path + '/transformed') if isfile(join(path + '/transformed', f))]
-
+    fichier_log.write('START SEPARATION' + '\n' * 2)
     for element in transf_liste:
         e = element.split('_')
         if os.path.exists(e[0] + '_ligand1.pdb'):

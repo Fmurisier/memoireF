@@ -132,7 +132,7 @@ def check_file():
     if x in [f for f in listdir(path + dossier_path) if isfile(join(path + dossier_path, f))]:
         r = True
         if x[-4:] != '.pdb':
-            fichier_log.write('Decompression ref file\n\n'')
+            fichier_log.write('Decompression ref file\n\n')
             decompression_pdb(x)
         b, resi3 = ecriture_box()
         check_box = lecture_ref_file(x[:-3], resi3)
@@ -188,7 +188,7 @@ def decompression_pdb(file):
     fichier.write('print("END")\n quit')
     fichier.close()
     os.system('pymol -cp scriptPymol.pml')
-    fichier_log.write('Decompression of the reference file\n\n'')
+    fichier_log.write('Decompression of the reference file\n\n')
 
 
 def check_rmsd():
@@ -254,7 +254,7 @@ if __name__ == '__main__':
 
     fichier_log = open('log_pipeline.txt', 'a')
     fichier_log.write(str(datetime.date.today()) + ' -' * 20 + '\n\n')
-    fichier_log.write('START CHECK SUPERPOSITION\n\n')
+    fichier_log.write('START \n\n')
     if 'transformed' not in listdir(path):
         os.system('mkdir transformed')
 
