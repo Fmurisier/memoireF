@@ -344,20 +344,22 @@ def conversion_ligand_smile_pdbqt_liste(files):
 
     for ligne in files:
         c += 1
-        print('####################################################################################################\n' +
-              str(c) + '------------------>' + str(compteur) + '    ' + ligne +
-              '\n###################################################################################################\n')
+        indication = '#' * 100 + '\n' + str(c) + '-' * 17 + str(compteur) + ' ' * 4 + ligne + '\n' + '#' * 100 + '\n'
+        print(indication)
+        fichier_log.write(indication)
 
         # transforme le ligand de ref en pdbqt ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1.pdb')
 
         # commande qui transforme un smi en pdb ################### smi to pdb ##################
+        indication = 'acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile'
+        print(indication)
+        fichier_log.write(indication)
         if terminal:
             os.system('acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile')
             fichiers_smile_pdb = liste_file('_ligand1_smile')
             if ligne not in fichiers_smile_pdb:
-                fichier_log.write('\nerror smile : ' + ligne)
-        print('acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile')
+                fichier_log.write('\nerror smile : ' + ligne + '\n')
 
         # commande qui transforme un pdb en pdbqt ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1_smile.pdb')
