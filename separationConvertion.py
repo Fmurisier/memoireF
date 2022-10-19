@@ -259,6 +259,7 @@ def verification_ligand_box():
     fichier_log.write('Verification done\n')
     if LIGABS:
         print('ligand absent from Chain A: ' + '  '.join(LIGABS))
+        fichier_log.write('WARNING !\nligand absent from Chain A: ' + '  '.join(LIGABS) + '\n')
 
 
 def conversion_ligand_smile_pdbqt():
