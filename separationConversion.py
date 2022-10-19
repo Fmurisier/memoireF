@@ -28,6 +28,8 @@ terminal = False
 PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
 REF = '1T56'
 LIGABS = []
+LIGSALT = []
+RECALT = []
 liste_solute = ['GOL', 'HOH', 'MES', 'TRS', 'MG', 'SO4', 'CL', 'PO4', 'AZI', 'ACT', 'K', 'MN', 'SCN', 'ZN', 'BR']
 
 
@@ -115,7 +117,7 @@ def write_sep_file(e):
     # safety warning if there is no ligand detected for a structure
     if first:
         LIGABS.append(e)
-        m = 'No ligand detected ! ' + e
+        m = 'No ligand detected !\n' + e
         print(m)
         fichier_log.write(m + '\n')
     if errorlig:
@@ -124,12 +126,14 @@ def write_sep_file(e):
         fichier_log.write(m + '\n')
         # print('residu from the box having alternative conformation : ')
         print(lig_alt)
+        LIGSALT.append(e)
     if error:
         m = 'alternatif RECEPTOR conformation for : ' + e
         print(m)
         fichier_log.write(m + '\n')
         # print('residu from the box having alternative conformation : ')
         print(res_alt)
+        RECALT.append(e)
     fichier_recepteur.close()
     fichier.close()
     print(m)
@@ -220,8 +224,8 @@ def verification_ligand_box():
     ligands = liste_file_complet('ligand')
     print(center)
     print(length)
-    fichier_log.write('center = ' + center + '\n')
-    fichier_log.write('length = ' + length + '\n')
+    fichier_log.write('center = ' + str(center) + '\n')
+    fichier_log.write('length = ' + str(length) + '\n')
 
     xmin = float(center[2]) - float(length[2]) / 2
     xmax = float(center[2]) + float(length[2]) / 2
@@ -253,14 +257,22 @@ def verification_ligand_box():
         if not zmin < z < zmax:
             in_box = True
         if in_box:
-            print('WARNING ! ligand ' + i + ' is not in the box')
+            print('\n\nWARNING ! ligand ' + i + ' is not in the box')
             fichier_log.write('\n\nWARNING !\n ligand ' + i + ' is not in the box\n\n')
     print('Verification done')
     fichier_log.write('Verification done\n')
     if LIGABS:
-        print('ligand absent from Chain A: ' + '  '.join(LIGABS))
-        fichier_log.write('WARNING !\nligand absent from Chain A: ' + '  '.join(LIGABS) + '\n')
-
+        mess = 'WARNING !\nligand absent from Chain A:\n' + '  '.join(LIGABS) + '\n'
+        print(mess)
+        fichier_log.write(mess + '\n')
+    if LIGSALT:
+        mess = 'ligand with alternative conformation:\n' + '  '.join(LIGSALT) + '\n'
+        print(mess)
+        fichier_log.write(mess + '\n')
+    if RECALT:
+        mess = 'receptor with alternative conformation:\n' + '  '.join(RECALT) + '\n'
+        print(mess)
+        fichier_log.write(mess + '\n')
 
 def conversion_ligand_smile_pdbqt():
     """
@@ -555,7 +567,6 @@ def ecriture_box(liste=False):
 if __name__ == '__main__':
     fichier_log = open('log_pipeline.txt', 'a')
     fichier_log.write(str(datetime.date.today()) + ' -' * 40)
-    fichier_log.write('START SEPARATION\n')
 
     separation()
 
