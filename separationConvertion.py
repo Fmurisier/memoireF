@@ -432,22 +432,22 @@ def conversion_recepteur_pdbqt():
         os.system('mv *_recepteur* RECEPTEUR/pdbqtLOG')
 
 
-def liste_file(patern, file_path=''):
+def liste_file(pattern, file_path=''):
     """
-    Return the list of file
-    :param patern:
+    Return the list of file with the pattern given in argument present in the directory specified in argument
+    the name in the list do not have the extension file tag
+    :param pattern:
     :param file_path:
     :return:
     """
     list_file = []
 
-    # fait la liste des fichier dans le repertoire ou se trouve script.py
+    # list of file present in the directory specified in argument
     fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
 
-    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
-    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
+    # split the name of each file by '_' to select only the file name with the pattern given in argument
     for ligne in fichiers:
-        if patern in ligne:
+        if pattern in ligne:
             name = ligne.split('_')
             list_file.append(name[0])
     list_file.sort()
@@ -455,22 +455,22 @@ def liste_file(patern, file_path=''):
     return list_file
 
 
-def liste_file_complet(patern, file_path=''):
+def liste_file_complet(pattern, file_path=''):
     """
-    MODIFIER POUR QU'IL DONNE DIRECT LE NOM COMPLET
-    :param patern:
+    Return the list of file with the pattern given in argument present in the directory specified in argument
+    the name in the list HAVE the extension file tag
+    :param pattern:
     :param file_path:
     :return:
     """
     list_file = []
 
-    # fait la liste des fichier dans le repertoire ou se trouve script.py
+    # list of file present in the directory specified in argument
     fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
 
-    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
-    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
+    # if the pattern is present in the name file then the name complete name file is stored in the list_file
     for ligne in fichiers:
-        if patern in ligne:
+        if pattern in ligne:
             list_file.append(ligne)
     list_file.sort()
 
