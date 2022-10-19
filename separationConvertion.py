@@ -264,10 +264,7 @@ def verification_ligand_box():
 
 def conversion_ligand_smile_pdbqt():
     """
-    /home/rene/bin/ADFRsuite-1.0/bin/prepare_ligand -l 1T56_ligand1.pdb
-    obabel -ipdb 1T56_ligand1.pdb -osmi -O 1T56_ligand1.smi
-    acedrg -i 1T56_ligand1.smi -o 1T56_ligand1_smile
-    /home/rene/bin/ADFRsuite-1.0/bin/prepare_ligand -l 1T56_ligand1_smile.pdb
+    Convert the pdb file in smile then back in pdb to change the coordinate
     :return:
     """
     c = 0
@@ -335,10 +332,7 @@ def conversion_ligand_smile_pdbqt():
 
 def conversion_ligand_smile_pdbqt_liste(files):
     """
-    /home/rene/bin/ADFRsuite-1.0/bin/prepare_ligand -l 1T56_ligand1.pdb
-    obabel -ipdb 1T56_ligand1.pdb -osmi -O 1T56_ligand1.smi
-    acedrg -i 1T56_ligand1.smi -o 1T56_ligand1_smile
-    /home/rene/bin/ADFRsuite-1.0/bin/prepare_ligand -l 1T56_ligand1_smile.pdb
+    Convert the pdb file in smile then back in pdb to change the coordinate
     :return:
     """
     c = 0
@@ -353,10 +347,10 @@ def conversion_ligand_smile_pdbqt_liste(files):
         fichier_log.write(indication)
         fichier_log_smile.write(indication)
 
-        # transforme le ligand de ref en pdbqt ################# pdb to pdbqt ################
+        # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1.pdb')
 
-        # commande qui transforme un smi en pdb ################### smi to pdb ##################
+        # ################### smi to pdb ##################
         indication = 'acedrg -i ' + ligne + '_ligand1.smi -o ' + ligne + '_ligand1_smile'
         print(indication)
         fichier_log.write(indication)
@@ -368,7 +362,7 @@ def conversion_ligand_smile_pdbqt_liste(files):
                 fichier_log.write('\nerror smile : ' + ligne + '\n')
                 fichier_log_smile.write('\nerror smile : ' + ligne + '\n')
 
-        # commande qui transforme un pdb en pdbqt ################# pdb to pdbqt ################
+        # ################# pdb to pdbqt ################
         conversion_pdbqt(ligne + '_ligand1_smile.pdb')
 
     if terminal:
