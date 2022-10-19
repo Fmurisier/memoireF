@@ -1,7 +1,7 @@
 """
 Superposition pymol
 Editor : Murisier Frederic
-Date : 2022
+Date : feb 2022
 
 Superpose every structure to the structure reference given in argument
 listing every (compressed) pdb file present in the repertory
@@ -52,7 +52,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
     """
     fichier = open('scriptPymol.pml', 'w')
     fichier.write('output = open("rmsd_result.txt", "w")\n')
-    fichier_log.write('WRITING PYMOL SCRIPT')
+    fichier_log.write('WRITING PYMOL SCRIPT\n\n')
     for e in liste_pdb:
         name = e.split('.')[0]
         ref_name = ref.split('.')[0]
@@ -72,7 +72,7 @@ def ecriture_pymol_all(liste_pdb, ref, box):
     fichier.write('output.close()\n')
     fichier.write('print("END")\n quit')
     fichier.close()
-    fichier_log.write('PYMOL SCRIPT DONE')
+    fichier_log.write('PYMOL SCRIPT DONE\n\n')
 
 
 def ecriture_box(liste=False):
@@ -102,7 +102,7 @@ def ecriture_box(liste=False):
                   ' residus, if it is not the case then please check that the file is filled correctly (' \
                   ' exemple : \'residues A:LEU87,LEU90,MET102,TRP103,ILE107,... \')'
             print(information)
-            fichier_log.write(information)
+            fichier_log.write(information + '\n\n')
 
         commande = '_poche, resi ' + '+'.join(resi_liste) + ' and model '
         if liste:
@@ -111,7 +111,7 @@ def ecriture_box(liste=False):
     else:
         error_message = 'error file residus.txt don\'t exist ! '
         print(error_message)
-        fichier_log.write(error_message)
+        fichier_log.write(error_message + '\n\n')
         return 'error', ''
 
 
@@ -132,7 +132,7 @@ def check_file():
     if x in [f for f in listdir(path + dossier_path) if isfile(join(path + dossier_path, f))]:
         r = True
         if x[-4:] != '.pdb':
-            fichier_log.write('Decompression ref file')
+            fichier_log.write('Decompression ref file\n\n'')
             decompression_pdb(x)
         b, resi3 = ecriture_box()
         check_box = lecture_ref_file(x[:-3], resi3)
@@ -171,7 +171,7 @@ def lecture_ref_file(ref, liste_code3):
         warning_message = 'WARNING !!! Error the residus of the box are not present in the structure, ' \
                           'please check again the residus'
         print(warning_message)
-        fichier_log.write(warning_message)
+        fichier_log.write(warning_message+ '\n\n')
 
     return box_ok
 
@@ -188,7 +188,7 @@ def decompression_pdb(file):
     fichier.write('print("END")\n quit')
     fichier.close()
     os.system('pymol -cp scriptPymol.pml')
-    fichier_log.write('Decompression of the reference file')
+    fichier_log.write('Decompression of the reference file\n\n'')
 
 
 def check_rmsd():
@@ -206,10 +206,10 @@ def check_rmsd():
         if float(ligne[1][:-1]) > 1:
             problem = True
             print('\nWARNING ' + str(l))
-            fichier_log.write('\nWARNING ' + str(l))
+            fichier_log.write('\nWARNING ' + str(l)+ '\n\n')
     if not problem:
         print('\nNo RMSD problem detected\n')
-        fichier_log.write('\nNo RMSD problem detected\n')
+        fichier_log.write('\nNo RMSD problem detected\n\n')
 
 
 def superpose_all():
@@ -217,22 +217,23 @@ def superpose_all():
     Check if the reference structure exists in the directory if yes then executes the function writing the pymol file
     :return:
     """
-    fichier_log.write('START CHECK SUPERPOSITION')
+    fichier_log.write('START CHECK SUPERPOSITION\n\n')
     liste_pdb = liste_file('pdb')
     for i in range(len(liste_pdb)):
         liste_pdb[i] = liste_pdb[i].split('.')[0]
     present, ref_structure, b = check_file()
     if present:
-        fichier_log.write('CHECK SUPERPOSITION OK')
-        fichier_log.write('START SUPERPOSITION')
+        fichier_log.write('CHECK SUPERPOSITION OK\n\n')
+        fichier_log.write('START SUPERPOSITION\n\n')
         ecriture_pymol_all(liste_file('pdb'), ref_structure, b)
         if terminal:
             os.system('pymol -cp scriptPymol.pml')
             check_rmsd()
             os.system('mv *_transformed.pdb transformed/')
     else:
-        print('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
-        fichier_log.write('Fichier absent du repertoire entrez la commande : python superposition.py NomFichierValide')
+        error_mess = 'File absent from directory, try : python superposition.py ValidFileName\n\n'
+        print(error_mess)
+        fichier_log.write(error_mess)
 
 
 def superpose_liste(file_p):
@@ -252,8 +253,8 @@ def superpose_liste(file_p):
 if __name__ == '__main__':
 
     fichier_log = open('log_pipeline.txt', 'a')
-    fichier_log.write(str(datetime.date.today()) + ' -' * 40)
-    fichier_log.write('START CHECK SUPERPOSITION')
+    fichier_log.write(str(datetime.date.today()) + ' -' * 20 + '\n\n')
+    fichier_log.write('START CHECK SUPERPOSITION\n\n')
     if 'transformed' not in listdir(path):
         os.system('mkdir transformed')
 
