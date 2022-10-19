@@ -220,8 +220,8 @@ def verification_ligand_box():
     ligands = liste_file_complet('ligand')
     print(center)
     print(length)
-    fichier_log.write('center = ' + center)
-    fichier_log.write('length = ' + length)
+    fichier_log.write('center = ' + center + '\n')
+    fichier_log.write('length = ' + length + '\n')
 
     xmin = float(center[2]) - float(length[2]) / 2
     xmax = float(center[2]) + float(length[2]) / 2
@@ -232,6 +232,9 @@ def verification_ligand_box():
     print('x ', xmin, xmax)
     print('y ', ymin, ymax)
     print('z ', zmin, zmax)
+    fichier_log.write('x ' + str(xmin) + '---' + str(xmax) + '\n')
+    fichier_log.write('y ' + str(ymin) + '---' + str(ymax) + '\n')
+    fichier_log.write('z ' + str(zmin) + '---' + str(zmax) + '\n')
     for i in ligands:
         # print(ligands[i])
         # lig = open('../Donnee_memoire/ligand/' + i).readlines()
