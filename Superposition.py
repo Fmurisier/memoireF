@@ -247,7 +247,7 @@ def superpose_liste(file_p):
     if terminal:
         os.system('pymol -cp scriptPymol.pml')
         check_rmsd()
-        os.system('mv *_transformed.pdb transformed/')
+        # os.system('mv *_transformed.pdb transformed/')
 
 
 if __name__ == '__main__':
