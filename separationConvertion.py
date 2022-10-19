@@ -111,29 +111,29 @@ def write_sep_file(e):
                     fichier_ligand = open(e + '_ligand' + str(lc) + '.pdb', 'a')
                     fichier_ligand.write(i)
                     fichier_ligand.close()
-    m=''
+    m = ''
     # safety warning if there is no ligand detected for a structure
     if first:
         LIGABS.append(e)
         m = 'No ligand detected ! ' + e
         print(m)
-        fichier_log.write(m)
+        fichier_log.write(m + '\n')
     if errorlig:
         m = 'alternatif LIGAND conformation for : ' + e
         print(m)
-        fichier_log.write(m)
+        fichier_log.write(m + '\n')
         # print('residu from the box having alternative conformation : ')
         print(lig_alt)
     if error:
         m = 'alternatif RECEPTOR conformation for : ' + e
         print(m)
-        fichier_log.write(m)
+        fichier_log.write(m + '\n')
         # print('residu from the box having alternative conformation : ')
         print(res_alt)
     fichier_recepteur.close()
     fichier.close()
     print(m)
-    fichier_log.write('END SEPARATION')
+    fichier_log.write('END SEPARATION' + '\n' * 2)
 
 
 def lecture_residu():
@@ -154,7 +154,7 @@ def lecture_residu():
     if residus[-1] == '\n':
         residus = residus[:-1]
     print(residus)
-    fichier_log.write('Residus = ' + residus)
+    fichier_log.write('Residus = ' + residus + '\n' *2)
     return residus
 
 
@@ -169,13 +169,12 @@ def check_error_grid(file):
     fichier = open(file, 'r')
     for l in fichier:
         if 'ERROR' in l:
-            print('\nWARNING PROBLEM agdr crashes....\n')
-            print(l)
-            fichier_log.write('\nWARNING PROBLEM agdr crashes....\n' + l)
+            print('\nWARNING PROBLEM agdr crashes....\n' + l)
+            fichier_log.write('\nWARNING PROBLEM agdr crashes....\n' + l + '\n')
             restart = True
     if not restart:
         print('\nNo problem detected in the grid creation\n')
-        fichier_log.write('\nNo problem detected in the grid creation\n')
+        fichier_log.write('\nNo problem detected in the grid creation\n' + '\n')
     return restart
 
 
@@ -196,6 +195,7 @@ def grids(fichier):
         os.system(commande)
     else:
         print(commande)
+    fichier_log.write('\n\nCommande line :\n' + commande + '\n')
 
 
 def verification_ligand_box():
@@ -220,6 +220,9 @@ def verification_ligand_box():
     ligands = liste_file_complet('ligand')
     print(center)
     print(length)
+    fichier_log.write('center = ' + center)
+    fichier_log.write('length = ' + length)
+
     xmin = float(center[2]) - float(length[2]) / 2
     xmax = float(center[2]) + float(length[2]) / 2
     ymin = float(center[3]) - float(length[3]) / 2
