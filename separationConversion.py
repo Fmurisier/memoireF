@@ -578,6 +578,10 @@ if __name__ == '__main__':
 
     mol2()
 
+    if 'rcLog' not in listdir(path):
+        os.system('mkdir rcLog')
+    os.system('mv *_recepteur* rcLog/')
+
     fichier_log.close()
 
     '''
