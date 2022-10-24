@@ -261,18 +261,7 @@ def verification_ligand_box():
             fichier_log.write('\n\nWARNING !\n ligand ' + i + ' is not in the box\n\n')
     print('Verification done')
     fichier_log.write('Verification done\n')
-    if LIGABS:
-        mess = 'WARNING !\nligand absent from Chain A:\n' + '  '.join(LIGABS) + '\n'
-        print(mess)
-        fichier_log.write(mess + '\n')
-    if LIGSALT:
-        mess = 'ligand with alternative conformation:\n' + '  '.join(LIGSALT) + '\n'
-        print(mess)
-        fichier_log.write(mess + '\n')
-    if RECALT:
-        mess = 'receptor with alternative conformation:\n' + '  '.join(RECALT) + '\n'
-        print(mess)
-        fichier_log.write(mess + '\n')
+
 
 
 def conversion_ligand_smile_pdbqt():
@@ -564,6 +553,21 @@ def ecriture_box(liste=False):
         return 'error', ''
 
 
+def alternatif_print():
+    if LIGABS:
+        mess = 'WARNING !\nligand absent from Chain A:\n' + '  '.join(LIGABS) + '\n'
+        print(mess)
+        fichier_log.write(mess + '\n')
+    if LIGSALT:
+        mess = 'ligand with alternative conformation:\n' + '  '.join(LIGSALT) + '\n'
+        print(mess)
+        fichier_log.write(mess + '\n')
+    if RECALT:
+        mess = 'receptor with alternative conformation:\n' + '  '.join(RECALT) + '\n'
+        print(mess)
+        fichier_log.write(mess + '\n')
+
+
 if __name__ == '__main__':
     fichier_log = open('log_pipeline.txt', 'a')
     fichier_log.write(str(datetime.date.today()) + ' -' * 40)
@@ -581,6 +585,8 @@ if __name__ == '__main__':
     if 'rcLog' not in listdir(path):
         os.system('mkdir rcLog')
     os.system('mv *_recepteur* rcLog/')
+
+    alternatif_print
 
     fichier_log.close()
 
