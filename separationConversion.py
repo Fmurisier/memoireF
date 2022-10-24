@@ -586,7 +586,7 @@ if __name__ == '__main__':
         os.system('mkdir rcLog')
     os.system('mv *_recepteur* rcLog/')
 
-    alternatif_print
+    alternatif_print()
 
     fichier_log.close()
 
