@@ -281,7 +281,7 @@ def conversion_ligand_smile_pdbqt():
     :return:
     """
     c = 0
-    fichier_log_smile = open('log_smile', 'w')
+    fichier_log_smile = open('smile_log.txt', 'w')
     fichiers = liste_file('_ligand1')
     fichier = ['3Q0V', '5MYM', '5NZ1']
     compteur = len(fichiers)
