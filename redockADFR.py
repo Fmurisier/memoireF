@@ -195,16 +195,15 @@ def grid_dock_liste(start=0, end=82):
 
 def check_summary():
     """
-    verifie la taille des fichiers resultat, dans le cas ou la taille du fichier est inferieur a 3000 octets cela
-    signifie que le docking a echoue ou qu'il n'a pas pu s'effectuer.
+    Check the length of the file in the result directory. If the file is too small (< 3000 octet) the docking failled.
     :return:
     """
-
     error = open('taille_error.txt', 'w')
     if terminal:
         os.system('ls -l AUTODOCKFR/*summary* > taille.txt')
 
     taille = open('taille.txt', 'r')
+    fichier_log.write('\n\n\nChecking if the docking failled...\n')
     for ligne in taille:
         sep = ligne.split(' ')
         d = 0
@@ -212,8 +211,10 @@ def check_summary():
             d = 1
         if int(sep[4 + d]) < 3000:
             name = sep[-1].split('_')
-            error.write(name[0] + '-------->' + sep[4 + d] + '-------->' + sep[-1])
+            error.write(name[0] + '-' * 8 + sep[4 + d] + '-' * 8 + sep[-1])
+            fichier_log.write(name[0] + '-' * 8 + sep[4 + d] + '-' * 8 + sep[-1])
     taille.close()
+    fichier_log.write('\n\n...Checking Done\n\n')
 
 
 def ttt_resultat(name, file_result):
