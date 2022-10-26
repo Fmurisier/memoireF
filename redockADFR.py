@@ -93,24 +93,24 @@ def obtention_liste_pdbqt_H():
 
 def grids(fichier):
     """
-    effectue la creation du fichier target = la grille/ box pour le docking a partir du fichier recepteur
-    un exemple de la commande qui doit etre effectue
+    Create the target file (= grid or box) for the docking
+    an exemple of commande line :
     /home/rene/bin/ADFRsuite-1.0/bin/agfr -b residues A:LEU87,LEU90,MET102,TRP103,ILE107,PHE110,PHE114,TRP138,MET142,
     TRP145,TYR148,THR149,VAL152,ASN176,ASN179,GLU180,LEU183,PHE184,TRP207 -r RECEPTEUR/PDBQT/1T56_recepteur_H.pdbqt -o
     1T56
-    fonction qui contien une boucle pour essayer de minimiser les echecs de creation de grille, en cas d'echec de
-    creation de grille relancement de la ligne de commande pour effectuer de nouveau la creation de la grille
-    :param fichier: nom de la structure recepteur a partir de laquelle il faut cree la grille
+    loop to minimise the faillure when creating the box
+    :param fichier: name of the receptor file from which we need to create the grid
     :return:
     """
     boucle = True
+    commande = PATH + 'agfr -b ' + RESIDUES + ' -r RECEPTEUR/PDBQT/' + fichier + '_recepteur_H.pdbqt -o target/' + \
+               fichier
+
     while boucle:
         if terminal:
-            os.system(PATH + 'agfr -b ' + RESIDUES + ' -r RECEPTEUR/PDBQT/' + fichier + '_recepteur_H.pdbqt -o target/'
-                      + fichier)
-        else:
-            print(PATH + 'agfr -b ' + RESIDUES + ' -r RECEPTEUR/PDBQT/' + fichier + '_recepteur_H.pdbqt -o target/' +
-                  fichier)
+            os.system(commande)
+        print(commande)
+        fichier_log.write('\n\nCommande line :\n' + commande + '\n')
         boucle = check_error_grid(fichier + '.log')
 
 
