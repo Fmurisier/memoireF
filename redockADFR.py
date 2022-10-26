@@ -222,7 +222,6 @@ def ttt_resultat(name, file_result):
     file + _result_summary.dlg
     :return:
     """
-
     file = open('AUTODOCKFR/' + name + '_result_summary.dlg', 'r')
 
     p = False
@@ -246,28 +245,26 @@ def ttt_resultat(name, file_result):
             if float(e[3]) < best_score:
                 best_score = float(e[3])
                 top = e[0]
-    file_result.write(name + ' top : ' + top + '  score :  ' + str(best_score) + ' \n')
-    print(name + '---> top : ' + top + '  score :  ' + str(best_score))
+    message_info = name + ' top : ' + top + '  score :  ' + str(best_score) + ' \n'
+    file_result.write(message_info)
+    print(message_info)
+    fichier_log.write(message_info)
 
 
 def ttt_resultat_all():
     """
-        ### one by one
-        n = 8
-    liste = liste_file('summary', '/AUTODOCKFR/')
-    resultat_adfr = open('resultatADFR.txt', 'w')
-    print(liste[n])
-    ttt_resultat(liste[n])
-    resultat_adfr.close()
+
     :return:
     """
-    lise_error = ['3Q0V', '5MYM', '5NZ1']
+    # list if you need to exclude some sturctures
+    # exemple : liste_error = ['3Q0V', '5MYM', '5NZ1']
+    liste_error = ['']
 
     liste = liste_file('summary', '/AUTODOCKFR/')
     resultat_adfr = open('resultatADFR.txt', 'w')
 
     for e in liste:
-        if e not in lise_error:
+        if e not in liste_error:
             ttt_resultat(e, resultat_adfr)
     resultat_adfr.close()
 
