@@ -338,11 +338,15 @@ if __name__ == '__main__':
     # grid_for_all()
     # grids('model_alphaFold')
     # dock('1T56')
+
+    grid_dock_liste(0, 25)
+    #check_summary()
+    # ttt_resultat_all()
+    # check_result()
+
+    '''
     liste = ['5MYM']
     for e in liste:
         grids(e)
         dock(e)
-    # grid_dock_liste(0, 25)
-    check_summary()
-    # ttt_resultat_all()
-    # check_result()
+        '''
