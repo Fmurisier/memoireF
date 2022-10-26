@@ -12,6 +12,8 @@ import datetime
 import os
 from os import listdir
 from os.path import isfile, join
+import matplotlib.pyplot as plt
+import numpy as np
 
 path = os.getcwd()
 terminal = False
@@ -219,7 +221,7 @@ def check_summary():
 
 def ttt_resultat(name, file_result):
     """
-    file + _result_summary.dlg
+
     :return:
     """
     file = open('AUTODOCKFR/' + name + '_result_summary.dlg', 'r')
@@ -271,7 +273,7 @@ def ttt_resultat_all():
 
 def check_result():
     """
-    classement des resultats par top
+    Rank the result by top
     :return:
     """
     result = open('resultatADFR.txt', 'r')
@@ -308,13 +310,13 @@ def check_result():
     data4 = len(top_else)
     data5 = len(fail)
 
-    year = ["AutodockFR"]
+    name = ["AutodockFR"]
 
     plt.figure(figsize=(10, 10))
-    plt.bar(year, data4, color="red", label="else --> " + str(data4))
-    plt.bar(year, data3, color="orange", bottom=np.array(data4), label="top10 --> " + str(data3))
-    plt.bar(year, data2, color="yellow", bottom=np.array(data4) + np.array(data3), label="top3 --> " + str(data2))
-    plt.bar(year, data1, color="green", bottom=np.array(data4) + np.array(data3) + np.array(data2),
+    plt.bar(name, data4, color="red", label="else --> " + str(data4))
+    plt.bar(name, data3, color="orange", bottom=np.array(data4), label="top10 --> " + str(data3))
+    plt.bar(name, data2, color="yellow", bottom=np.array(data4) + np.array(data3), label="top3 --> " + str(data2))
+    plt.bar(name, data1, color="green", bottom=np.array(data4) + np.array(data3) + np.array(data2),
             label="top1 --> " + str(data1))
 
     plt.legend(loc="lower left", bbox_to_anchor=(0.8, 1.0))
