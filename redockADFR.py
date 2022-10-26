@@ -2,13 +2,13 @@
 Redock autodock FR
 Editor : Murisier Frederic
 
-Date : 2022
+Date : mars 2022
 
-effectue le test 0 pour AutodockFR, docking de chaque recepteur avec son / ses ligands et evaluation si le docking a
-bien fonctionne
+redocking for AutodockFR : docking each receptor with his ligand(s) and check if the docking went well
 
 Python version : 3.8
 """
+import datetime
 import os
 from os import listdir
 from os.path import isfile, join
@@ -20,6 +20,10 @@ PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
 
 
 def lecture_residu():
+    """
+    extraction of the name and number of the different residus of the box
+    :return:
+    """
     resi_file = open('residus.txt', 'r').readlines()
     residus = ''
     if len(resi_file) > 1:
@@ -30,7 +34,10 @@ def lecture_residu():
 
     if 'residues' not in residus:
         residus = 'residues A:' + residus
+    if residus[-1] == '\n':
+        residus = residus[:-1]
     print(residus)
+    fichier_log.write('Residus = ' + residus + '\n' * 2)
     return residus
 
 
@@ -316,6 +323,9 @@ def check_result():
 
 
 if __name__ == '__main__':
+    fichier_log = open('log_ADFR_reDock.txt', 'a')
+    fichier_log.write(str(datetime.date.today()) + ' -' * 40)
+
     RESIDUES = lecture_residu()
     if terminal:
         ldoc = ['target', 'AUTODOCKFR']
