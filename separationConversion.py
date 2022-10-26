@@ -581,10 +581,6 @@ if __name__ == '__main__':
 
     mol2()
 
-    if 'rcLog' not in listdir(path):
-        os.system('mkdir rcLog')
-    os.system('mv *_recepteur* rcLog/')
-
     alternatif_print()
 
     fichier_log.close()
@@ -595,4 +591,9 @@ if __name__ == '__main__':
     for e in listeX:
         write_sep_file(e)
     
+    
+    
+    if 'rcLog' not in listdir(path):
+        os.system('mkdir rcLog')
+    os.system('mv *_recepteur* rcLog/')
     '''

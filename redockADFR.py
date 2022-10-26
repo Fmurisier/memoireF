@@ -172,7 +172,7 @@ def dock(file):
 def grid_dock_liste(start=0, end=82):
     """
     Create the grid and docking for each structur in the liste of all receptor from indice start to end
-    the aim of this parameter if to allows the running of some part of the list
+    the aim of this parameter is to allow the running of some part of the list
     :param start:
     :param end:
     :return:
@@ -334,10 +334,11 @@ if __name__ == '__main__':
             if dossier not in listdir(path):
                 os.system('mkdir ' + dossier)
 
-    liste = ['5MYM']
+
     # grid_for_all()
     # grids('model_alphaFold')
     # dock('1T56')
+    liste = ['5MYM']
     for e in liste:
         grids(e)
         dock(e)
