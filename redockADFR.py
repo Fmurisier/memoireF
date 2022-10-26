@@ -84,7 +84,7 @@ def obtention_liste_pdbqt_H():
             c += 1
 
     list_pdbqt.sort()
-    message = 'Number of pdb file in the directory : ' + str(c)
+    message = 'Number of pdb file in the directory : ' + str(c) + '\n'
     print(message)
     fichier_log.write(message)
 
@@ -151,8 +151,8 @@ def grid_for_all():
 
 def dock(file):
     """
-    effectue le docking pour la structure donnee en argument.
-    exemple de commande:
+    Run the docking for the structure in argument
+    example of commande:
     /home/rene/bin/ADFRsuite-1.0/bin/adfr -l LIGAND/PDBQT/1T56_ligand1_smile.pdbqt -t target/1T56.trg -r
     LIGAND/PDBQT/1T56_ligand1.pdbqt -p 150 -e 5000000 -n 100 -c 6 -O -o 1T56_result -J dock
     :param file:
@@ -163,8 +163,8 @@ def dock(file):
                file + '_result -J dock'
     if terminal:
         os.system(commande)
-    else:
-        print(commande)
+    print(commande)
+    fichier_log.write(commande + '\n')
 
 
 def grid_dock_liste(start=0, end=82):
@@ -182,17 +182,18 @@ def grid_dock_liste(start=0, end=82):
     """
     liste = liste_file('H.pdbqt', '/RECEPTEUR/PDBQT/')
     c = 0
+    sep = '#' * 110 + '\n'
     for element in range(start, end):
         if terminal:
             c += 1
-            print(
-                '##################################################################################################\n' +
-                str(c) + '------------------>' + str(end - start) + '    ' + liste[element] +
-                '\n#################################################################################################\n')
+            info_message = sep + str(c) + '-' * 18 + str(end - start) + ' ' * 4 + liste[element] + '\n' + sep
+            print(info_message)
+            fichier_log.write(info_message)
             grids(liste[element])
             dock(liste[element])
-        else:
-            print(str(element) + ' --> ' + liste[element])
+
+        print(str(element) + ' --> ' + liste[element])
+        fichier_log.write(str(element) + ' --> ' + liste[element] + '\n')
 
 
 def check_summary():
