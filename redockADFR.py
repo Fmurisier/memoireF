@@ -84,7 +84,7 @@ def obtention_liste_pdbqt_H():
             c += 1
 
     list_pdbqt.sort()
-    message = 'Nombre de pdb file transforme dans le dossier : ' + str(c)
+    message = 'Number of pdb file in the directory : ' + str(c)
     print(message)
     fichier_log.write(message)
 
