@@ -169,18 +169,15 @@ def dock(file):
 
 def grid_dock_liste(start=0, end=82):
     """
-    effectue la creation de la grille et du docking pour chaque structure de la liste d'indice arg1 jusqu'a l'indice
-    arg2
-
-    0,20
-    20,40
-    40,60
-    60,82
+    Create the grid and docking for each structur in the liste of all receptor from indice start to end
+    the aim of this parameter if to allows the running of some part of the list
     :param start:
     :param end:
     :return:
     """
     liste = liste_file('H.pdbqt', '/RECEPTEUR/PDBQT/')
+    if end == 82:
+        end = len(liste)
     c = 0
     sep = '#' * 110 + '\n'
     for element in range(start, end):
