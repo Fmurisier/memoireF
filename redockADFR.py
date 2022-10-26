@@ -116,35 +116,37 @@ def grids(fichier):
 
 def check_error_grid(file):
     """
-    verifie s'il y a eu des erreurs lors de la creation des gilles, si oui affichage d'un message d'erreur sur le
-    terminal indiquant que agfr a crashe et sur quel structure. enregistrement egalement de ce message d'erreur dans un
-    fichier fileerror.txt pour une consultation rapide des erreurs potentielles
-    :param file: fichier a verifier
+    Check if there is any error during the creation of the box. If yes, error message with the information in a
+    fileerror.txt file
+    :param file: file to check
     :return:
     """
     restart = False
     fichier = open('target/' + file, 'r')
-    fichierlog = open('fileERROR.txt', 'a')
+    fichierlog = open('fileERROR_Grid.txt', 'a')
     for l in fichier:
         if 'ERROR' in l:
-            print('\nWARNING PROBLEM agdr crashes....\n')
-            print(l)
-            fichierlog.write('\nWARNING PROBLEM agdr crashes....\n' + l)
+            message = '\nWARNING PROBLEM agdr crashes....\n' + l + '\n'
+            print(message)
+            fichierlog.write(message)
+            fichier_log.write(message)
             restart = True
     if not restart:
-        print('\nNo problem detected in the grid creation\n')
+        message = '\n\n\nNo problem detected in the grid creation\n\n\n'
+        print(message)
+        fichier_log.write(message)
     fichierlog.close()
     return restart
 
 
 def grid_for_all():
     """
-    effectue la creation de grille pour le docking pour toutes les structures
+    Create the grid for each structure calling the grid function for every file
     :return:
     """
-    liste = obtention_liste_pdbqt_H()
-    for e in liste:
-        grids(e)
+    liste_grid = obtention_liste_pdbqt_H()
+    for element in liste_grid:
+        grids(element)
 
 
 def dock(file):
