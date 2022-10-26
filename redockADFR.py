@@ -165,7 +165,7 @@ def dock(file):
         print(commande)
 
 
-def grid_dock_liste(start=0,end=82):
+def grid_dock_liste(start=0, end=82):
     """
     effectue la creation de la grille et du docking pour chaque structure de la liste d'indice arg1 jusqu'a l'indice
     arg2
@@ -179,7 +179,7 @@ def grid_dock_liste(start=0,end=82):
     :return:
     """
     liste = liste_file('H.pdbqt', '/RECEPTEUR/PDBQT/')
-    c=0
+    c = 0
     for element in range(start, end):
         if terminal:
             c += 1
@@ -216,7 +216,7 @@ def check_summary():
     taille.close()
 
 
-def ttt_resultat(name,file_result):
+def ttt_resultat(name, file_result):
     """
     file + _result_summary.dlg
     :return:
@@ -316,7 +316,8 @@ def check_result():
     plt.bar(year, data4, color="red", label="else --> " + str(data4))
     plt.bar(year, data3, color="orange", bottom=np.array(data4), label="top10 --> " + str(data3))
     plt.bar(year, data2, color="yellow", bottom=np.array(data4) + np.array(data3), label="top3 --> " + str(data2))
-    plt.bar(year, data1, color="green", bottom=np.array(data4) + np.array(data3) + np.array(data2), label="top1 --> "  + str(data1))
+    plt.bar(year, data1, color="green", bottom=np.array(data4) + np.array(data3) + np.array(data2),
+            label="top1 --> " + str(data1))
 
     plt.legend(loc="lower left", bbox_to_anchor=(0.8, 1.0))
     plt.show()
@@ -333,14 +334,14 @@ if __name__ == '__main__':
             if dossier not in listdir(path):
                 os.system('mkdir ' + dossier)
 
-    liste = [ '5MYM']
+    liste = ['5MYM']
     # grid_for_all()
-    #grids('model_alphaFold')
+    # grids('model_alphaFold')
     # dock('1T56')
     for e in liste:
         grids(e)
         dock(e)
-    #grid_dock_liste(0, 25)
+    # grid_dock_liste(0, 25)
     check_summary()
-    #ttt_resultat_all()
-    #check_result()
+    # ttt_resultat_all()
+    # check_result()

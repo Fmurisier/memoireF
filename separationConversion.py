@@ -263,7 +263,6 @@ def verification_ligand_box():
     fichier_log.write('Verification done\n')
 
 
-
 def conversion_ligand_smile_pdbqt():
     """
     Convert the pdb file in smile then back in pdb to change the coordinate
