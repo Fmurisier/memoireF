@@ -66,17 +66,16 @@ def liste_file(pattern, file_path=''):
 
 def obtention_liste_pdbqt_H():
     """
-    va effectuer la liste des fichiers pdb transforme dans le repertoire dans lequel le script.py se trouve
+    Return the list of the pdb file transformed in the current directory
     :return: list
     """
     list_pdbqt = []
     c = 0
 
-    # fait la liste des fichier dans le repertoire ou se trouve script.py
+    # list of the pdb file transformed in the current directory
     fichiers = [f for f in listdir(path) if isfile(join(path, f))]
 
-    # pour chaque nom de fichier on separe le nom par '_' pour chercher uniquement les fichiers comportant le prefix
-    # '_transformed.pdb' et on stocke tous les noms de fichier dans une liste
+    # for each file name split by '_' to find only the file with '_transformed.pdb' and then store the names in a list
     for ligne in fichiers:
         name = ligne.split('_')
 
@@ -85,7 +84,9 @@ def obtention_liste_pdbqt_H():
             c += 1
 
     list_pdbqt.sort()
-    print('Nombre de pdb file transforme dans le dossier : ', c)
+    message = 'Nombre de pdb file transforme dans le dossier : ' + str(c)
+    print(message)
+    fichier_log.write(message)
 
     return list_pdbqt
 
