@@ -191,8 +191,8 @@ def grid_dock_liste(start=0, end=82):
             grids(liste[element])
             dock(liste[element])
 
-        print(str(element) + ' --> ' + liste[element])
-        fichier_log.write(str(element) + ' --> ' + liste[element] + '\n')
+        print(str(element + 1) + ' --> ' + liste[element])
+        fichier_log.write(str(element + 1) + ' --> ' + liste[element] + '\n')
 
 
 def check_summary():
