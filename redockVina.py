@@ -19,6 +19,7 @@ PATH = '/home/rene/bin/AutoDockVina1.2/vina_1.2.2_linux_x86_64'
 
 def createBoxTxt(f):
     """
+    Creation of the box = txt file with the coordinate of the box
     creation de la box = fichier texte contenant les coordonnees de la box
     :param f: nom de la structure pour laquelle il faut cree la box
     :return:
