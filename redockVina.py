@@ -1,10 +1,9 @@
 """
-Redock Vina vina
+Redock Vina
 Editor : Murisier Frederic
-Date : 2022
+Date : mars 2022
 
-effectue le test 0 pour Vina, docking de chaque recepteur avec son / ses ligands et evaluation si le docking a
-bien fonctionne
+redocking for Vina : docking each receptor with his ligand(s) and check if the docking went well
 
 Python version : 3.8
 """
