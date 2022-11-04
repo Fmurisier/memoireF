@@ -122,22 +122,21 @@ def result_vina(file):
 
 def ecriturelig1(structure, m, lig):
     """
-    creation du fichier comparaison et ajout du calcul rmsd par dock rmsd pour le ligand 1 de la structure entree en 
-    argument 
+    Create the comparaison file and adding the rmsd for each dock for the first ligand of the argument structur
     :param structure: 
     :param m: 
     :param lig: 
     :return: 
     """
-    # initialisation du document contenant la comparaison
+    # creating the comparison file
     resultfile = open('VINA/RESULT/comparaison_' + structure + '.txt', 'w')
     resultfile.write('Nombre de models = ' + str(m) + '\n')
     m += 1
     resultfile.write('Model | affinite | Docks RMSD |\n')
     resultfile.write('      | Kcal/mol | Angstrom   |\n')
-    # conversion et remplissage du doc
+    # conversion and filling the document
     for n in range(1, m):
-        # conversion du model en mol2, pas besoin de le faire pour le ligand car il a deja ete transforme avant
+        # conversion of the model in mol2, no need for the ligand because we already did it
         commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + structure + '/' + structure + 'result_' + str(n) + \
                    '.pdbqt -O ' + 'VINA/RESULT/model_' + structure + '/' + structure + '_model_' + str(n) + '.mol2'
         if terminal:
