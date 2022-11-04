@@ -96,7 +96,7 @@ def result_vina(file):
     model = open('VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) + '.pdbqt', 'w')
     for ligne in fichier:
         if 'MODEL' in ligne:
-            commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) +\
+            commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) + \
                        '.pdbqt -O ' + 'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c) + '.mol2'
             if terminal:
                 os.system(commande)
@@ -108,9 +108,9 @@ def result_vina(file):
         model.write(ligne)
     model.close()
     fichier.close()
-    
+
     # conversion of the result file un mol2 in prevision of the rescoring
-    commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) + '.pdbqt -O ' +\
+    commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) + '.pdbqt -O ' + \
                'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c - 1) + '.mol2'
     if terminal:
         os.system(commande)
@@ -153,7 +153,7 @@ def ecriturelig1(structure, m, lig):
         print(commande)
 
         # extraction of the rescoring
-        dockrmsd='NA'
+        dockrmsd = 'NA'
         rescore_file = open('rescore_result.txt', 'r')
         rescore_lignes = rescore_file.readlines()
         for i in rescore_lignes:
@@ -175,7 +175,7 @@ def ecriturelig1(structure, m, lig):
 
 def ecritureligs(structure, m, lig):
     """
-    ajout du calcul rmsd par dock rmsd pour le ligand 2 ou 3 de la structure entree en argument au fichier comparaison
+    Adding the calculated rmsd for each docking for the ligand 2 and 3 of the argument structur in the comparaison file
     :param structure: 
     :param m: 
     :param lig: 
@@ -186,21 +186,21 @@ def ecritureligs(structure, m, lig):
     resultfile.close()
     resultfile = open('VINA/RESULT/comparaison_' + structure + '.txt', 'w')
     print(old)
-    n=0
-    for l in old:
-        if l == old[0]:
-            resultfile.write(l)
+    n = 0
+    for ligne in old:
+        if ligne == old[0]:
+            resultfile.write(ligne)
             n = 0
-        elif l == old[1]:
-            resultfile.write(l[:-1] + ' Docks RMSD lig' + str(n+2) + ' |\n')
-        elif l == old[2]:
-            resultfile.write(l[:-1] + ' Angstrom        |\n')
+        elif ligne == old[1]:
+            resultfile.write(ligne[:-1] + ' Docks RMSD lig' + str(n + 2) + ' |\n')
+        elif ligne == old[2]:
+            resultfile.write(ligne[:-1] + ' Angstrom        |\n')
         else:
             n += 1
+            # dockrmsd : we rescore the rmsd for lig 2 and 3; and we store the result in a temporary file (will be
+            # erased during the next loop) named rescore_result.txt
 
-            # dockrmsd : on rescore le rmsd avec le ligand 2 ou 3 ; et on stocke le resultat dans un fichier temporaire
-            # (sera ecrase a la prochaine boucle) nome rescore_result.txt
-            commande = '/home/rene/bin/DockRMSD/DockRMSD LIGAND/MOL2/' + lig + '.mol2 VINA/RESULT/model_' + structure +\
+            commande = '/home/rene/bin/DockRMSD/DockRMSD LIGAND/MOL2/' + lig + '.mol2 VINA/RESULT/model_' + structure + \
                        '/' + structure + '_model_' + str(n) + '.mol2 > rescore_result.txt'
             if terminal:
                 os.system(commande)
@@ -233,7 +233,7 @@ def ecriture_energie_galaxy(structure):
     resultfile.close()
     resultfile = open('VINA/RESULT/model_' + structure + '/comparaison_' + structure + '.txt', 'w')
     print(old)
-    n=0
+    n = 0
     for l in old:
         if l == old[0]:
             resultfile.write(l)
@@ -334,18 +334,16 @@ if __name__ == '__main__':
         os.system('mkdir VINA/RESULT')
     listeMol2 = liste_file('.mol2', '/LIGAND/MOL2/')
     l = liste_file('.log', '/target')
-    #l = ['3Q0V', '5MYM', '5NZ1']
+    # l = ['3Q0V', '5MYM', '5NZ1']
 
     modelliste = []
 
     for i in l:
         createBoxTxt(i)
-        #vina(i)
-        #models = result_vina(i)
-        #comparaison(i, models)
-        #ecriture_energie_galaxy(i)
-
-
+        # vina(i)
+        # models = result_vina(i)
+        # comparaison(i, models)
+        # ecriture_energie_galaxy(i)
 
     # comparaison('5MYN', 10)
     # ecriture_energie_galaxy(i)
