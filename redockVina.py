@@ -110,9 +110,8 @@ def result_vina(file):
     fichier.close()
     
     # conversion of the result file un mol2 in prevision of the rescoring
-    c -=1
     commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) + '.pdbqt -O ' +\
-               'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c) + '.mol2'
+               'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c - 1) + '.mol2'
     if terminal:
         os.system(commande)
     print(commande)
