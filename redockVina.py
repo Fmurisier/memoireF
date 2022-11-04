@@ -161,10 +161,11 @@ def ecriturelig1(structure, m, lig):
                 dockrmsd = i.split()[3]
         rescore_file.close()
         print(dockrmsd)
+        fichier_log.write(dockrmsd + '\n')
         e = 6
         if n > 9:
             e = 5
-        # ecriture dans le doc
+        # writing in the doc
         model = open('VINA/RESULT/model_' + structure + '/' + structure + 'result_' + str(n) + '.pdbqt', 'r')
         lignes = model.readlines()
         resultfile.write(str(n) + ' ' * e + lignes[1].split()[3] + ' ' * 6 + str(dockrmsd) + '\n')
