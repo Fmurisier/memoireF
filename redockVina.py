@@ -294,7 +294,8 @@ def comparaison(structure, m):
 
 def galaxy():
     """
-    fonction qui va calculer l'energie avec le champ de force de galaxydock
+    Calcul of the energy with the force field of galaxyDock
+
     resultfile = open('VINA/RESULT/model_1T56/comparaison_1T56.txt', 'r')
     old = resultfile.readlines()
     resultfile.close()
