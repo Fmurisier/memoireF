@@ -200,13 +200,14 @@ def ecritureligs(structure, m, lig):
             # dockrmsd : we rescore the rmsd for lig 2 and 3; and we store the result in a temporary file (will be
             # erased during the next loop) named rescore_result.txt
 
-            commande = '/home/rene/bin/DockRMSD/DockRMSD LIGAND/MOL2/' + lig + '.mol2 VINA/RESULT/model_' + structure + \
+            commande = '/home/rene/bin/DockRMSD/DockRMSD LIGAND/MOL2/' + lig + '.mol2 VINA/RESULT/model_' + structure +\
                        '/' + structure + '_model_' + str(n) + '.mol2 > rescore_result.txt'
             if terminal:
                 os.system(commande)
             print(commande)
+            fichier_log.write(commande + '\n')
 
-            # extraction du rescoring
+            # extraction of the rescoring
             dockrmsd = 'NA'
             rescore_file = open('rescore_result.txt', 'r')
             rescore_lignes = rescore_file.readlines()
