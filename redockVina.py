@@ -97,7 +97,7 @@ def result_vina(file):
     for ligne in fichier:
         if 'MODEL' in ligne:
             commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) +\
-                       '.pdbqt -O ' + 'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c) + '.mol2
+                       '.pdbqt -O ' + 'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c) + '.mol2'
             if terminal:
                 os.system(commande)
             print(commande)
