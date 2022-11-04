@@ -257,12 +257,13 @@ def ecriture_energie_galaxy(structure):
             print('model numero' + str(n))
             fichier_log.write('model numero' + str(n) + '\n')
 
-            # extraction du resuultat du rescoring
+            # extraction of the rescoring
             fileresult = open('calc_energy.log', 'r')
             energy = fileresult.readlines()
             fileresult.close()
             galaxy_energy = energy[0].split()[-1]
             print(galaxy_energy)
+            fichier_log.write(galaxy_energy + '\n')
             resultfile.write(l[:-1] + ' ' * 8 + galaxy_energy + '\n')
 
     resultfile.close()
