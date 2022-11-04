@@ -7,6 +7,7 @@ redocking for Vina : docking each receptor with his ligand(s) and check if the d
 
 Python version : 3.8
 """
+import datetime
 import os
 from os import listdir
 from os.path import isfile, join
@@ -20,13 +21,14 @@ PATH = '/home/rene/bin/AutoDockVina1.2/vina_1.2.2_linux_x86_64'
 def createBoxTxt(f):
     """
     Creation of the box = txt file with the coordinate of the box
-    :param f: name of the structure nom de la structure pour laquelle il faut cree la box
+    :param f: name of the structure for the creation of the box
     :return:
     """
     fichier = open('target/' + f + '.log', 'r')
     fichier_box = open('VINA/BoxTxt/' + f + '_box.txt', 'w')
     lines = fichier.readlines()
     fichier.close()
+    fichier_log.write('box creation for ' + f)
     for i in range(0, 7):
         if 'center' in lines[i]:
             center = lines[i].split()[-3:]
@@ -328,6 +330,9 @@ def galaxy():
 
 
 if __name__ == '__main__':
+    fichier_log = open('log_VINA_reDock.txt', 'a')
+    fichier_log.write(str(datetime.date.today()) + ' -' * 40)
+
     if terminal:
         os.system('mkdir VINA')
         os.system('mkdir VINA/BoxTxt')
