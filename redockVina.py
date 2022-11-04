@@ -348,10 +348,10 @@ if __name__ == '__main__':
     for i in l:
         fichier_log.write('Starting structure ' + i + ' -' * 40)
         createBoxTxt(i)
-        # vina(i)
-        # models = result_vina(i)
-        # comparaison(i, models)
+        vina(i)
+        models = result_vina(i)
+        comparaison(i, models)
         # ecriture_energie_galaxy(i)
-
+    os.system('mv nohup.out VINA_REDOCK_log.out')
     # comparaison('5MYN', 10)
     # ecriture_energie_galaxy(i)
