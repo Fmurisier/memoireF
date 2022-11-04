@@ -346,6 +346,7 @@ if __name__ == '__main__':
     modelliste = []
 
     for i in l:
+        fichier_log.write('Starting structure ' + i + ' -' * 40)
         createBoxTxt(i)
         # vina(i)
         # models = result_vina(i)
