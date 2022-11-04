@@ -82,8 +82,7 @@ def liste_file(pattern, file_path=''):
 
 def result_vina(file):
     """
-    effectue la separation des dix modeles (nombre choisit en parametre) contenu dans le fichier resultat de vina en dix
-    fichier pour faciliter la comparaison
+    Split the ten models from the vina result file in ten file to facilitate the comparaison
     :param file: 
     :return: 
     """
@@ -98,11 +97,11 @@ def result_vina(file):
     for ligne in fichier:
         if 'MODEL' in ligne:
             commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) +\
-                       '.pdbqt -O ' + 'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c) + '.mol2'
+                       '.pdbqt -O ' + 'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c) + '.mol2
             if terminal:
                 os.system(commande)
-            else:
-                print(commande)
+            print(commande)
+            fichier_log.write(commande + '\n')
             model.close()
             model = open('VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) + '.pdbqt', 'w')
             c += 1
@@ -110,14 +109,14 @@ def result_vina(file):
     model.close()
     fichier.close()
     
-    # conversion du fichier resultat en mol2 en prevision du rescoring
+    # conversion of the result file un mol2 in prevision of the rescoring
     c -=1
     commande = '/usr/bin/obabel -ipdbqt VINA/RESULT/model_' + file + '/' + file + 'result_' + str(c) + '.pdbqt -O ' +\
                'VINA/RESULT/model_' + file + '/' + file + '_model_' + str(c) + '.mol2'
     if terminal:
         os.system(commande)
-    else:
-        print(commande)
+    print(commande)
+    fichier_log.write(commande + '\n')
 
     return c
 
