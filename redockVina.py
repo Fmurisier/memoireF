@@ -222,7 +222,7 @@ def ecritureligs(structure, m, lig):
 
 def ecriture_energie_galaxy(structure):
     """
-    ajout dans le fichier comparaison de du rescoring effectuee avec le champ de force ge galaxyDock
+    Adding the rescoring from galaxyDock to the comparaison file
     :param structure: 
     :return: 
     """
@@ -245,14 +245,17 @@ def ecriture_energie_galaxy(structure):
             resultfile.write(l[:-1] + ' Kcal/mol   |\n')
         else:
             n += 1
-            # galaxyDock : on rescore l'energie' avec le ligand 2 ou 3 ; et on obtient deux fichier de resultat
+            # galaxyDock : we rescore the energie for the ligand 2 ou 3 ; and we get 2 result file
+            commande = '/home/rene/bin/GalaxyDock3/script/calc_energy.py -d /home/rene/bin/GalaxyDock3 -p RECEPTEUR/'\
+                       + structure + '_recepteur.pdb -l VINA/RESULT/model_' + structure + '/' + structure + '_model_' +\
+                       str(n) + '.mol2 -x ' + box[0].split()[-1] + ' -y ' + box[1].split()[-1] + ' -z ' + \
+                       box[2].split()[-1] + ' -size_x ' + box[3].split()[-1] + ' -size_y ' + box[4].split()[-1] + \
+                       ' -size_z ' + box[5].split()[-1]
             if terminal:
-                os.system('/home/rene/bin/GalaxyDock3/script/calc_energy.py -d /home/rene/bin/GalaxyDock3 -p RECEPTEUR/'
-                          + structure + '_recepteur.pdb -l VINA/RESULT/model_' + structure + '/' + structure + '_model_'
-                          + str(n) + '.mol2 -x ' + box[0].split()[-1] + ' -y ' + box[1].split()[-1] + ' -z ' +
-                          box[2].split()[-1] + ' -size_x ' + box[3].split()[-1] + ' -size_y ' + box[4].split()[-1] +
-                          ' -size_z ' + box[5].split()[-1])
+                os.system(commande)
+            fichier_log.write(commande + '\n')
             print('model numero' + str(n))
+            fichier_log.write('model numero' + str(n) + '\n')
 
             # extraction du resuultat du rescoring
             fileresult = open('calc_energy.log', 'r')
