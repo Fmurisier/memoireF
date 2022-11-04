@@ -271,7 +271,7 @@ def ecriture_energie_galaxy(structure):
 
 def comparaison(structure, m):
     """
-    creation et remplissage du fichier comparaison pour la structure donnee en argument 
+    Creation and writing the comparaison file for the structure given in argument
     :param structure: 
     :param m: 
     :return: 
@@ -283,6 +283,7 @@ def comparaison(structure, m):
         name = structure + lig + str(c)
         if c == 1:
             print(name)
+            fichier_log.write(name + '\n')
             ecriturelig1(structure, m, name)
         elif name in listeMol2:
             ecritureligs(structure, m, name)
