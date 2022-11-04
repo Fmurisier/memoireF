@@ -28,7 +28,7 @@ def createBoxTxt(f):
     fichier_box = open('VINA/BoxTxt/' + f + '_box.txt', 'w')
     lines = fichier.readlines()
     fichier.close()
-    fichier_log.write('box creation for ' + f)
+    fichier_log.write('\nbox creation for ' + f + '\n')
     for i in range(0, 7):
         if 'center' in lines[i]:
             center = lines[i].split()[-3:]
@@ -45,19 +45,18 @@ def createBoxTxt(f):
 
 def vina(element):
     """
-    effectue le docking pour la structure donnee en argument, en prenant les parametres par default, le fichier
-    recepteur, les coordonnees de la box et le nom du fichier resultat
+    Dock the structure given in argument automaticaly searching for the files of the same structur
     :param element:
     :return:
     """
-    commande = '/home/rene/bin/AutoDockVina1.2/vina_1.2.2_linux_x86_64 --receptor RECEPTEUR/PDBQT/' + element + \
-               '_recepteur_H.pdbqt --ligand LIGAND/PDBQT/' + element + '_ligand1.pdbqt --config VINA/BoxTxt/' + element\
-               + '_box.txt --exhaustiveness=132 --cpu 10  --num_modes 10 --out VINA/RESULT/' + element +\
+    commande = PATH + ' --receptor RECEPTEUR/PDBQT/' + element + '_recepteur_H.pdbqt --ligand LIGAND/PDBQT/' + element \
+               + '_ligand1.pdbqt --config VINA/BoxTxt/' + element + \
+               '_box.txt --exhaustiveness=132 --cpu 10  --num_modes 10 --out VINA/RESULT/' + element + \
                '_ligand_vina_out.pdbqt'
     if terminal:
         os.system(commande)
-    else:
-        print(commande)
+    print(commande)
+    fichier_log.write(commande + '\n')
 
 
 def liste_file(patern, file_path=''):
