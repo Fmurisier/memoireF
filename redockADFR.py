@@ -52,10 +52,8 @@ def liste_file(pattern, file_path=''):
     :return:
     """
     list_file = []
-
     # list of file present in the directory specified in argument
     fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
-
     # split the name of each file by '_' to select only the file name with the pattern given in argument
     for ligne in fichiers:
         if pattern in ligne:
