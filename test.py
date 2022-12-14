@@ -211,7 +211,6 @@ def conformation_alternative(file):
         print(res_alt)
 
 
-
 if __name__ == '__main__':
 
     #print(ecriture_box())
