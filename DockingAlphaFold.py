@@ -4,8 +4,6 @@ Editor : Murisier Frederic
 
 Date : 2022
 
-Resultat :
-
 Python version : 3.8
 
 

@@ -342,9 +342,3 @@ if __name__ == '__main__':
     # ttt_resultat_all()
     # check_result()
 
-    '''
-    liste = ['5MYM']
-    for e in liste:
-        grids(e)
-        dock(e)
-        '''
