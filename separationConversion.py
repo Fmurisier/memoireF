@@ -479,7 +479,7 @@ def liste_file_complet(pattern, file_path=''):
 
 def mol2():
     """
-    convert the pdbqt file in mol2
+    Convert all the pdbqt file from LIGAND/PDBQT and LIGAND/ligand2_3 in mol2
     :return:
     """
     if terminal:
@@ -491,6 +491,7 @@ def mol2():
     #l = ['3Q0V_ligand1.pdb', '5MYM_ligand1.pdb', '5NZ1_ligand1.pdb']
     #l2 = ['3Q0V_ligand2.pdb', '5MYM_ligand2.pdb', '5NZ1_ligand2.pdb', '5NZ1_ligand3.pdb']
 
+    # Files from LIGAND/PDBQT
     for h in l:
         if '_smile.pdbqt' not in h:
             commande = '/usr/bin/obabel -ipdbqt LIGAND/PDBQT/' + h + ' -O LIGAND/MOL2/' + h[:-3] + 'mol2'
@@ -498,7 +499,7 @@ def mol2():
             print(commande)
             if terminal:
                 os.system(commande)
-
+    # Files from LIGAND/ligand2_3
     for h in l2:
         if '.pdb' in h:
             commande1 = '/usr/bin/obabel -ipdb LIGAND/ligand2_3/' + h + ' -O LIGAND/ligand2_3/' + h[:-3] + 'pdbqt'
@@ -515,7 +516,7 @@ def mol2():
 
 def ecriture_box(liste=False):
     """
-    write the grid from the residus.txt file, and check if the file existe if not print a warning
+    Write the grid from the residus.txt file, and check if the file existe if not print a warning
     :param liste:
     :return:
     """
@@ -553,6 +554,12 @@ def ecriture_box(liste=False):
 
 
 def alternatif_print():
+    """
+    Check function printing a warning if some structures have alternatives conformation or if there is a problem with the
+    ligand (ligand and receptor chain are differents)
+    If there is a warning the function print the list of structures concerned
+    :return:
+    """
     if LIGABS:
         mess = 'WARNING !\nligand absent from Chain A:\n' + '  '.join(LIGABS) + '\n'
         print(mess)
