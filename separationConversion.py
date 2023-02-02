@@ -1,21 +1,13 @@
-"""
-Separation ligand recepteur et conversions lig ref en pdbqt et les ligand pour docking en smile puis pdb puis pdbqt
-ensuite conversion de chaque fichier en mol2
 
-Editor : Murisier Frederic
+###################################################################
+# Description: SeparationConversion                               #
+# # Split pdb file in receptor and ligand(s) and convert them in  #
+# # pdbqt, smile and mol2                                         #
+# Python version : 3.8                                            #
+# Date: 2022/02                                                   #
+# Author: Frederic MURISIER                                       #
+###################################################################
 
-Separation : Prend tous les fichiers qui ont ete transforme et va les separer en un fichier ligand et un fichier
-recepteur
-Conversion : converti les fichier en de pdb a pdbqt, de pdb a smile, de smile a pdb, de pdbqt a mol2
-Date : 2022
-cree une liste des fichiers qui ont ete transforme (= les fichiers qui ont l'extension '_transformed.pdb' et va ensuite
-cree de nouveaux fichiers separant les proteines et les ligands en creant un nouveau fichier lorsqu'il y a plusieurs
-ligands
-Resultat : nouveaux fichiers separe : ligand(s) et recepteur pour chaque fichier
-
-Python version : 3.8
-
-"""
 
 import os
 from os import listdir

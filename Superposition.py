@@ -1,15 +1,16 @@
-"""
-Superposition pymol
-Editor : Murisier Frederic
-Date : feb 2022
 
-Superpose every structure to the structure reference given in argument
-listing every (compressed) pdb file present in the repertory
-then create a pymol script with the instruction to superpose every structure to the reference structure
-then execute the script
+###################################################################
+# Description: Superposition pymol                                #
+# # Superpose every structure to the structure reference given in #
+# # argument listing every (compressed) pdb file present in the   #
+# # repertory then create a pymol script with the instruction     #
+# # to superpose every structure to the reference structure then  #
+# # execute the script                                            #
+# Python version : 3.8                                            #
+# Date: 2022/02                                                   #
+# Author: Frederic MURISIER                                       #
+###################################################################
 
-Python version : 3.8
-"""
 
 import sys
 from os import listdir
