@@ -1,13 +1,13 @@
-"""
-Redock autodock FR
-Editor : Murisier Frederic
 
-Date : mars 2022
+###################################################################
+# Description: Redock autodock FR                                 #
+# # redocking for AutodockFR : docking each receptor with his     #
+# # ligand(s) and check if the docking went well                  #
+# Python version : 3.8                                            #
+# Date: 2022/03                                                   #
+# Author: Frederic MURISIER                                       #
+###################################################################
 
-redocking for AutodockFR : docking each receptor with his ligand(s) and check if the docking went well
-
-Python version : 3.8
-"""
 import datetime
 import os
 from os import listdir
