@@ -45,7 +45,7 @@ def createBoxTxt(f):
 
 def vina(element):
     """
-    Dock the structure given in argument automaticaly searching for the files of the same structur
+    Dock the structure given in argument automaticaly searching for the files of the same structure
     :param element:
     :return:
     """

@@ -9,6 +9,7 @@ Python version : 3.8
 
 
 """
+import datetime
 import os
 from os import listdir
 from os.path import isfile, join
@@ -19,12 +20,12 @@ terminal = False
 PATH = '/home/rene/bin/GalaxyDock3/'
 
 
-def liste_file(patern, file_path=''):
+def liste_file(pattern, file_path=''):
     """
-    effectue la liste des fichier comprenant un certain motif donne en argument dans le dossier donne en argument si la
-    liste des fichiers doit etre faites dans un sous dossier de repertoire dans lequel le script se trouve
-    :param patern: motif a rechercher dans le nom des fichiers
-    :param file_path: chemin du repertoire souhaite, si vide = repertoire dans lequel le script se trouve
+    Return the list of file with the pattern given in argument present in the directory specified in argument
+    the name in the list do not have the extension file tag
+    :param pattern:
+    :param file_path: path of the directory, if empty then current directory
     :return:
     """
     list_file = []
@@ -35,7 +36,7 @@ def liste_file(patern, file_path=''):
     # pour chaque nom de fichier on separe le nom par '.' pour recuperer et stocker tous les noms de fichier dans une
     # liste
     for ligne in fichiers:
-        if patern in ligne:
+        if pattern in ligne:
             name = ligne.split('.')
             list_file.append(name[0])
     list_file.sort()
@@ -45,15 +46,19 @@ def liste_file(patern, file_path=''):
 
 def dock_galaxy(e):
     """
-    effectue le docking avec galaxyDock en allant prealablement chercher les informations de la box 
+    Dock the structure given in argument automaticaly searching for the box information
     :param e: 
     :return: 
     """
+
+    # Creation of a directory for each structure to store the specific result
     if terminal:
         if e not in listdir(path + '/GalaxyD'):
             os.system('mkdir GalaxyD/' + e)
 
+    # Open the box file
     file = open('VINA/BoxTxt/' + e.split('_')[0] + '_box.txt', 'r').readlines()
+    # Extracting each coordinate of the box
     cx = file[0].split()[-1]
     cy = file[1].split()[-1]
     cz = file[2].split()[-1]
@@ -61,50 +66,53 @@ def dock_galaxy(e):
     sy = file[4].split()[-1]
     sz = file[5].split()[-1]
 
-    # galaxy dock
+    # Commande line for the Docking with Galaxy dock
     commande = '/home/rene/bin/GalaxyDock3/script/run_GalaxyDock3.py -d /home/rene/bin/GalaxyDock3 -p RECEPTEUR/' + \
                e.split('_')[0] + '_recepteur.pdb -l LIGAND/MOL2/' + e + '.mol2 -x ' + cx + ' -y ' + cy + ' -z ' + \
                cz + ' -size_x ' + sx + ' -size_y ' + sy + ' -size_z ' + sz + ' --n_proc 1'
 
     if terminal:
         os.system(commande)
-    else:
-        print('docking--->' + commande)
 
-    # split le resultat
+    print('docking--->' + commande)
+    fichier_log.write('docking--->' + commande + '\n')
+
+    # Using a Python script to split the result
     commande = 'python2 /home/rene/bin/GalaxyDock3/script/split_mol2.py GD3_cl.mol2 GalaxyD/' + e + '/' + e
     if terminal:
         os.system(commande)
-    else:
-        print('split---->' + commande)
+    print('split---->' + commande)
+    fichier_log.write('split--->' + commande + '\n')
 
-    # ouverture ficher resultat, suppression trois derniere colonne, ajout de 'rmsd' comme derniere colonne
+    # Openning the result file, suppression of the three last colunm, adding a new colunm (at the end) 'rmsd'
     result = open('GD3_cl.E.info', 'r').readlines()
     resultfinal = open('GalaxyD/' + e + '_result_galaxy.txt', 'w')
     resultfinal.write(result[0] + result[1][:-15] + 'RMSD\n' + result[0])
 
-    # calcul RMSD
+    # Calcul the RMSD
     liste_galaxy = liste_file(e, '/GalaxyD/' + e)
     nbr_model = len(liste_galaxy)
     compteur = 0
+    # For loop to generate the cmd line
     for model in liste_galaxy:
         commande = '/home/rene/bin/DockRMSD/DockRMSD LIGAND/MOL2/' + e + '.mol2 GalaxyD/' + e + '/' + model + \
                    '.mol2 > rescore_result.txt'
 
         if terminal:
             os.system(commande)
-            # else:
-            print('rmsd ---> ' + commande)
+        print('rmsd ---> ' + commande)
+        fichier_log.write('rmsd--->' + commande + '\n')
 
-        # extraction du RMSD
+        # RMSD extraction
         rescore_lignes = open('rescore_result.txt', 'r').readlines()
 
+        # Initialisation at 'NA' for the RMSD value in case the calcul of the rmsd went wrong
         dockrmsd = 'NA'
         for i in rescore_lignes:
             if 'Calculated Docking RMSD:' in i:
                 dockrmsd = i.split()[3]
 
-        # ecriture du RMSD dans le fichier
+        # Writing the RMSD in the final file
         resultfinal.write(result[3 + compteur][:-27] + dockrmsd + '\n')
         compteur += 1
 
@@ -167,16 +175,20 @@ def conversion_mol2():
 
 def dockG():
     """
-    effectue le docking pour toutes les structures contenue dans la liste
+    Dock the structure present in the /LIGAND/MOL2 repertory
     :return: 
     """
     liste_gal = liste_file('.', '/LIGAND/MOL2')
     #liste_gal = ['5NZ1_ligand1', '5NZ1_ligand2', '5NZ1_ligand3', '6HNX_ligand1', '6HNZ_ligand1', '6HO0_ligand1', '6HO1_ligand1', '6HO2_ligand1', '6HO3_ligand1', '6HO4_ligand1', '6HO5_ligand1', '6HO6_ligand1', '6HO7_ligand1', '6HO8_ligand1', '6HO9_ligand1', '6HOA_ligand1', '6HOB_ligand1', '6HOC_ligand1', '6HOD_ligand1', '6HOE_ligand1', '6HOF_ligand1', 'BDM15048_ligand1', 'BDM15048_ligand2', 'Cmpd1_ligand1', 'Cmpd1_ligand2', 'Cmpd2_ligand1', 'Cmpd3_ligand1', 'Cmpd3_ligand2', 'Cmpd4_ligand1', 'Cmpd4_ligand2', 'Cmpd5_ligand1', 'Cmpd5_ligand2', 'Cmpd6_ligand1', 'Cmpd6_ligand2', 'Cmpd7_ligand1', 'Cmpd8_ligand1', 'Cmpd9_ligand1']
     #liste_gal = ['3Q0V', '5NZ1']
-    n=0
+    n = 0
     for i in liste_gal:
         n += 1
-        print('######################## Docking Galaxy ' + str(n) + ' sur ' + str(len(liste_gal)) + ' ----> ' + i)
+
+        message = "#" * 24 + " Docking Galaxy " + str(n) + ' on ' + str(len(liste_gal)) + ' ----> ' + str(i) + '\n'
+        print(message)
+        fichier_log.write(message)
+        print()
         dock_galaxy(i)
 
 
