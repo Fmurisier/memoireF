@@ -23,7 +23,7 @@ PATH = '/home/rene/bin/ADFRsuite-1.0/bin/'
 
 def lecture_residu():
     """
-    extraction of the name and number of the different residus of the box
+    Extraction of the name and number of the different residus of the box and prepare the right structure for the cmd
     :return:
     """
     resi_file = open('residus.txt', 'r').readlines()
@@ -125,13 +125,13 @@ def check_error_grid(file):
     fichier = open('target/' + file, 'r')
     fichierlog = open('fileERROR_Grid.txt', 'a')
     for l in fichier:
-        if 'ERROR' in l:
+        if 'ERROR' in l: # print a warning message
             message = '\nWARNING PROBLEM agdr crashes....\n' + l + '\n'
             print(message)
             fichierlog.write(message)
             fichier_log.write(message)
             restart = True
-    if not restart:
+    if not restart: # print a success message
         message = '\n\n\nNo problem detected in the grid creation\n\n\n'
         print(message)
         fichier_log.write(message)
