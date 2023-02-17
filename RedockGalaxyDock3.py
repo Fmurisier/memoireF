@@ -181,12 +181,19 @@ def dockG():
 
 
 if __name__ == '__main__':
+    fichier_log = open('log_VINA_reDock.txt', 'a')
+    fichier_log.write(str(datetime.date.today()) + ' -' * 40)
+
     if terminal:
         if 'GalaxyD' not in listdir(path):
             os.system('mkdir GalaxyD')
 
     dockG()
 
+"""    
+    message = '' + '\n'
+    print(message)
+    fichier_log.write(message)"""
     #conversion_mol2()
     # triage()
     # e = '5MXV_ligand1'
