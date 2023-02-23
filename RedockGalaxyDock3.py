@@ -2,8 +2,7 @@
 redock GalaxyDock3
 Editor : Murisier Frederic
 Date : 2022
-effectue le test 0 pour GalaxyDock3, docking de chaque recepteur avec son / ses ligands et evaluation si le docking a
-bien fonctionne
+redocking for GalaxyDock3 : docking each receptor with his ligand(s) and check if the docking went well
 
 Python version : 3.8
 
@@ -30,11 +29,10 @@ def liste_file(pattern, file_path=''):
     """
     list_file = []
 
-    # fait la liste des fichier dans le repertoire ou se trouve script.py
+    # Generate the list of all file in the directory where the script.py is located
     fichiers = [f for f in listdir(path + file_path) if isfile(join(path + file_path, f))]
 
-    # pour chaque nom de fichier on separe le nom par '.' pour recuperer et stocker tous les noms de fichier dans une
-    # liste
+    # For loop to split each file name by '.' to keep only the name of the files in a list
     for ligne in fichiers:
         if pattern in ligne:
             name = ligne.split('.')
@@ -121,47 +119,48 @@ def dock_galaxy(e):
 
 def triage():
     """
-    cree un nouveau fichier result_galaxy_tried.txt contenant les resultats de galaxyDock trie par energie croissant
+    Create a new file result_galaxy_tried.txt with the sorted result of galaxyDock
     :return: 
     """
     l = liste_file('result_galaxy.txt', '/GalaxyD')
     for s in l:
         print(s)
+        fichier_log.write(s)
         file = result = open('GalaxyD/' + s + '.txt', 'r').readlines()
         c = 0
         for i in file:
             c += 1
         print(c)
+        fichier_log.write(str(c))
         co = 'head -3 GalaxyD/' + s + '.txt > GalaxyD/' + s + '_tried.txt'
         commande = 'tail -' + str(c - 3) + ' GalaxyD/' + s + '.txt | sort -n -k 2 >> GalaxyD/' + s + '_tried.txt'
 
         if terminal:
             os.system(co)
             os.system(commande)
-        else:
-            print(co)
-            print(commande)
+
+        print(co)
+        print(commande)
 
 
 def reconstruction(e, model):
     """
-    fonction pour la reconstruction des complexes
+    Function for the reconstruction of the complexes
     :param e: 
     :param model: 
     :return: 
     """
-    # reconstruction du complex
     commande = 'obabel -imol2 GalaxyD/' + e + '/' + model + ' -O fichier_temporaire.pdb'
     if terminal:
         os.system(commande)
-    else:
-        print(commande)
+    print(commande)
+    fichier_log.write(commande)
 
 
 def conversion_mol2():
     """
-    conversion en mol de tous les fichiers ligand_smile
-    :return: 
+    Convert all the ligand_smile file in mol
+    :return:
     """
     if terminal:
         if 'MOL2' not in listdir(path + '/SMILE'):
@@ -171,6 +170,8 @@ def conversion_mol2():
         commande = '/usr/bin/obabel -ipdb SMILE/' + smi + '.pdb -O SMILE/MOL2/' + smi + '.mol2'
         if terminal:
             os.system(commande)
+        fichier_log.write(commande)
+        print(commande)
 
 
 def dockG():
