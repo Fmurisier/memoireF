@@ -1,7 +1,7 @@
 """
 Redock Vina
 Editor : Murisier Frederic
-Date : mars 2022
+Date : 03/2022
 
 redocking for Vina : docking each receptor with his ligand(s) and check if the docking went well
 

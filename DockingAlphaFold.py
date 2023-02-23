@@ -1,13 +1,11 @@
 """
 AlphaFold
 Editor : Murisier Frederic
-
-Date : 2022
+Date : 04/2022
 
 Python version : 3.8
-
-
 """
+import datetime
 import os
 from os import listdir
 from os.path import isfile, join
@@ -543,6 +541,9 @@ def ecritureligs2_3_GD(structure):
 
 
 if __name__ == '__main__':
+    fichier_log = open('log_VINA_reDock.txt', 'a')
+    fichier_log.write(str(datetime.date.today()) + ' -' * 40)
+
     dossier = 'AlphaFold'
     if terminal:
         if dossier not in listdir(path):
